@@ -75,6 +75,8 @@ ZSH_THEME="steeef"
 plugins=(git)
 plugins+=(zsh-vi-mode)
 
+ZVM_VI_INSERT_ESCAPE_BINDKEY=jj
+
 source $ZSH/oh-my-zsh.sh
 
 #source /usr/share/autojump/autojump.zsh
@@ -102,8 +104,6 @@ source $ZSH/oh-my-zsh.sh
 # For a full list of active aliases, run `alias`.
 #
 source /usr/share/fzf/completion.zsh && source /usr/share/fzf/key-bindings.zsh
-
-
 function zvm_after_init() {
     source /usr/share/fzf/completion.zsh && source /usr/share/fzf/key-bindings.zsh
 }
@@ -120,11 +120,11 @@ alias thuis="./.screenlayout/thuis.sh"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 export PYENV_ROOT="$HOME/.pyenv"
 
-ZVM_VI_INSERT_ESCAPE_BINDKEY=jj
 
 export PATH="$PYENV_ROOT/bin:$PATH"
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
 fi
 
+# colorfol manpager
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"

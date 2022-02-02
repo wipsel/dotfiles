@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =7
+let g:netrw_dirhist_7='/home/wipsel/programming/hapheastus/plcopen/project'
+let g:netrw_dirhist_6='/home/wipsel/programming/sbsm/api/core'
+let g:netrw_dirhist_5='/home/wipsel/programming/sauron/tasks'
+let g:netrw_dirhist_4='/home/wipsel/programming/sauron/store'
+let g:netrw_dirhist_3='/home/wipsel/programming/sauron/tasks'
+let g:netrw_dirhist_2='/home/wipsel/programming/sauron/devices'
+let g:netrw_dirhist_1='/home/wipsel/programming/bacpypes/py34/bacpypes'
+let g:netrw_dirhist_0='/home/wipsel/programming/bacpypes'
+let g:netrw_dirhist_9='/home/wipsel/programming/sbsm/api'
+let g:netrw_dirhist_8='/home/wipsel/programming/sauron/tasks'
