@@ -1,22 +1,19 @@
 # Font configuration (changes require restart)
 font:
   # The normal (roman) font face to use.
-  # Style can be specified to pick a specific face.
   normal:
     family: "Fira Code"
-    # family: "Source Code Pro"
     style: "SemiBold"
 
   # The bold font face
   bold:
     family: "Fira Code"
-    # family: "Source Code Pro"
 
   # The italic font face
   italic:
     family: "Fira Code"
+    style: "SemiBold"
     # family: "Source Code Pro"
-    # style: "SemiBold"
 
   # Point size of the font
   size: 12.0

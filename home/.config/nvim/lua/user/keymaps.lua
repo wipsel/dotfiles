@@ -1,36 +1,18 @@
-local opts = { noremap = true, silent = true }
-
--- Shorten function name
 local keymap = vim.api.nvim_set_keymap
+local options = { noremap = true, silent = true }
 
-keymap("", "<Space>", "<Nop>", opts)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+local open_telescope_cmd =
+	"<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false}))<cr>"
 
--- exit insert mode on jj
-keymap("i", "jj", "<ESC>", opts)
-
-
--- buffer moving
-keymap("n", "<leader>h", ":bp<CR>", opts)
-keymap("n", "<leader>l", ":bn<CR>", opts)
-keymap("n", "<leader>j", ":bd<CR>", opts)
-
--- write file on enter
-keymap("n", "<CR>", ":w <CR>", opts)
-keymap("n", "<leader>q", ":q <CR>", opts)
-
-
--- TODO paste from clipboard
-
-
--- open telescope finder
-keymap(
-    "n",
-    "<leader>p",
-    "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>",
-    opts
-)
--- open live grep finder
-keymap("n", "<leader>o", "<cmd>Telescope live_grep<cr>", opts)
+keymap("", "<Space>", "<Nop>", options)
+keymap("i", "jj", "<ESC>", options)
+keymap("n", "<leader>h", ":bp<CR>", options)
+keymap("n", "<leader>l", ":bn<CR>", options)
+keymap("n", "<leader>j", ":bd<CR>", options)
+keymap("n", "<CR>", ":w <CR>", options)
+keymap("n", "<leader>q", ":q <CR>", options)
+keymap("n", "<leader>p", open_telescope_cmd, options)
+keymap("n", "<leader>o", "<cmd>Telescope live_grep<cr>", options)
