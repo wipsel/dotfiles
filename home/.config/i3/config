@@ -175,5 +175,4 @@ client.urgent           #3c3836 #3c3836 #fb4934
 
 for_window [class="^.*"] border pixel 0
 
-# Set inner/outer gaps
 exec --no-startup-id nitrogen --restore
