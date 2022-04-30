@@ -111,4 +111,8 @@ cmp.setup({
 		behavior = cmp.ConfirmBehavior.Replace,
 		select = false,
 	},
+	window = {
+		completion = cmp.config.window.bordered(),
+		documentation = cmp.config.window.bordered(),
+	},
 })
