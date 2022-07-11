@@ -6,6 +6,6 @@ end
 
 local servers = require("servers")
 
-require("user.lsp.installer").setup(servers.servers, options)
+require("user.lsp.installer").setup(servers, options)
 require("user.lsp.handlers").setup()
 require("user.lsp.null-ls")
