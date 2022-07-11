@@ -48,6 +48,7 @@ return packer.startup(function(use)
 
 	-- color scheme
 	use("lunarvim/onedarker.nvim")
+	use("marko-cerovac/material.nvim")
 
 	-- easier commenting
 	use("scrooloose/nerdcommenter")
@@ -55,11 +56,11 @@ return packer.startup(function(use)
 	use("akinsho/bufferline.nvim")
 
 	-- cmp plugins
-	use("hrsh7th/nvim-cmp") -- The completion plugin
-	use("hrsh7th/cmp-buffer") -- buffer completions
-	use("hrsh7th/cmp-path") -- path completions
-	use("hrsh7th/cmp-cmdline") -- cmdline completions
-	use("hrsh7th/cmp-nvim-lsp") -- cmdline completions
+	use("hrsh7th/nvim-cmp") -- Completion plugin
+	use("hrsh7th/cmp-buffer") -- Buffer completions
+	use("hrsh7th/cmp-path") -- Path completions
+	use("hrsh7th/cmp-cmdline") -- Cmdline completions
+	use("hrsh7th/cmp-nvim-lsp") -- Cmdline completions
 	use("saadparwaiz1/cmp_luasnip") -- snippet completions
 
 	-- snippets

@@ -6,33 +6,32 @@ end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
--- highlight identifiers.
-local function highlight_document(client)
-	if client.resolved_capabilities.document_highlight then
-		vim.api.nvim_exec(
-			[[
-      augroup lsp_document_highlight
-        autocmd! * <buffer>
-        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-      augroup END
-    ]],
-			false
-		)
-	end
+local function highlight_document(bufnr)
+	vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true })
+	vim.api.nvim_create_autocmd("CursorHold", {
+		callback = function()
+			vim.lsp.buf.document_highlight()
+		end,
+		buffer = bufnr,
+	})
+
+	vim.api.nvim_create_autocmd("CursorMoved", {
+		callback = function()
+			vim.lsp.buf.clear_references()
+		end,
+		buffer = bufnr,
+	})
 end
 
 -- format on save
-local function format_on_save()
-	vim.api.nvim_exec(
-		[[
-      augroup AutoFormat
-        autocmd! * <buffer>
-        autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()
-      augroup END
-    ]],
-		false
-	)
+local function format_on_save(bufnr)
+	vim.api.nvim_create_augroup("auto_format", { clear = true })
+	vim.api.nvim_create_autocmd("BufWritePre", {
+		callback = function()
+			vim.lsp.buf.formatting_sync()
+		end,
+		buffer = bufnr,
+	})
 end
 
 -- lsp keymap commands
@@ -78,38 +77,55 @@ local function setup()
 	end
 
 	-- config for diagnostic
+	-- LSP handlers configuration
 	local config = {
-		virtual_text = false,
-		signs = { active = signs },
-		update_in_insert = true,
-		underline = true,
-		severity_sort = true,
 		float = {
-			focusable = false,
+			focusable = true,
 			style = "minimal",
 			border = "rounded",
-			source = "always",
-			header = "",
-			prefix = "",
+		},
+
+		diagnostic = {
+			-- virtual_text = false,
+			-- virtual_text = { spacing = 4, prefix = "●" },
+			virtual_text = { severity = vim.diagnostic.severity.ERROR },
+			signs = {
+				active = signs,
+			},
+			underline = true,
+			update_in_insert = false,
+			severity_sort = true,
+			float = {
+				focusable = true,
+				style = "minimal",
+				border = "rounded",
+				source = "always",
+				header = "",
+				prefix = "",
+			},
 		},
 	}
 
-	vim.diagnostic.config(config)
+	vim.diagnostic.config(config.diagnostic)
 
-	vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
-	vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
-		vim.lsp.handlers.signature_help,
-		{ border = "rounded" }
-	)
+	vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, config.float)
+	vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, config.float)
 end
 
 local function on_attach(client, bufnr)
 	if client.name == "tsserver" then
 		client.resolved_capabilities.document_formatting = false
+		highlight_document(bufnr)
 	end
 
 	-- explicitly disable formatting for gopls since we let null-ls handle the formatting.
 	if client.name == "gopls" then
+		client.resolved_capabilities.document_formatting = false
+		client.resolved_capabilities.document_range_formatting = false
+		highlight_document(bufnr)
+	end
+
+	if client.name == "jsonls" then
 		client.resolved_capabilities.document_formatting = false
 		client.resolved_capabilities.document_range_formatting = false
 	end
@@ -121,15 +137,11 @@ local function on_attach(client, bufnr)
 	end
 
 	keymaps(bufnr)
-	highlight_document(client)
-	format_on_save()
+	format_on_save(bufnr)
 end
 
--- lsp setup class
-local lsp_setup = {
+return {
 	setup = setup,
 	on_attach = on_attach,
 	capabilities = cmp_nvim_lsp.update_capabilities(capabilities),
 }
-
-return lsp_setup

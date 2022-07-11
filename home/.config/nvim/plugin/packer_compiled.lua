@@ -114,6 +114,11 @@ _G.packer_plugins = {
     path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/lualine.nvim",
     url = "https://github.com/nvim-lualine/lualine.nvim"
   },
+  ["material.nvim"] = {
+    loaded = true,
+    path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/material.nvim",
+    url = "https://github.com/marko-cerovac/material.nvim"
+  },
   nerdcommenter = {
     loaded = true,
     path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/nerdcommenter",

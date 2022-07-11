@@ -17,7 +17,7 @@ telescope.setup({
 				mirror = true,
 			},
 		},
-		winblend = 10,
+		winblend = 20,
 		use_less = false,
 		set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
 	},

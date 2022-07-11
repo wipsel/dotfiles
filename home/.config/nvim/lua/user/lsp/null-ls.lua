@@ -12,6 +12,7 @@ null_ls.setup({
 	sources = {
 		formatting.stylua,
 		formatting.prettier,
+		formatting.eslint,
 		formatting.goimports,
 		diagnostics.golangci_lint.with({
 			args = {
