@@ -4,7 +4,7 @@ if not status_ok then
 	return
 end
 
-local servers = require("servers")
+local servers = require("user.lsp.servers")
 
 require("user.lsp.installer").setup(servers, options)
 require("user.lsp.handlers").setup()

@@ -13,6 +13,7 @@ function Installer.setup(servers, options)
 		local opts = vim.tbl_deep_extend("force", options, servers[server_name] or {})
 
 		-- TODO see if you need special setup for servers
+                print(server_name)
 		lspconfig[server_name].setup(opts)
 	end
 end

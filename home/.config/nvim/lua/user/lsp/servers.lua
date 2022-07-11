@@ -1,15 +1,9 @@
 local Servers = {}
 
-local Servers.servers = {
+local servers = {
   gopls = {},
   html = {},
-  jsonls = {
-    settings = {
-      json = {
-        schemas = require("schemastore").json.schemas(),
-      },
-    },
-  },
+  jsonls = {},
   pyright = {
     analysis = {
       typeCheckingMode = "off",
