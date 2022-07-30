@@ -4,12 +4,18 @@ if not ok then
 	return
 end
 
-treesitter.setup({
-	ensure_installed = "all",
-	highlight = {
-		enable = true,
-	},
-	indent = {
-		enable = false,
-	},
-})
+local function setup()
+	treesitter.setup({
+		ensure_installed = "all",
+		highlight = {
+			enable = true,
+		},
+		indent = {
+			enable = false,
+		},
+	})
+end
+
+return {
+	setup = setup,
+}

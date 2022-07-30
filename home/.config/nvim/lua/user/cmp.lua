@@ -78,42 +78,48 @@ local format = function(entry, vim_item)
 	return vim_item
 end
 
-cmp.setup({
-	snippet = {
-		expand = expand,
-	},
+local function setup()
+	cmp.setup({
+		snippet = {
+			expand = expand,
+		},
 
-	mapping = {
-		["<C-k>"] = cmp.mapping.select_prev_item(),
-		["<C-j>"] = cmp.mapping.select_next_item(),
-		["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
-		["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
-		["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
-		["<C-y>"] = cmp.config.disable,
-		["<CR>"] = cmp.mapping.confirm({ select = true }),
-		["<Tab>"] = cmp.mapping(tab_next, { "i", "s" }),
-		["<S-Tab>"] = cmp.mapping(tab_prev, { "i", "s" }),
-	},
+		mapping = {
+			["<C-k>"] = cmp.mapping.select_prev_item(),
+			["<C-j>"] = cmp.mapping.select_next_item(),
+			["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
+			["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
+			["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
+			["<C-y>"] = cmp.config.disable,
+			["<CR>"] = cmp.mapping.confirm({ select = true }),
+			["<Tab>"] = cmp.mapping(tab_next, { "i", "s" }),
+			["<S-Tab>"] = cmp.mapping(tab_prev, { "i", "s" }),
+		},
 
-	formatting = {
-		fields = { "kind", "abbr", "menu" },
-		format = format,
-	},
+		formatting = {
+			fields = { "kind", "abbr", "menu" },
+			format = format,
+		},
 
-	sources = {
-		{ name = "nvim_lsp" },
-		{ name = "luasnip" },
-		{ name = "buffer" },
-		{ name = "path" },
-	},
+		sources = {
+			{ name = "nvim_lsp" },
+			{ name = "luasnip" },
+			{ name = "buffer" },
+			{ name = "path" },
+		},
 
-	confirm_opts = {
-		behavior = cmp.ConfirmBehavior.Replace,
-		select = false,
-	},
+		confirm_opts = {
+			behavior = cmp.ConfirmBehavior.Replace,
+			select = false,
+		},
 
-	window = {
-		completion = cmp.config.window.bordered(),
-		documentation = cmp.config.window.bordered(),
-	},
-})
+		window = {
+			completion = cmp.config.window.bordered(),
+			documentation = cmp.config.window.bordered(),
+		},
+	})
+end
+
+return {
+    setup = setup,
+}

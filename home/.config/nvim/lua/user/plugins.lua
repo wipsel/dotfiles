@@ -1,47 +1,46 @@
-local fn = vim.fn
-
--- Automatically install packer if it's not installed
-local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-if fn.empty(fn.glob(install_path)) > 0 then
-	print(install_path)
-	PACKER_BOOTSTRAP = fn.system({
-		"git",
-		"clone",
-		"--depth",
-		"1",
-		"https://github.com/wbthomason/packer.nvim",
-		install_path,
-	})
-	print("Installing packer close and reopen Neovim...")
-	vim.cmd([[packadd packer.nvim]])
-end
-
--- Autocommand that reloads neovim whenever you save the plugins.lua file
-vim.cmd([[
-  augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerSync
-  augroup end
-]])
-
----- Use a protected call so we don't error out on first use
 local ok, packer = pcall(require, "packer")
 if not ok then
 	vim.notify("packer not found, make sure it is installed.")
 	return
 end
 
----- Have packer use a popup window
-packer.init({
+-- Indicate first time installation
+local packer_bootstrap = false
+
+-- packer.nvim configuration
+local conf = {
+	profile = {
+		enable = true,
+		threshold = 0, -- the amount in ms that a plugins load time must be over for it to be included in the profile
+	},
+
 	display = {
 		open_fn = function()
 			return require("packer.util").float({ border = "rounded" })
 		end,
 	},
-})
+}
 
--- Install your plugins here
-return packer.startup(function(use)
+-- Check if packer.nvim is installed
+-- Run PackerCompile if there are changes in this file
+local function packer_init()
+	local fn = vim.fn
+	local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+	if fn.empty(fn.glob(install_path)) > 0 then
+		packer_bootstrap = fn.system({
+			"git",
+			"clone",
+			"--depth",
+			"1",
+			"https://github.com/wbthomason/packer.nvim",
+			install_path,
+		})
+		vim.cmd([[packadd packer.nvim]])
+	end
+	vim.cmd("autocmd BufWritePost plugins.lua source <afile> | PackerCompile")
+end
+
+local function plugins(use)
 	use("wbthomason/packer.nvim") -- Have packer manage itself
 	use("nvim-lua/popup.nvim") -- An implementation of the Popup API from vim in Neovim
 	use("nvim-lua/plenary.nvim") -- Useful lua functions used by lots of plugins
@@ -49,6 +48,12 @@ return packer.startup(function(use)
 	-- color scheme
 	use("lunarvim/onedarker.nvim")
 	use("marko-cerovac/material.nvim")
+	use({
+		"sainnhe/everforest",
+		config = function()
+			vim.cmd("colorscheme everforest")
+		end,
+	})
 
 	-- easier commenting
 	use("scrooloose/nerdcommenter")
@@ -82,9 +87,19 @@ return packer.startup(function(use)
 		run = ":TSUpdate",
 	})
 
-	-- Automatically set up your configuration after cloning packer.nvim
-	-- Put this at the end after all plugins
-	if PACKER_BOOTSTRAP then
+	if packer_bootstrap then
+		print("Restart Neovim required after installation!")
 		require("packer").sync()
 	end
-end)
+end
+
+local function setup()
+	packer_init()
+
+	packer.init(conf)
+	packer.startup(plugins)
+end
+
+return {
+	setup = setup,
+}

@@ -1,2 +1,11 @@
-require("user.lsp.handlers").setup()
-require("user.lsp.null-ls")
+local handlers = require("user.lsp.lsp_config")
+local null_ls = require("user.lsp.null_ls")
+
+local function setup()
+	handlers.setup()
+	null_ls.setup()
+end
+
+return {
+	setup = setup,
+}
