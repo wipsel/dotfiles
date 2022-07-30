@@ -117,6 +117,7 @@ alias ls="exa"
 alias vim="nvim"
 alias bus="./.screenlayout/bus.sh"
 alias thuis="./.screenlayout/thuis.sh"
+alias tsserver="npx tsserver"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 export PYENV_ROOT="$HOME/.pyenv"
 
