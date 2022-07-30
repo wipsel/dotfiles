@@ -7,8 +7,7 @@ end
 -- Indicate first time installation
 local packer_bootstrap = false
 
--- packer.nvim configuration
-local conf = {
+local config = {
 	profile = {
 		enable = true,
 		threshold = 0, -- the amount in ms that a plugins load time must be over for it to be included in the profile
@@ -41,22 +40,26 @@ local function packer_init()
 end
 
 local function plugins(use)
-	use("wbthomason/packer.nvim") -- Have packer manage itself
-	use("nvim-lua/popup.nvim") -- An implementation of the Popup API from vim in Neovim
-	use("nvim-lua/plenary.nvim") -- Useful lua functions used by lots of plugins
+	use("wbthomason/packer.nvim")
+	use("nvim-lua/popup.nvim")
+	-- Useful lua functions used by lots of plugins
+	use("nvim-lua/plenary.nvim")
 
-	-- color scheme
-	use("lunarvim/onedarker.nvim")
-	use("marko-cerovac/material.nvim")
+	-- color schemes
 	use({
-		"sainnhe/everforest",
+		"lunarvim/onedarker.nvim",
 		config = function()
 			vim.cmd("colorscheme everforest")
 		end,
 	})
+	use("sainnhe/everforest")
+	use("marko-cerovac/material.nvim")
+	-- icons for file types, errors git signs and stuff.
+	use("kyazdani42/nvim-web-devicons")
 
 	-- easier commenting
 	use("scrooloose/nerdcommenter")
+
 	use("nvim-lualine/lualine.nvim")
 	use("akinsho/bufferline.nvim")
 
@@ -78,8 +81,6 @@ local function plugins(use)
 
 	-- telescope
 	use("nvim-telescope/telescope.nvim")
-	-- icons for file types, errors git signs and stuff.
-	use("kyazdani42/nvim-web-devicons")
 
 	-- treesitter
 	use({
@@ -96,7 +97,7 @@ end
 local function setup()
 	packer_init()
 
-	packer.init(conf)
+	packer.init(config)
 	packer.startup(plugins)
 end
 

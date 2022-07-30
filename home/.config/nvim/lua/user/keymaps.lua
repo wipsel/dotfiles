@@ -4,7 +4,7 @@ local options = { noremap = true, silent = true }
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
--- lsp keymap commands
+-- predefined commands we can bind to a keymap.
 local commands = {
 	ui = {
 		toggle_color = "<cmd>lua require('material.functions').toggle_style()<cr>",

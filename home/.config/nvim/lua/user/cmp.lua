@@ -40,7 +40,7 @@ local kind_icons = {
 	TypeParameter = "",
 }
 
-local tab_next = function(fallback)
+local function tab_next(fallback)
 	if cmp.visible() then
 		cmp.select_next_item()
 	elseif luasnip.expandable() then
@@ -52,7 +52,7 @@ local tab_next = function(fallback)
 	end
 end
 
-local tab_prev = function(fallback)
+local function tab_prev(fallback)
 	if cmp.visible() then
 		cmp.select_prev_item()
 	elseif luasnip.jumpable(-1) then
@@ -62,11 +62,11 @@ local tab_prev = function(fallback)
 	end
 end
 
-local expand = function(args)
+local function expand(args)
 	luasnip.lsp_expand(args.body)
 end
 
-local format = function(entry, vim_item)
+local function format(entry, vim_item)
 	vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
 	vim_item.menu = ({
 		nvim_lsp = "[Lsp]",
@@ -121,5 +121,5 @@ local function setup()
 end
 
 return {
-    setup = setup,
+	setup = setup,
 }
