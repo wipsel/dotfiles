@@ -17,6 +17,7 @@ local config = {
 		focusable = true,
 		style = "minimal",
 		border = "rounded",
+                width = 200,
 	},
 
 	diagnostic = {

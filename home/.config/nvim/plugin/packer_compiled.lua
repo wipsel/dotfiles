@@ -155,7 +155,7 @@ _G.packer_plugins = {
     url = "https://github.com/kyazdani42/nvim-web-devicons"
   },
   ["onedarker.nvim"] = {
-    config = { "\27LJ\2\n:\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0\27colorscheme everforest\bcmd\bvim\0" },
+    config = { "\27LJ\2\n9\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0\26colorscheme onedarker\bcmd\bvim\0" },
     loaded = true,
     path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/onedarker.nvim",
     url = "https://github.com/lunarvim/onedarker.nvim"
@@ -185,7 +185,7 @@ _G.packer_plugins = {
 time([[Defining packer_plugins]], false)
 -- Config for: onedarker.nvim
 time([[Config for onedarker.nvim]], true)
-try_loadstring("\27LJ\2\n:\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0\27colorscheme everforest\bcmd\bvim\0", "config", "onedarker.nvim")
+try_loadstring("\27LJ\2\n9\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0\26colorscheme onedarker\bcmd\bvim\0", "config", "onedarker.nvim")
 time([[Config for onedarker.nvim]], false)
 if should_profile then save_profiles(0) end
 
