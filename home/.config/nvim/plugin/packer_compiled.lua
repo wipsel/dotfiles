@@ -120,6 +120,7 @@ _G.packer_plugins = {
     url = "https://github.com/nvim-lualine/lualine.nvim"
   },
   ["material.nvim"] = {
+    config = { "\27LJ\2\n×\1\0\0\4\0\t\0\0166\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0025\3\6\0=\3\a\2B\0\2\0016\0\0\0'\2\1\0B\0\2\0029\0\b\0B\0\1\1K\0\1\0\tload\16diagnostics\1\0\1\15background\1\15code_style\1\0\0\1\0\5\rkeywords\tnone\rcomments\vitalic\14variables\tnone\fstrings\tnone\14functions\tnone\nsetup\fonedark\frequire\0" },
     loaded = true,
     path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/material.nvim",
     url = "https://github.com/marko-cerovac/material.nvim"
@@ -154,11 +155,10 @@ _G.packer_plugins = {
     path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
     url = "https://github.com/kyazdani42/nvim-web-devicons"
   },
-  ["onedarker.nvim"] = {
-    config = { "\27LJ\2\n9\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0\26colorscheme onedarker\bcmd\bvim\0" },
+  ["onedark.nvim"] = {
     loaded = true,
-    path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/onedarker.nvim",
-    url = "https://github.com/lunarvim/onedarker.nvim"
+    path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/onedark.nvim",
+    url = "https://github.com/navarasu/onedark.nvim"
   },
   ["packer.nvim"] = {
     loaded = true,
@@ -183,10 +183,10 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: onedarker.nvim
-time([[Config for onedarker.nvim]], true)
-try_loadstring("\27LJ\2\n9\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0\26colorscheme onedarker\bcmd\bvim\0", "config", "onedarker.nvim")
-time([[Config for onedarker.nvim]], false)
+-- Config for: material.nvim
+time([[Config for material.nvim]], true)
+try_loadstring("\27LJ\2\n×\1\0\0\4\0\t\0\0166\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0025\3\6\0=\3\a\2B\0\2\0016\0\0\0'\2\1\0B\0\2\0029\0\b\0B\0\1\1K\0\1\0\tload\16diagnostics\1\0\1\15background\1\15code_style\1\0\0\1\0\5\rkeywords\tnone\rcomments\vitalic\14variables\tnone\fstrings\tnone\14functions\tnone\nsetup\fonedark\frequire\0", "config", "material.nvim")
+time([[Config for material.nvim]], false)
 if should_profile then save_profiles(0) end
 
 end)

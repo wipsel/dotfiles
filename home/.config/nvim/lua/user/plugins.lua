@@ -47,12 +47,8 @@ local function plugins(use)
 
 	-- color schemes
 	use("sainnhe/everforest")
-	use({
-		"marko-cerovac/material.nvim",
-		config = function()
-			vim.cmd("colorscheme material")
-		end,
-	})
+	use("navarasu/onedark.nvim")
+	use("marko-cerovac/material.nvim")
 	-- icons for file types, errors git signs and stuff.
 	use("kyazdani42/nvim-web-devicons")
 
