@@ -48,7 +48,7 @@
     highlight:     underline bold #ffffff;
 
     transparent: rgba(0,0,0,0);
-    font: "Fira Code 14";
+    font: "Fira Code semi bold 14";
 }
 window {
     location: center;
