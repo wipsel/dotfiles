@@ -4,6 +4,7 @@
  * Copyright: Dave Davenport
  */
 
+
 * {
     foreground:  #abb2bf;
     backlight:   #ccffeedd;
@@ -11,8 +12,8 @@
     dark: #1c1c1c;
     // Black
     black:       #181a1f;
-    lightblack:  #554444;
-    tlightblack:  #554444cc;
+    lightblack:  #21252b;
+    tlightblack:  #31353fcc;
     //
     // Red
     red:         #e86671;
@@ -47,7 +48,7 @@
     highlight:     underline bold #ffffff;
 
     transparent: rgba(0,0,0,0);
-    font: "Source Code Pro 10";
+    font: "Fira Code 14";
 }
 window {
     location: center;
@@ -56,6 +57,7 @@ window {
     padding: 10px;
     border:  0px;
     border-radius: 10px;
+    border-color: @blue;
     color: @black;
     background-color: @transparent;
     spacing: 0;
@@ -78,13 +80,13 @@ message {
     color: @black;
 }
 inputbar {
-    color: @lightgreen;
+    color: @green;
     padding: 11px;
     background-color: @tlightblack;
-    border: 2px 2px 2px 2px;
+    border: 1px 1px 1px 1px;
     border-radius:  15px 15px 0px 0px;
-    border-color: @foreground;
-    font: "Source Code Pro 18";
+    border-color: @cyan;
+    font: "Fira Code 18";
 }
 entry,prompt,case-indicator {
     text-font: inherit;
@@ -96,9 +98,9 @@ prompt {
 listview {
     padding: 8px;
     border-radius: 0px 0px 15px 15px;
-    border-color: @foreground;
-    border: 0px 2px 2px 2px;
-    background-color: #1c1c1ccc;
+    border-color: @cyan;
+    border: 0px 1px 1px 1px;
+    background-color: @tlightblack;
     dynamic: false;
     lines: 10;
 }
@@ -116,7 +118,7 @@ element-text {
     text-color:       inherit;
 }
 element selected.normal {
-    background-color: @blue;
+    background-color: @lightblack;
 }
 element normal active {
     foreground: @lightblue;
