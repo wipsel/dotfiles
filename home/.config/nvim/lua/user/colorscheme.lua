@@ -10,11 +10,13 @@ local function setup()
 			comments = "italic",
 			keywords = "none",
 			functions = "none",
-			strings = "none",
+			strings = "italic",
 			variables = "none",
 		},
+                style = "darker",
 		diagnostics = {
-			background = false, -- use background color for virtual text
+                        darker = true,
+			background = true, -- use background color for virtual text
 		},
 	})
 	onedark.load()

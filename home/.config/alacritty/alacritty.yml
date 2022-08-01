@@ -12,13 +12,13 @@ font:
   # The italic font face
   italic:
     family: "Fira Code"
-    style: "SemiBold"
+    # style: "Italic"
     # family: "Source Code Pro"
 
   # Point size of the font
   size: 12.0
 
-  # Colors (Material Theme)
+# Colors (Material Theme)
 #colors:
   ## Default colors
   #primary:
@@ -48,56 +48,56 @@ font:
     #white:   '#ffffff'  # Arbitrary
   
 # Colors (One Dark)
-#colors:
-  ## Default colors
-  #primary:
-    #background: '0x1e2127'
-    #foreground: '0xabb2bf'
+colors:
+  # Default colors
+  primary:
+    background: '0x1e2127'
+    foreground: '0xabb2bf'
 
-  ## Normal colors
-  #normal:
-    #black:   '0x1e2127'
-    #red:     '0xe06c75'
-    #green:   '0x98c379'
-    #yellow:  '0xd19a66'
-    #blue:    '0x61afef'
-    #magenta: '0xc678dd'
-    #cyan:    '0x56b6c2'
-    #white:   '0xabb2bf'
+  # Normal colors
+  normal:
+    black:   '0x1e2127'
+    red:     '0xe06c75'
+    green:   '0x98c379'
+    yellow:  '0xd19a66'
+    blue:    '0x61afef'
+    magenta: '0xc678dd'
+    cyan:    '0x56b6c2'
+    white:   '0xabb2bf'
 
-  ## Bright colors
-  #bright:
-    #black:   '0x5c6370'
-    #red:     '0xe06c75'
-    #green:   '0x98c379'
-    #yellow:  '0xd19a66'
-    #blue:    '0x61afef'
-    #magenta: '0xc678dd'
-    #cyan:    '0x56b6c2'
-    #white:   '0xffffff'
+  # Bright colors
+  bright:
+    black:   '0x5c6370'
+    red:     '0xe06c75'
+    green:   '0x98c379'
+    yellow:  '0xd19a66'
+    blue:    '0x61afef'
+    magenta: '0xc678dd'
+    cyan:    '0x56b6c2'
+    white:   '0xffffff'
     
 # Colors (Ever forest)
-colors:
-   primary:
-      background: '#323d43'
-      foreground: '#d3c6aa'
+#colors:
+   #primary:
+      #background: '#323d43'
+      #foreground: '#d3c6aa'
 
-   normal:
-      black:   '#4b565c'
-      red:     '#e67e80'
-      green:   '#a7c080'
-      yellow:  '#dbbc7f'
-      blue:    '#7fbbb3'
-      magenta: '#d699b6'
-      cyan:    '#83c092'
-      white:   '#d3c6aa'
+   #normal:
+      #black:   '#4b565c'
+      #red:     '#e67e80'
+      #green:   '#a7c080'
+      #yellow:  '#dbbc7f'
+      #blue:    '#7fbbb3'
+      #magenta: '#d699b6'
+      #cyan:    '#83c092'
+      #white:   '#d3c6aa'
 
-   bright:
-      black:   '#4b565c'
-      red:     '#e67e80'
-      green:   '#a7c080'
-      yellow:  '#dbbc7f'
-      blue:    '#7fbbb3'
-      magenta: '#d699b6'
-      cyan:    '#83c092'
-      white:   '#d3c6aa'
+   #bright:
+      #black:   '#4b565c'
+      #red:     '#e67e80'
+      #green:   '#a7c080'
+      #yellow:  '#dbbc7f'
+      #blue:    '#7fbbb3'
+      #magenta: '#d699b6'
+      #cyan:    '#83c092'
+      #white:   '#d3c6aa'

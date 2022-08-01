@@ -14,7 +14,7 @@ set $mod Mod1
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:Fira Code Medium 12
+font pango:Fira Code Italic 12
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -151,27 +151,26 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        font pango:Fira Code Medium 12
+        font pango:Fira Code Italic 12
         status_command i3status -c /home/wipsel/.config/i3/i3status.conf
         position top
         separator_symbol  "|"
 	colors {
-           background #3c3836
+           background #1e2127
            statusline #ebdbb2
            separator #83a598
            #                  border  backgr. text
-           focused_workspace  #3c3836 #3c3836 #8ec07c
-           active_workspace   #3c3836 #3c3836 #8ec07c
-           inactive_workspace #3c3836 #3c3836 #928374
-           urgent_workspace   #3c3836 #3c3836 #fb4934
+           focused_workspace  #1e2127 #1e2127 #8ec07c
+           active_workspace   #1e2127 #1e2127 #8ec07c
+           inactive_workspace #1e2127 #1e2127 #928374
+           urgent_workspace   #1e2127 #1e2127 #fb4934
 	}
-
 }
 
-client.focused          #3c3836 #3c3836 #8ec07c
-client.focused_inactive #3c3836 #3c3836 #8ec07c
-client.unfocused        #292d2e #3c3836 #928374
-client.urgent           #3c3836 #3c3836 #fb4934
+client.focused          #1e2127 #1e2127 #8ec07c
+client.focused_inactive #1e2127 #1e2127 #8ec07c
+client.unfocused        #292d2e #1e2127 #928374
+client.urgent           #1e2127 #1e2127 #fb4934
 
 for_window [class="^.*"] border pixel 0
 
