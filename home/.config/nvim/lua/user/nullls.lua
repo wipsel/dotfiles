@@ -16,6 +16,8 @@ local function setup()
 			formatting.eslint,
 			formatting.goimports,
 			formatting.gofumpt,
+                        formatting.isort,
+                        formatting.black,
 			diagnostics.eslint,
 			diagnostics.stylelint,
 			diagnostics.golangci_lint.with({

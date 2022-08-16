@@ -82,6 +82,20 @@ local function setup_gopls()
 	})
 end
 
+local function setup_pyright() 
+    lspconfig.pyright.setup({
+		capabilities = capabilities,
+		on_attach = function(client, bufnr)
+			client.resolved_capabilities.document_formatting = false
+			client.resolved_capabilities.document_range_formatting = false
+
+			format_on_save(bufnr)
+			highlight_document(bufnr)
+		end,
+    })
+end
+
+
 local function setup_tsserver()
 	lspconfig.tsserver.setup({
 		capabilities = capabilities,
@@ -115,6 +129,7 @@ local function setup()
 
         setup_signs()
 	setup_gopls()
+        setup_pyright()
 	setup_tsserver()
 end
 
