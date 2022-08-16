@@ -52,6 +52,11 @@ local function plugins(use)
 	-- icons for file types, errors git signs and stuff.
 	use("kyazdani42/nvim-web-devicons")
 
+        -- prettier ui for renaming and stuff.
+        use("stevearc/dressing.nvim")
+
+        -- colorize hex strings 
+        use("norcalli/nvim-colorizer.lua")
 	-- easier commenting
 	use("scrooloose/nerdcommenter")
 
