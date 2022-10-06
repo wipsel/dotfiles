@@ -72,8 +72,8 @@ local function setup_gopls()
 		capabilities = capabilities,
 		on_attach = function(client, bufnr)
 			-- disable document formatting because null-ls takes care of this.
-			client.resolved_capabilities.document_formatting = false
-			client.resolved_capabilities.document_range_formatting = false
+			client.server_capabilities.documentFormattingProvider = false
+			client.server_capabilities.documentRangeFormattingProvider = false
 
                         -- Gofumpt is fast enough so we can format on save.
 			format_on_save(bufnr)
@@ -86,8 +86,8 @@ local function setup_pyright()
     lspconfig.pyright.setup({
 		capabilities = capabilities,
 		on_attach = function(client, bufnr)
-			client.resolved_capabilities.document_formatting = false
-			client.resolved_capabilities.document_range_formatting = false
+			client.server_capabilities.documentFormattingProvider = false
+			client.server_capabilities.documentRangeFormattingProvider = false
 
 			format_on_save(bufnr)
 			highlight_document(bufnr)
@@ -101,8 +101,8 @@ local function setup_tsserver()
 		capabilities = capabilities,
 		on_attach = function(client, bufnr)
 			-- disable document formatting because null-ls takes care of this.
-			client.resolved_capabilities.document_formatting = false
-			client.resolved_capabilities.document_range_formatting = false
+			client.server_capabilities.documentFormattingProvider = false
+			client.server_capabilities.documentRangeFormattingProvider = false
 
 			highlight_document(bufnr)
 		end,
