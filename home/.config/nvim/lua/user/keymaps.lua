@@ -15,7 +15,7 @@ local commands = {
 		show_implementation = "<cmd>lua vim.lsp.buf.implementation()<CR>",
 		rename = "<cmd>lua vim.lsp.buf.rename()<CR>",
 		references = "<cmd>lua vim.lsp.buf.references()<CR>",
-		format = "<cmd>lua vim.lsp.buf.formatting_sync(nil, 2000)<CR>",
+		format = "<cmd>lua vim.lsp.buf.format(nil, 2000)<CR>",
 		goto_prev = '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>',
 		goto_next = '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>',
 		diagnostic = '<cmd>lua vim.diagnostic.open_float(0, { scop = "line" })<CR>',

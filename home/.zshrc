@@ -78,6 +78,7 @@ plugins=(git)
 ZVM_VI_INSERT_ESCAPE_BINDKEY=jj
 
 source $ZSH/oh-my-zsh.sh
+source $HOME/.docker_env
 
 #source /usr/share/autojump/autojump.zsh
 #autoload -U compinit && compinit -u

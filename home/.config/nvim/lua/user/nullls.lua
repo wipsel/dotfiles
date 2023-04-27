@@ -18,7 +18,7 @@ local function setup()
 			formatting.gofumpt,
                         formatting.isort,
                         formatting.black,
-			diagnostics.eslint,
+			diagnostics.eslint_d,
 			diagnostics.stylelint,
 			diagnostics.golangci_lint.with({
 				args = {

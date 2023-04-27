@@ -6,7 +6,6 @@ end
 
 -- formats the indicator for diagnostics on the buffer.
 local indicator = function(count, level)
-	-- TODO info icon
 	local icon = level:match("error") and " " or " "
 	return " " .. icon .. count
 end

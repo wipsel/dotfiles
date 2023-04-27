@@ -44,6 +44,7 @@ local function plugins(use)
 	use("nvim-lua/popup.nvim")
 	-- Useful lua functions used by lots of plugins
 	use("nvim-lua/plenary.nvim")
+        use("nvim-tree/nvim-tree.lua")
 
 	-- color schemes
 	use("sainnhe/everforest")

@@ -3,7 +3,7 @@ font:
   # The normal (roman) font face to use.
   normal:
     family: "Fira Code"
-    style: "SemiBold"
+    #style: "SemiBold"
 
   # The bold font face
   bold:
