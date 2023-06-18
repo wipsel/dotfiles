@@ -1,4 +1,5 @@
 require("user.options").setup()
+require("neodev").setup()
 require("user.keymaps").setup()
 require("user.plugins").setup()
 require("user.cmp").setup()

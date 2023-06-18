@@ -4,50 +4,29 @@ if not ok then
 	return
 end
 
--- Indicate first time installation
-local packer_bootstrap = false
-
-local config = {
-	profile = {
-		enable = true,
-		threshold = 0, -- the amount in ms that a plugins load time must be over for it to be included in the profile
-	},
-
-	display = {
-		open_fn = function()
-			return require("packer.util").float({ border = "rounded" })
-		end,
-	},
-}
 
 -- Check if packer.nvim is installed
--- Run PackerCompile if there are changes in this file
-local function packer_init()
-	local fn = vim.fn
-	local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-	if fn.empty(fn.glob(install_path)) > 0 then
-		packer_bootstrap = fn.system({
-			"git",
-			"clone",
-			"--depth",
-			"1",
-			"https://github.com/wbthomason/packer.nvim",
-			install_path,
-		})
-		vim.cmd([[packadd packer.nvim]])
-	end
-	vim.cmd("autocmd BufWritePost plugins.lua source <afile> | PackerCompile")
+local ensure_packer = function()
+      local fn = vim.fn
+      local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+      if fn.empty(fn.glob(install_path)) > 0 then
+            fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+            vim.cmd [[packadd packer.nvim]]
+            return true
+      end
+      return false
 end
 
 local function plugins(use)
 	use("wbthomason/packer.nvim")
+        use("folke/neodev.nvim")
 	use("nvim-lua/popup.nvim")
 	-- Useful lua functions used by lots of plugins
 	use("nvim-lua/plenary.nvim")
         use("nvim-tree/nvim-tree.lua")
 
 	-- color schemes
-	use("sainnhe/everforest")
+	use("neanias/everforest-nvim")
 	use("navarasu/onedark.nvim")
 	use("marko-cerovac/material.nvim")
 	-- icons for file types, errors git signs and stuff.
@@ -89,14 +68,25 @@ local function plugins(use)
 		run = ":TSUpdate",
 	})
 
-	if packer_bootstrap then
+	if ensure_packer() then
 		print("Restart Neovim required after installation!")
 		require("packer").sync()
 	end
 end
 
 local function setup()
-	packer_init()
+        local config = {
+                profile = {
+                        enable = true,
+                        threshold = 0, -- the amount in ms that a plugins load time must be over for it to be included in the profile
+                },
+
+                display = {
+                        open_fn = function()
+                                return require("packer.util").float({ border = "rounded" })
+                        end,
+                },
+        }
 
 	packer.init(config)
 	packer.startup(plugins)

@@ -134,6 +134,11 @@ _G.packer_plugins = {
     path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/material.nvim",
     url = "https://github.com/marko-cerovac/material.nvim"
   },
+  ["neodev.nvim"] = {
+    loaded = true,
+    path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/neodev.nvim",
+    url = "https://github.com/folke/neodev.nvim"
+  },
   nerdcommenter = {
     loaded = true,
     path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/nerdcommenter",

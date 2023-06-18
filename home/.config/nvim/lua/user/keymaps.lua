@@ -7,7 +7,8 @@ vim.g.maplocalleader = " "
 -- predefined commands we can bind to a keymap.
 local commands = {
 	ui = {
-		toggle_color = "<cmd>lua require('material.functions').toggle_style()<cr>",
+		--toggle_color = "<cmd>lua require('material.functions').toggle_style()<cr>",
+                toggle_color = "<cmd>lua require('user.colorscheme').toggle_style()<cr>",
 	},
 	lsp = {
 		goto_definition = "<cmd>lua vim.lsp.buf.definition()<CR>",

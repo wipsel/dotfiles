@@ -19,7 +19,7 @@ local function setup()
 	vim.opt.listchars = "tab:>-"
 	vim.opt.softtabstop = 8
 	vim.opt.numberwidth = 4
-	vim.opt.wrap = false 
+	vim.opt.wrap = false
 	vim.opt.termguicolors = true
 	vim.opt.foldlevel = 99
 end

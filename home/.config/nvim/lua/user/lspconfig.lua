@@ -12,32 +12,6 @@ end
 
 local capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-local config = {
-	float = {
-		focusable = true,
-		style = "minimal",
-		border = "rounded",
-                width = 200,
-	},
-
-	diagnostic = {
-		virtual_text = false,
-		signs = {
-			active = signs,
-		},
-		underline = true,
-		update_in_insert = false,
-		severity_sort = true,
-		float = {
-			focusable = true,
-			style = "minimal",
-			border = "rounded",
-			source = "always",
-			header = "",
-			prefix = "",
-		},
-	},
-}
 
 local function highlight_document(bufnr)
 	vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true })
@@ -60,7 +34,7 @@ local function format_on_save(bufnr)
 	vim.api.nvim_create_augroup("auto_format", { clear = true })
 	vim.api.nvim_create_autocmd("BufWritePre", {
 		callback = function()
-			vim.lsp.buf.format(nil, 2000)
+			vim.lsp.buf.format({timeout_ms= 2000})
 		end,
 		buffer = bufnr,
 	})
@@ -82,7 +56,7 @@ local function setup_gopls()
 	})
 end
 
-local function setup_pyright() 
+local function setup_pyright()
     lspconfig.pyright.setup({
 		capabilities = capabilities,
 		on_attach = function(client, bufnr)
@@ -101,6 +75,19 @@ local function setup_tsserver()
 		capabilities = capabilities,
 		on_attach = function(client, bufnr)
 			-- disable document formatting because null-ls takes care of this.
+                        client.server_capabilities.documentFormattingProvider = false
+                        client.server_capabilities.documentRangeFormattingProvider = false
+
+			highlight_document(bufnr)
+		end,
+	})
+end
+
+local function setup_lua_language_server()
+	lspconfig.lua_ls.setup({
+		capabilities = capabilities,
+		on_attach = function(client, bufnr)
+			-- disable document formatting because null-ls takes care of this.
 			client.server_capabilities.documentFormattingProvider = false
 			client.server_capabilities.documentRangeFormattingProvider = false
 
@@ -109,28 +96,54 @@ local function setup_tsserver()
 	})
 end
 
-local function setup_signs() 
-	local signs = {
-		{ name = "DiagnosticSignError", text = "" },
-		{ name = "DiagnosticSignWarn", text = "" },
-		{ name = "DiagnosticSignHint", text = "" },
-		{ name = "DiagnosticSignInfo", text = "" },
-	}
+local signs = {
+        { name = "DiagnosticSignError", text = "" },
+        { name = "DiagnosticSignWarn", text = "" },
+        { name = "DiagnosticSignHint", text = "" },
+        { name = "DiagnosticSignInfo", text = "" },
+}
 
+local function setup_signs()
 	for _, sign in ipairs(signs) do
 		vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
 	end
 end
 
 local function setup()
-	vim.diagnostic.config(config.diagnostic)
-	vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, config.float)
-	vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, config.float)
+        local float = {
+                focusable = true,
+                style = "minimal",
+                border = "rounded",
+                width = 200,
+        }
+
+        local diagnostic = {
+                virtual_text = false,
+                signs = {
+                        active = signs,
+                },
+                underline = true,
+                update_in_insert = false,
+                severity_sort = true,
+                float = {
+                        focusable = true,
+                        style = "minimal",
+                        border = "rounded",
+                        source = "always",
+                        header = "",
+                        prefix = "",
+                },
+        }
+
+        vim.diagnostic.config(diagnostic)
+        vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, float)
+        vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, float)
 
         setup_signs()
-	setup_gopls()
+        setup_gopls()
         setup_pyright()
-	setup_tsserver()
+        setup_tsserver()
+        setup_lua_language_server()
 end
 
 return {

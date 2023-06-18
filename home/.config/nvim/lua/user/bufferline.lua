@@ -5,7 +5,7 @@ if not ok then
 end
 
 -- formats the indicator for diagnostics on the buffer.
-local indicator = function(count, level)
+local function indicator(count, level)
 	local icon = level:match("error") and " " or " "
 	return " " .. icon .. count
 end
