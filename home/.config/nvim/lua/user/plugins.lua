@@ -4,39 +4,43 @@ if not ok then
 	return
 end
 
-
 -- Check if packer.nvim is installed
 local ensure_packer = function()
-      local fn = vim.fn
-      local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-      if fn.empty(fn.glob(install_path)) > 0 then
-            fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-            vim.cmd [[packadd packer.nvim]]
-            return true
-      end
-      return false
+	local fn = vim.fn
+	local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+	if fn.empty(fn.glob(install_path)) > 0 then
+		fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path })
+		vim.cmd([[packadd packer.nvim]])
+		return true
+	end
+	return false
 end
 
 local function plugins(use)
 	use("wbthomason/packer.nvim")
-        use("folke/neodev.nvim")
+	use("folke/neodev.nvim")
 	use("nvim-lua/popup.nvim")
 	-- Useful lua functions used by lots of plugins
 	use("nvim-lua/plenary.nvim")
-        use("nvim-tree/nvim-tree.lua")
+	use("nvim-tree/nvim-tree.lua")
 
-	-- color schemes
+	-- colorschemes
+	-- the real reason I became a programmer
 	use("neanias/everforest-nvim")
+	use("sainnhe/sonokai")
 	use("navarasu/onedark.nvim")
 	use("marko-cerovac/material.nvim")
+	use("rebelot/kanagawa.nvim")
+
 	-- icons for file types, errors git signs and stuff.
 	use("kyazdani42/nvim-web-devicons")
 
-        -- prettier ui for renaming and stuff.
-        use("stevearc/dressing.nvim")
+	-- prettier ui for renaming and stuff.
+	use("stevearc/dressing.nvim")
 
-        -- colorize hex strings 
-        use("norcalli/nvim-colorizer.lua")
+	-- colorize hex strings
+	use("norcalli/nvim-colorizer.lua")
+
 	-- easier commenting
 	use("scrooloose/nerdcommenter")
 
@@ -67,6 +71,7 @@ local function plugins(use)
 		"nvim-treesitter/nvim-treesitter",
 		run = ":TSUpdate",
 	})
+	use("echasnovski/mini.surround")
 
 	if ensure_packer() then
 		print("Restart Neovim required after installation!")
@@ -75,18 +80,18 @@ local function plugins(use)
 end
 
 local function setup()
-        local config = {
-                profile = {
-                        enable = true,
-                        threshold = 0, -- the amount in ms that a plugins load time must be over for it to be included in the profile
-                },
+	local config = {
+		profile = {
+			enable = true,
+			threshold = 0, -- the amount in ms that a plugins load time must be over for it to be included in the profile
+		},
 
-                display = {
-                        open_fn = function()
-                                return require("packer.util").float({ border = "rounded" })
-                        end,
-                },
-        }
+		display = {
+			open_fn = function()
+				return require("packer.util").float({ border = "rounded" })
+			end,
+		},
+	}
 
 	packer.init(config)
 	packer.startup(plugins)

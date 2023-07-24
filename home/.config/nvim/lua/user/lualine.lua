@@ -10,8 +10,8 @@ local function setup()
 			icons_enabled = true,
 			theme = "auto",
 			component_separators = { left = "|", right = "|" },
-			--section_separators = { left = "", right = "" },
-                        section_separators = { left = "", right = "" },
+			section_separators = { left = "", right = "" },
+			--section_separators = { left = "", right = "" },
 			disabled_filetypes = {},
 			always_divide_middle = true,
 		},
@@ -31,14 +31,7 @@ local function setup()
 			lualine_y = {},
 			lualine_z = {},
 		},
-                --tabline = {
-                      --lualine_a = {'buffers'},
-                      --lualine_b = {'branch'},
-                      --lualine_c = {'filename'},
-                      --lualine_x = {},
-                      --lualine_y = {},
-                      --lualine_z = {'tabs'}
-                --},
+		tabline = {},
 		extensions = {},
 	})
 end
