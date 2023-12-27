@@ -15,10 +15,9 @@ local function setup()
 		sources = {
 			formatting.stylua,
 			formatting.prettier,
-			formatting.eslint,
+			formatting.eslint_d,
 			formatting.goimports,
 			formatting.gofumpt,
-			formatting.golines,
 			formatting.isort,
 			formatting.black,
 			diagnostics.eslint_d,
