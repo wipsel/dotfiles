@@ -1,9 +1,9 @@
-
 local function setup()
 	vim.opt.backup = false
 	vim.opt.cursorline = true
 	vim.opt.number = true
 	vim.opt.hidden = true
+	vim.opt.colorcolumn = "80"
 	vim.opt.fileencoding = "utf-8"
 	vim.opt.swapfile = false
 	vim.opt.expandtab = true
@@ -25,5 +25,5 @@ local function setup()
 end
 
 return {
-    setup = setup
+	setup = setup,
 }

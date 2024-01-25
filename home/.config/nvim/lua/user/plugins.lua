@@ -22,7 +22,6 @@ local function plugins(use)
 	use("nvim-lua/popup.nvim")
 	-- Useful lua functions used by lots of plugins
 	use("nvim-lua/plenary.nvim")
-	use("nvim-tree/nvim-tree.lua")
 
 	-- colorschemes
 	-- the real reason I became a programmer
@@ -34,6 +33,12 @@ local function plugins(use)
 
 	-- icons for file types, errors git signs and stuff.
 	use("kyazdani42/nvim-web-devicons")
+
+	-- git stuff
+	use("lewis6991/gitsigns.nvim")
+	use("'akinsho/git-conflict.nvim")
+
+	use("nvim-tree/nvim-tree.lua")
 
 	-- prettier ui for renaming and stuff.
 	use("stevearc/dressing.nvim")
@@ -72,6 +77,13 @@ local function plugins(use)
 		run = ":TSUpdate",
 	})
 	use("echasnovski/mini.surround")
+
+	-- debugging
+	use("mfussenegger/nvim-dap")
+	use("rcarriga/nvim-dap-ui")
+
+	-- golang
+	use("olexsmir/gopher.nvim")
 
 	if ensure_packer() then
 		print("Restart Neovim required after installation!")

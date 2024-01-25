@@ -133,6 +133,7 @@ local function setup()
 	}
 
 	vim.diagnostic.config(diagnostic)
+
 	vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, float)
 	vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, float)
 
