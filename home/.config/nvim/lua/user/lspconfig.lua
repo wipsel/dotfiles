@@ -1,15 +1,5 @@
-local ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-if not ok then
-	vim.notify("cmp_nvim_lsp not found, make sure it is installed.")
-	return
-end
-
-local ok, lspconfig = pcall(require, "lspconfig")
-if not ok then
-	vim.notify("nvim-lsp-config not found, make sure it is installed.")
-	return
-end
-
+local cmp_nvim_lsp = require("cmp_nvim_lsp")
+local lspconfig = require("lspconfig")
 local util = require("lspconfig/util")
 
 local capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities())
@@ -31,67 +21,58 @@ local function highlight_document(bufnr)
 	})
 end
 
-local function setup_gopls()
-	lspconfig.gopls.setup({
-		capabilities = capabilities,
-		filetypes = { "go", "gomod", "gowork", "gotmpl" },
-		root_dir = util.root_pattern("go.work", "go.mod", ".git"),
-		settings = {
-			gopls = {
-				completeUnimported = true,
-				usePlaceholders = true,
-				analyses = {
-					unusedparams = true,
+local function on_attach(client, bufnr)
+	-- disable document formatting because null-ls takes care of this.
+	client.server_capabilities.documentFormattingProvider = false
+	client.server_capabilities.documentRangeFormattingProvider = false
+
+	highlight_document(bufnr)
+end
+
+local lsps = {
+	{
+		server = lspconfig.gopls,
+		config = {
+			capabilities = capabilities,
+			filetypes = { "go", "gomod", "gowork", "gotmpl" },
+			root_dir = util.root_pattern("go.work", "go.mod", ".git"),
+			settings = {
+				gopls = {
+					completeUnimported = true,
+					usePlaceholders = true,
+					analyses = {
+						unusedparams = true,
+					},
 				},
 			},
+			on_attach = on_attach,
 		},
-		on_attach = function(client, bufnr)
-			-- disable document formatting because null-ls takes care of this.
-			client.server_capabilities.documentFormattingProvider = false
-			client.server_capabilities.documentRangeFormattingProvider = false
+	},
 
-			highlight_document(bufnr)
-		end,
-	})
-end
+	{
+		server = lspconfig.lua_ls,
+		config = {
+			capabilities = capabilities,
+			on_attach = on_attach,
+		},
+	},
 
-local function setup_pyright()
-	lspconfig.pyright.setup({
-		capabilities = capabilities,
-		on_attach = function(client, bufnr)
-			client.server_capabilities.documentFormattingProvider = false
-			client.server_capabilities.documentRangeFormattingProvider = false
+	{
+		server = lspconfig.tsserver,
+		config = {
+			capabilities = capabilities,
+			on_attach = on_attach,
+		},
+	},
 
-			highlight_document(bufnr)
-		end,
-	})
-end
-
-local function setup_tsserver()
-	lspconfig.tsserver.setup({
-		capabilities = capabilities,
-		on_attach = function(client, bufnr)
-			-- disable document formatting because null-ls takes care of this.
-			client.server_capabilities.documentFormattingProvider = false
-			client.server_capabilities.documentRangeFormattingProvider = false
-
-			highlight_document(bufnr)
-		end,
-	})
-end
-
-local function setup_lua_language_server()
-	lspconfig.lua_ls.setup({
-		capabilities = capabilities,
-		on_attach = function(client, bufnr)
-			-- disable document formatting because null-ls takes care of this.
-			client.server_capabilities.documentFormattingProvider = false
-			client.server_capabilities.documentRangeFormattingProvider = false
-
-			highlight_document(bufnr)
-		end,
-	})
-end
+	{
+		server = lspconfig.pyright,
+		config = {
+			capabilities = capabilities,
+			on_attach = on_attach,
+		},
+	},
+}
 
 local signs = {
 	{ name = "DiagnosticSignError", text = "" },
@@ -100,50 +81,44 @@ local signs = {
 	{ name = "DiagnosticSignInfo", text = "" },
 }
 
-local function setup_signs()
-	for _, sign in ipairs(signs) do
-		vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
-	end
-end
-
-local function setup()
-	local float = {
+local diagnostic = {
+	virtual_text = false,
+	signs = {
+		active = signs,
+	},
+	underline = true,
+	update_in_insert = false,
+	severity_sort = true,
+	float = {
 		focusable = true,
 		style = "minimal",
 		border = "rounded",
-		width = 200,
-	}
+		source = "always",
+		header = "",
+		prefix = "",
+	},
+}
 
-	local diagnostic = {
-		virtual_text = false,
-		signs = {
-			active = signs,
-		},
-		underline = true,
-		update_in_insert = false,
-		severity_sort = true,
-		float = {
-			focusable = true,
-			style = "minimal",
-			border = "rounded",
-			source = "always",
-			header = "",
-			prefix = "",
-		},
-	}
-
-	vim.diagnostic.config(diagnostic)
-
-	vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, float)
-	vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, float)
-
-	setup_signs()
-	setup_gopls()
-	setup_pyright()
-	setup_tsserver()
-	setup_lua_language_server()
-end
+local float = {
+	focusable = true,
+	style = "minimal",
+	border = "rounded",
+	width = 200,
+}
 
 return {
-	setup = setup,
+	setup = function()
+		vim.diagnostic.config(diagnostic)
+
+		vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, float)
+		vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, float)
+
+		for _, sign in ipairs(signs) do
+			vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
+		end
+
+		for _, lsp in pairs(lsps) do
+			lsp.server.setup(lsp.config)
+		end
+	end,
 }
