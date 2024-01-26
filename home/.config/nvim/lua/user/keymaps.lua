@@ -38,10 +38,6 @@ local function open_lsp_implementations()
 	return builtin.lsp_implementations(themes.get_cursor({ winblend = 0 }))
 end
 
-local function open_lsp_incoming()
-	return builtin.lsp_incoming_calls(themes.get_cursor({ winblend = 0 }))
-end
-
 local function open_file_tree()
 	return file_tree.tree.toggle()
 end

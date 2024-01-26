@@ -4,7 +4,7 @@ local luasnip = require("luasnip")
 local cmp_nvim_lsp = require("cmp_nvim_lsp")
 local capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-local kind_icons = {
+local KIND_ICONS = {
 	Text = "",
 	Method = "m",
 	Function = "",
@@ -59,7 +59,7 @@ local function expand(args)
 end
 
 local function format(entry, vim_item)
-	vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
+	vim_item.kind = string.format("%s", KIND_ICONS[vim_item.kind])
 	vim_item.menu = ({
 		nvim_lsp = "[Lsp]",
 		luasnip = "[Snippet]",

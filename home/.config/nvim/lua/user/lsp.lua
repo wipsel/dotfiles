@@ -23,21 +23,26 @@ local function highlight_document(bufnr)
 	})
 end
 
+local function auto_format(bufnr)
+	local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+	vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+	vim.api.nvim_create_autocmd("BufWritePre", {
+		group = augroup,
+		buffer = bufnr,
+		callback = function()
+			vim.lsp.buf.format({ async = false })
+		end,
+	})
+end
+
 local function on_attach(client, bufnr)
-	-- disable document formatting because null-ls takes care of this.
 	if client.supports_method("textDocument/formatting") then
-		local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-		vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-		vim.api.nvim_create_autocmd("BufWritePre", {
-			group = augroup,
-			buffer = bufnr,
-			callback = function()
-				vim.lsp.buf.format({ async = false })
-			end,
-		})
+		auto_format(bufnr)
 	end
 
-	highlight_document(bufnr)
+	if client.supports_method("textDocument/documentHighligth") then
+		highlight_document(bufnr)
+	end
 end
 
 local sources = {
@@ -149,7 +154,11 @@ return {
 			vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
 		end
 
-		vim.api.nvim_set_option_value("winhighlight", "NormalFloat:Normal,FloatBorder:TelescopeBorder", {})
+		vim.api.nvim_set_option_value(
+			"winhighlight",
+			"NormalFloat:Normal,FloatBorder:TelescopeBorder,DiagnosticError:Exception,DiagnosticSignError:GitSignsDelete",
+			{}
+		)
 		vim.diagnostic.config(diagnostic)
 
 		cmp.setup()

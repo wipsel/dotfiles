@@ -127,7 +127,7 @@ _G.packer_plugins = {
   ["git-conflict.nvim"] = {
     loaded = true,
     path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/git-conflict.nvim",
-    url = "https://github.com/'akinsho/git-conflict.nvim"
+    url = "https://github.com/akinsho/git-conflict.nvim"
   },
   ["gitsigns.nvim"] = {
     loaded = true,

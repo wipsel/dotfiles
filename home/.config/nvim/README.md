@@ -1,7 +1,22 @@
 ### Some info about the setup
------------------------------
-The `init.lua` only contains calls to setup function of other config files 
-located in `./lua/user`. Most of these files only do the setup for one specific 
-plugin. These plugins are managed by [packer](https://github.com/wbthomason/packer.nvim).
-The setup for a plugin is usually done in a lua file with the same name as the plugin. 
-Each config file should return a function called `setup` which can be called in the init.
+
+---
+
+Plugins are managed using [packer](https://github.com/wbthomason/packer.nvim)
+Note that packer is currently unmaintained and I should probably move to something
+else.
+
+The `init.lua` calls the setup for each installed plugin. I add plugins
+and optional user config using a lua table.
+For adding a plugin use the following format:
+
+```lua
+{
+    name = "module-name" -- same as plugin name
+    config = {} -- the table that you would pass into the setup function for the plugin
+}
+```
+
+Then I also have some modules under `lua/user`. These modules contain
+the setup for plugins that need some additional setup as wel as
+keybinds and global nvim options
