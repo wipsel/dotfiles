@@ -1,4 +1,15 @@
+local kanagawa = require("kanagawa")
+
+local function setup_color_scheme()
+	kanagawa.setup({
+		commentStyle = { italic = true },
+		functionStyle = { bold = true },
+	})
+	vim.cmd("colorscheme kanagawa")
+end
+
 local function setup()
+	setup_color_scheme()
 	vim.opt.backup = false
 	vim.opt.cursorline = true
 	vim.opt.number = true

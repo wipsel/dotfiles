@@ -36,7 +36,7 @@ local function plugins(use)
 
 	-- git stuff
 	use("lewis6991/gitsigns.nvim")
-	use("'akinsho/git-conflict.nvim")
+	use("akinsho/git-conflict.nvim")
 
 	use("nvim-tree/nvim-tree.lua")
 
@@ -57,7 +57,7 @@ local function plugins(use)
 	use("hrsh7th/cmp-buffer") -- Buffer completions
 	use("hrsh7th/cmp-path") -- Path completions
 	use("hrsh7th/cmp-cmdline") -- Cmdline completions
-	use("hrsh7th/cmp-nvim-lsp") -- Cmdline completions
+	use("hrsh7th/cmp-nvim-lsp") -- LSP completions
 	use("saadparwaiz1/cmp_luasnip") -- snippet completions
 
 	-- snippets

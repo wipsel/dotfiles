@@ -1,8 +1,10 @@
-local cmp_nvim_lsp = require("cmp_nvim_lsp")
 local lspconfig = require("lspconfig")
 local util = require("lspconfig/util")
+local cmp = require("user.completion")
+local null_ls = require("null-ls")
 
-local capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities())
+local formatting = null_ls.builtins.formatting
+local diagnostics = null_ls.builtins.diagnostics
 
 local function highlight_document(bufnr)
 	vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true })
@@ -23,17 +25,46 @@ end
 
 local function on_attach(client, bufnr)
 	-- disable document formatting because null-ls takes care of this.
-	client.server_capabilities.documentFormattingProvider = false
-	client.server_capabilities.documentRangeFormattingProvider = false
+	if client.supports_method("textDocument/formatting") then
+		local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+		vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+		vim.api.nvim_create_autocmd("BufWritePre", {
+			group = augroup,
+			buffer = bufnr,
+			callback = function()
+				vim.lsp.buf.format({ async = false })
+			end,
+		})
+	end
 
 	highlight_document(bufnr)
 end
+
+local sources = {
+	formatting.stylua,
+	formatting.prettier,
+	formatting.eslint_d,
+	formatting.goimports,
+	formatting.gofumpt,
+	formatting.isort,
+	formatting.black,
+	diagnostics.eslint_d,
+	diagnostics.stylelint,
+	diagnostics.golangci_lint.with({
+		args = {
+			"run",
+			"--fix=false",
+			"--fast",
+			"--out-format=json",
+		},
+	}),
+}
 
 local lsps = {
 	{
 		server = lspconfig.gopls,
 		config = {
-			capabilities = capabilities,
+			capabilities = cmp.capabilities,
 			filetypes = { "go", "gomod", "gowork", "gotmpl" },
 			root_dir = util.root_pattern("go.work", "go.mod", ".git"),
 			settings = {
@@ -48,11 +79,10 @@ local lsps = {
 			on_attach = on_attach,
 		},
 	},
-
 	{
 		server = lspconfig.lua_ls,
 		config = {
-			capabilities = capabilities,
+			capabilities = cmp.capabilities,
 			on_attach = on_attach,
 		},
 	},
@@ -60,7 +90,7 @@ local lsps = {
 	{
 		server = lspconfig.tsserver,
 		config = {
-			capabilities = capabilities,
+			capabilities = cmp.capabilities,
 			on_attach = on_attach,
 		},
 	},
@@ -68,7 +98,7 @@ local lsps = {
 	{
 		server = lspconfig.pyright,
 		config = {
-			capabilities = capabilities,
+			capabilities = cmp.capabilities,
 			on_attach = on_attach,
 		},
 	},
@@ -108,17 +138,25 @@ local float = {
 
 return {
 	setup = function()
-		vim.diagnostic.config(diagnostic)
-
 		vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, float)
 		vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, float)
+
+		for _, lsp in pairs(lsps) do
+			lsp.server.setup(lsp.config)
+		end
 
 		for _, sign in ipairs(signs) do
 			vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
 		end
 
-		for _, lsp in pairs(lsps) do
-			lsp.server.setup(lsp.config)
-		end
+		vim.api.nvim_set_option_value("winhighlight", "NormalFloat:Normal,FloatBorder:TelescopeBorder", {})
+		vim.diagnostic.config(diagnostic)
+
+		cmp.setup()
+		null_ls.setup({
+			debug = false,
+			sources = sources,
+			on_attach = on_attach,
+		})
 	end,
 }
