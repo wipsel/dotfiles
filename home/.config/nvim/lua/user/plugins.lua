@@ -75,6 +75,7 @@ local function plugins(use)
 	use({
 		"nvim-treesitter/nvim-treesitter",
 		run = ":TSUpdate",
+		tag = "v0.9.2",
 	})
 	use("echasnovski/mini.surround")
 
