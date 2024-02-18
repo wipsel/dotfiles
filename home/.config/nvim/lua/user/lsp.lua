@@ -7,8 +7,9 @@ local formatting = null_ls.builtins.formatting
 local diagnostics = null_ls.builtins.diagnostics
 
 local function highlight_document(bufnr)
-	vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true })
+	local augroup = vim.api.nvim_create_augroup("LspDocumentHiglight", { clear = true })
 	vim.api.nvim_create_autocmd("CursorHold", {
+		group = augroup,
 		callback = function()
 			vim.lsp.buf.document_highlight()
 		end,
@@ -16,6 +17,7 @@ local function highlight_document(bufnr)
 	})
 
 	vim.api.nvim_create_autocmd("CursorMoved", {
+		group = augroup,
 		callback = function()
 			vim.lsp.buf.clear_references()
 		end,
@@ -40,7 +42,7 @@ local function on_attach(client, bufnr)
 		auto_format(bufnr)
 	end
 
-	if client.supports_method("textDocument/documentHighligth") then
+	if client.supports_method("textDocument/documentHighlight") then
 		highlight_document(bufnr)
 	end
 end
@@ -66,6 +68,12 @@ local sources = {
 }
 
 local lsps = {
+	{
+		server = lspconfig.ruff_lsp,
+		config = {
+			capabilities = cmp.capabilities,
+		},
+	},
 	{
 		server = lspconfig.gopls,
 		config = {
@@ -134,18 +142,8 @@ local diagnostic = {
 	},
 }
 
-local float = {
-	focusable = true,
-	style = "minimal",
-	border = "rounded",
-	width = 200,
-}
-
 return {
 	setup = function()
-		vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, float)
-		vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, float)
-
 		for _, lsp in pairs(lsps) do
 			lsp.server.setup(lsp.config)
 		end
@@ -154,14 +152,8 @@ return {
 			vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
 		end
 
-		vim.api.nvim_set_option_value(
-			"winhighlight",
-			"NormalFloat:Normal,FloatBorder:TelescopeBorder,DiagnosticError:Exception,DiagnosticSignError:GitSignsDelete",
-			{}
-		)
 		vim.diagnostic.config(diagnostic)
 
-		cmp.setup()
 		null_ls.setup({
 			debug = false,
 			sources = sources,
