@@ -1,5 +1,3 @@
-
-
 local function setup()
     vim.cmd.colorscheme("kanagawa")
 

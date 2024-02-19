@@ -1,163 +1,59 @@
-local lspconfig = require("lspconfig")
-local util = require("lspconfig/util")
-local cmp = require("user.completion")
-local null_ls = require("null-ls")
-
-local formatting = null_ls.builtins.formatting
-local diagnostics = null_ls.builtins.diagnostics
-
 local function highlight_document(bufnr)
-	local augroup = vim.api.nvim_create_augroup("LspDocumentHiglight", { clear = true })
-	vim.api.nvim_create_autocmd("CursorHold", {
-		group = augroup,
-		callback = function()
-			vim.lsp.buf.document_highlight()
-		end,
-		buffer = bufnr,
-	})
+    local augroup = vim.api.nvim_create_augroup("LspDocumentHiglight", { clear = true })
+    vim.api.nvim_create_autocmd("CursorHold", {
+        group = augroup,
+        callback = function()
+            vim.lsp.buf.document_highlight()
+        end,
+        buffer = bufnr,
+    })
 
-	vim.api.nvim_create_autocmd("CursorMoved", {
-		group = augroup,
-		callback = function()
-			vim.lsp.buf.clear_references()
-		end,
-		buffer = bufnr,
-	})
+    vim.api.nvim_create_autocmd("CursorMoved", {
+        group = augroup,
+        callback = function()
+            vim.lsp.buf.clear_references()
+        end,
+        buffer = bufnr,
+    })
 end
 
 local function auto_format(bufnr)
-	local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-	vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-	vim.api.nvim_create_autocmd("BufWritePre", {
-		group = augroup,
-		buffer = bufnr,
-		callback = function()
-			vim.lsp.buf.format({ async = false })
-		end,
-	})
+    local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+    vim.api.nvim_create_autocmd("BufWritePre", {
+        group = augroup,
+        callback = function()
+            vim.lsp.buf.format({ async = false })
+        end,
+        buffer = bufnr,
+    })
 end
 
 local function on_attach(client, bufnr)
-	if client.supports_method("textDocument/formatting") then
-		auto_format(bufnr)
-	end
+    if client.supports_method("textDocument/formatting") then
+        auto_format(bufnr)
+    end
 
-	if client.supports_method("textDocument/documentHighlight") then
-		highlight_document(bufnr)
-	end
+    if client.supports_method("textDocument/documentHighlight") then
+        highlight_document(bufnr)
+    end
 end
 
-local sources = {
-	formatting.stylua,
-	formatting.prettier,
-	formatting.eslint_d,
-	formatting.goimports,
-	formatting.gofumpt,
-	formatting.isort,
-	formatting.black,
-	diagnostics.eslint_d,
-	diagnostics.stylelint,
-	diagnostics.golangci_lint.with({
-		args = {
-			"run",
-			"--fix=false",
-			"--fast",
-			"--out-format=json",
-		},
-	}),
-}
-
-local lsps = {
-	{
-		server = lspconfig.ruff_lsp,
-		config = {
-			capabilities = cmp.capabilities,
-		},
-	},
-	{
-		server = lspconfig.gopls,
-		config = {
-			capabilities = cmp.capabilities,
-			filetypes = { "go", "gomod", "gowork", "gotmpl" },
-			root_dir = util.root_pattern("go.work", "go.mod", ".git"),
-			settings = {
-				gopls = {
-					completeUnimported = true,
-					usePlaceholders = true,
-					analyses = {
-						unusedparams = true,
-					},
-				},
-			},
-			on_attach = on_attach,
-		},
-	},
-	{
-		server = lspconfig.lua_ls,
-		config = {
-			capabilities = cmp.capabilities,
-			on_attach = on_attach,
-		},
-	},
-
-	{
-		server = lspconfig.tsserver,
-		config = {
-			capabilities = cmp.capabilities,
-			on_attach = on_attach,
-		},
-	},
-
-	{
-		server = lspconfig.pyright,
-		config = {
-			capabilities = cmp.capabilities,
-			on_attach = on_attach,
-		},
-	},
-}
-
-local signs = {
-	{ name = "DiagnosticSignError", text = "" },
-	{ name = "DiagnosticSignWarn", text = "" },
-	{ name = "DiagnosticSignHint", text = "" },
-	{ name = "DiagnosticSignInfo", text = "" },
-}
-
-local diagnostic = {
-	virtual_text = false,
-	signs = {
-		active = signs,
-	},
-	underline = true,
-	update_in_insert = false,
-	severity_sort = true,
-	float = {
-		focusable = true,
-		style = "minimal",
-		border = "rounded",
-		source = "always",
-		header = "",
-		prefix = "",
-	},
-}
-
 return {
-	setup = function()
-		for _, lsp in pairs(lsps) do
-			lsp.server.setup(lsp.config)
-		end
+    on_attach = on_attach,
+    setup = function(config)
+        vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, config.diagnostic.float)
+        vim.lsp.handlers["textDocument/signatureHelp"] =
+            vim.lsp.with(vim.lsp.handlers.signature_help, config.diagnostic.float)
 
-		for _, sign in ipairs(signs) do
-			vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
-		end
+        for _, lsp in pairs(config.servers) do
+            lsp.server.setup(lsp.config)
+        end
 
-		vim.diagnostic.config(diagnostic)
+        for _, sign in ipairs(config.diagnostic.signs.active) do
+            vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
+        end
 
-		null_ls.setup({
-			debug = false,
-			sources = sources,
-			on_attach = on_attach,
-		})
-	end,
+        vim.diagnostic.config(config.diagnostic)
+    end,
 }
