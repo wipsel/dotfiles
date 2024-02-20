@@ -18,8 +18,8 @@ local function setup()
     vim.opt.shiftwidth = 4
     vim.opt.tabstop = 8
     vim.opt.expandtab = true
-    vim.opt.list = true
-    vim.opt.listchars = "tab:>-"
+    --vim.opt.list = true
+    --vim.opt.listchars = "tab:>-"
     vim.opt.softtabstop = 8
     vim.opt.numberwidth = 4
     vim.opt.wrap = false

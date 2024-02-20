@@ -74,8 +74,12 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
+  LuaSnip = {
+    loaded = true,
+    path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/LuaSnip",
+    url = "https://github.com/L3MON4D3/LuaSnip"
+  },
   ["bufferline.nvim"] = {
-    config = { "\27LJ\2\n™\4\0\0\16\1\19\0Z6\0\0\0006\2\1\0-\3\0\0009\3\2\3B\0\3\3\14\0\0\0X\2\14€6\2\3\0009\2\4\0026\4\5\0009\4\6\4'\6\a\0-\a\0\0009\a\2\aB\4\3\0026\5\3\0009\5\b\0059\5\t\0059\5\n\5B\2\3\1K\0\1\0006\2\v\0-\4\0\0009\4\f\4B\2\2\2\a\2\r\0X\2*€4\2\0\0-\3\0\0009\3\14\3\15\0\3\0X\4\29€6\3\15\0-\5\0\0009\5\14\5B\3\2\4H\6\22€6\b\0\0006\n\1\0009\v\16\aB\b\3\3\14\0\b\0X\n\14€6\n\3\0009\n\4\n6\f\5\0009\f\6\f'\14\a\0-\15\0\0009\15\2\15B\f\3\0026\r\3\0009\r\b\r9\r\t\r9\r\n\rB\n\3\1K\0\1\0009\n\2\a<\t\n\2F\6\3\3R\6è\1279\3\17\1-\5\0\0009\5\f\5\18\a\1\0\18\b\2\0B\5\3\0A\3\0\1X\2\20€6\2\v\0-\4\0\0009\4\f\4B\2\2\2\a\2\18\0X\2\5€9\2\17\1-\4\0\0009\4\f\4B\2\2\1X\2\t€-\2\0\0009\2\f\2\v\2\0\0X\2\5€9\2\17\1\15\0\2\0X\3\2€9\2\17\1B\2\1\1K\0\1\0\0À\ntable\nsetup\vmodule\npairs\17dependencies\rfunction\vconfig\ttype\tWARN\vlevels\blog5module: %s not found, make sure it is installed.\vformat\vstring\vnotify\bvim\tname\frequire\npcall\0" },
     loaded = true,
     path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/bufferline.nvim",
     url = "https://github.com/akinsho/bufferline.nvim"
@@ -105,22 +109,35 @@ _G.packer_plugins = {
     path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
     url = "https://github.com/saadparwaiz1/cmp_luasnip"
   },
+  ["dressing.nvim"] = {
+    loaded = true,
+    path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/dressing.nvim",
+    url = "https://github.com/stevearc/dressing.nvim"
+  },
   ["everforest-nvim"] = {
     loaded = true,
     path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/everforest-nvim",
     url = "https://github.com/neanias/everforest-nvim"
   },
+  ["friendly-snippets"] = {
+    loaded = true,
+    path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/friendly-snippets",
+    url = "https://github.com/rafamadriz/friendly-snippets"
+  },
   ["git-conflict.nvim"] = {
-    config = { "\27LJ\2\n™\4\0\0\16\1\19\0Z6\0\0\0006\2\1\0-\3\0\0009\3\2\3B\0\3\3\14\0\0\0X\2\14€6\2\3\0009\2\4\0026\4\5\0009\4\6\4'\6\a\0-\a\0\0009\a\2\aB\4\3\0026\5\3\0009\5\b\0059\5\t\0059\5\n\5B\2\3\1K\0\1\0006\2\v\0-\4\0\0009\4\f\4B\2\2\2\a\2\r\0X\2*€4\2\0\0-\3\0\0009\3\14\3\15\0\3\0X\4\29€6\3\15\0-\5\0\0009\5\14\5B\3\2\4H\6\22€6\b\0\0006\n\1\0009\v\16\aB\b\3\3\14\0\b\0X\n\14€6\n\3\0009\n\4\n6\f\5\0009\f\6\f'\14\a\0-\15\0\0009\15\2\15B\f\3\0026\r\3\0009\r\b\r9\r\t\r9\r\n\rB\n\3\1K\0\1\0009\n\2\a<\t\n\2F\6\3\3R\6è\1279\3\17\1-\5\0\0009\5\f\5\18\a\1\0\18\b\2\0B\5\3\0A\3\0\1X\2\20€6\2\v\0-\4\0\0009\4\f\4B\2\2\2\a\2\18\0X\2\5€9\2\17\1-\4\0\0009\4\f\4B\2\2\1X\2\t€-\2\0\0009\2\f\2\v\2\0\0X\2\5€9\2\17\1\15\0\2\0X\3\2€9\2\17\1B\2\1\1K\0\1\0\0À\ntable\nsetup\vmodule\npairs\17dependencies\rfunction\vconfig\ttype\tWARN\vlevels\blog5module: %s not found, make sure it is installed.\vformat\vstring\vnotify\bvim\tname\frequire\npcall\0" },
     loaded = true,
     path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/git-conflict.nvim",
     url = "https://github.com/akinsho/git-conflict.nvim"
   },
   ["gitsigns.nvim"] = {
-    config = { "\27LJ\2\n™\4\0\0\16\1\19\0Z6\0\0\0006\2\1\0-\3\0\0009\3\2\3B\0\3\3\14\0\0\0X\2\14€6\2\3\0009\2\4\0026\4\5\0009\4\6\4'\6\a\0-\a\0\0009\a\2\aB\4\3\0026\5\3\0009\5\b\0059\5\t\0059\5\n\5B\2\3\1K\0\1\0006\2\v\0-\4\0\0009\4\f\4B\2\2\2\a\2\r\0X\2*€4\2\0\0-\3\0\0009\3\14\3\15\0\3\0X\4\29€6\3\15\0-\5\0\0009\5\14\5B\3\2\4H\6\22€6\b\0\0006\n\1\0009\v\16\aB\b\3\3\14\0\b\0X\n\14€6\n\3\0009\n\4\n6\f\5\0009\f\6\f'\14\a\0-\15\0\0009\15\2\15B\f\3\0026\r\3\0009\r\b\r9\r\t\r9\r\n\rB\n\3\1K\0\1\0009\n\2\a<\t\n\2F\6\3\3R\6è\1279\3\17\1-\5\0\0009\5\f\5\18\a\1\0\18\b\2\0B\5\3\0A\3\0\1X\2\20€6\2\v\0-\4\0\0009\4\f\4B\2\2\2\a\2\18\0X\2\5€9\2\17\1-\4\0\0009\4\f\4B\2\2\1X\2\t€-\2\0\0009\2\f\2\v\2\0\0X\2\5€9\2\17\1\15\0\2\0X\3\2€9\2\17\1B\2\1\1K\0\1\0\0À\ntable\nsetup\vmodule\npairs\17dependencies\rfunction\vconfig\ttype\tWARN\vlevels\blog5module: %s not found, make sure it is installed.\vformat\vstring\vnotify\bvim\tname\frequire\npcall\0" },
     loaded = true,
     path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
     url = "https://github.com/lewis6991/gitsigns.nvim"
+  },
+  ["gopher.nvim"] = {
+    loaded = true,
+    path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/gopher.nvim",
+    url = "https://github.com/olexsmir/gopher.nvim"
   },
   ["kanagawa.nvim"] = {
     loaded = true,
@@ -128,7 +145,6 @@ _G.packer_plugins = {
     url = "https://github.com/rebelot/kanagawa.nvim"
   },
   ["lualine.nvim"] = {
-    config = { "\27LJ\2\n™\4\0\0\16\1\19\0Z6\0\0\0006\2\1\0-\3\0\0009\3\2\3B\0\3\3\14\0\0\0X\2\14€6\2\3\0009\2\4\0026\4\5\0009\4\6\4'\6\a\0-\a\0\0009\a\2\aB\4\3\0026\5\3\0009\5\b\0059\5\t\0059\5\n\5B\2\3\1K\0\1\0006\2\v\0-\4\0\0009\4\f\4B\2\2\2\a\2\r\0X\2*€4\2\0\0-\3\0\0009\3\14\3\15\0\3\0X\4\29€6\3\15\0-\5\0\0009\5\14\5B\3\2\4H\6\22€6\b\0\0006\n\1\0009\v\16\aB\b\3\3\14\0\b\0X\n\14€6\n\3\0009\n\4\n6\f\5\0009\f\6\f'\14\a\0-\15\0\0009\15\2\15B\f\3\0026\r\3\0009\r\b\r9\r\t\r9\r\n\rB\n\3\1K\0\1\0009\n\2\a<\t\n\2F\6\3\3R\6è\1279\3\17\1-\5\0\0009\5\f\5\18\a\1\0\18\b\2\0B\5\3\0A\3\0\1X\2\20€6\2\v\0-\4\0\0009\4\f\4B\2\2\2\a\2\18\0X\2\5€9\2\17\1-\4\0\0009\4\f\4B\2\2\1X\2\t€-\2\0\0009\2\f\2\v\2\0\0X\2\5€9\2\17\1\15\0\2\0X\3\2€9\2\17\1B\2\1\1K\0\1\0\0À\ntable\nsetup\vmodule\npairs\17dependencies\rfunction\vconfig\ttype\tWARN\vlevels\blog5module: %s not found, make sure it is installed.\vformat\vstring\vnotify\bvim\tname\frequire\npcall\0" },
     loaded = true,
     path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/lualine.nvim",
     url = "https://github.com/nvim-lualine/lualine.nvim"
@@ -138,13 +154,22 @@ _G.packer_plugins = {
     path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/material.nvim",
     url = "https://github.com/marko-cerovac/material.nvim"
   },
+  ["mini.surround"] = {
+    loaded = true,
+    path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/mini.surround",
+    url = "https://github.com/echasnovski/mini.surround"
+  },
+  ["neodev.nvim"] = {
+    loaded = true,
+    path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/neodev.nvim",
+    url = "https://github.com/folke/neodev.nvim"
+  },
   nerdcommenter = {
     loaded = true,
     path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/nerdcommenter",
     url = "https://github.com/scrooloose/nerdcommenter"
   },
   ["null-ls.nvim"] = {
-    config = { "\27LJ\2\n™\4\0\0\16\1\19\0Z6\0\0\0006\2\1\0-\3\0\0009\3\2\3B\0\3\3\14\0\0\0X\2\14€6\2\3\0009\2\4\0026\4\5\0009\4\6\4'\6\a\0-\a\0\0009\a\2\aB\4\3\0026\5\3\0009\5\b\0059\5\t\0059\5\n\5B\2\3\1K\0\1\0006\2\v\0-\4\0\0009\4\f\4B\2\2\2\a\2\r\0X\2*€4\2\0\0-\3\0\0009\3\14\3\15\0\3\0X\4\29€6\3\15\0-\5\0\0009\5\14\5B\3\2\4H\6\22€6\b\0\0006\n\1\0009\v\16\aB\b\3\3\14\0\b\0X\n\14€6\n\3\0009\n\4\n6\f\5\0009\f\6\f'\14\a\0-\15\0\0009\15\2\15B\f\3\0026\r\3\0009\r\b\r9\r\t\r9\r\n\rB\n\3\1K\0\1\0009\n\2\a<\t\n\2F\6\3\3R\6è\1279\3\17\1-\5\0\0009\5\f\5\18\a\1\0\18\b\2\0B\5\3\0A\3\0\1X\2\20€6\2\v\0-\4\0\0009\4\f\4B\2\2\2\a\2\18\0X\2\5€9\2\17\1-\4\0\0009\4\f\4B\2\2\1X\2\t€-\2\0\0009\2\f\2\v\2\0\0X\2\5€9\2\17\1\15\0\2\0X\3\2€9\2\17\1B\2\1\1K\0\1\0\0À\ntable\nsetup\vmodule\npairs\17dependencies\rfunction\vconfig\ttype\tWARN\vlevels\blog5module: %s not found, make sure it is installed.\vformat\vstring\vnotify\bvim\tname\frequire\npcall\0" },
     loaded = true,
     path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/null-ls.nvim",
     url = "https://github.com/jose-elias-alvarez/null-ls.nvim"
@@ -154,20 +179,22 @@ _G.packer_plugins = {
     path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/nvim-cmp",
     url = "https://github.com/hrsh7th/nvim-cmp"
   },
+  ["nvim-colorizer.lua"] = {
+    loaded = true,
+    path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/nvim-colorizer.lua",
+    url = "https://github.com/norcalli/nvim-colorizer.lua"
+  },
   ["nvim-lspconfig"] = {
-    config = { "\27LJ\2\n™\4\0\0\16\1\19\0Z6\0\0\0006\2\1\0-\3\0\0009\3\2\3B\0\3\3\14\0\0\0X\2\14€6\2\3\0009\2\4\0026\4\5\0009\4\6\4'\6\a\0-\a\0\0009\a\2\aB\4\3\0026\5\3\0009\5\b\0059\5\t\0059\5\n\5B\2\3\1K\0\1\0006\2\v\0-\4\0\0009\4\f\4B\2\2\2\a\2\r\0X\2*€4\2\0\0-\3\0\0009\3\14\3\15\0\3\0X\4\29€6\3\15\0-\5\0\0009\5\14\5B\3\2\4H\6\22€6\b\0\0006\n\1\0009\v\16\aB\b\3\3\14\0\b\0X\n\14€6\n\3\0009\n\4\n6\f\5\0009\f\6\f'\14\a\0-\15\0\0009\15\2\15B\f\3\0026\r\3\0009\r\b\r9\r\t\r9\r\n\rB\n\3\1K\0\1\0009\n\2\a<\t\n\2F\6\3\3R\6è\1279\3\17\1-\5\0\0009\5\f\5\18\a\1\0\18\b\2\0B\5\3\0A\3\0\1X\2\20€6\2\v\0-\4\0\0009\4\f\4B\2\2\2\a\2\18\0X\2\5€9\2\17\1-\4\0\0009\4\f\4B\2\2\1X\2\t€-\2\0\0009\2\f\2\v\2\0\0X\2\5€9\2\17\1\15\0\2\0X\3\2€9\2\17\1B\2\1\1K\0\1\0\0À\ntable\nsetup\vmodule\npairs\17dependencies\rfunction\vconfig\ttype\tWARN\vlevels\blog5module: %s not found, make sure it is installed.\vformat\vstring\vnotify\bvim\tname\frequire\npcall\0" },
     loaded = true,
     path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
     url = "https://github.com/neovim/nvim-lspconfig"
   },
   ["nvim-tree.lua"] = {
-    config = { "\27LJ\2\n™\4\0\0\16\1\19\0Z6\0\0\0006\2\1\0-\3\0\0009\3\2\3B\0\3\3\14\0\0\0X\2\14€6\2\3\0009\2\4\0026\4\5\0009\4\6\4'\6\a\0-\a\0\0009\a\2\aB\4\3\0026\5\3\0009\5\b\0059\5\t\0059\5\n\5B\2\3\1K\0\1\0006\2\v\0-\4\0\0009\4\f\4B\2\2\2\a\2\r\0X\2*€4\2\0\0-\3\0\0009\3\14\3\15\0\3\0X\4\29€6\3\15\0-\5\0\0009\5\14\5B\3\2\4H\6\22€6\b\0\0006\n\1\0009\v\16\aB\b\3\3\14\0\b\0X\n\14€6\n\3\0009\n\4\n6\f\5\0009\f\6\f'\14\a\0-\15\0\0009\15\2\15B\f\3\0026\r\3\0009\r\b\r9\r\t\r9\r\n\rB\n\3\1K\0\1\0009\n\2\a<\t\n\2F\6\3\3R\6è\1279\3\17\1-\5\0\0009\5\f\5\18\a\1\0\18\b\2\0B\5\3\0A\3\0\1X\2\20€6\2\v\0-\4\0\0009\4\f\4B\2\2\2\a\2\18\0X\2\5€9\2\17\1-\4\0\0009\4\f\4B\2\2\1X\2\t€-\2\0\0009\2\f\2\v\2\0\0X\2\5€9\2\17\1\15\0\2\0X\3\2€9\2\17\1B\2\1\1K\0\1\0\0À\ntable\nsetup\vmodule\npairs\17dependencies\rfunction\vconfig\ttype\tWARN\vlevels\blog5module: %s not found, make sure it is installed.\vformat\vstring\vnotify\bvim\tname\frequire\npcall\0" },
     loaded = true,
     path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/nvim-tree.lua",
     url = "https://github.com/nvim-tree/nvim-tree.lua"
   },
   ["nvim-treesitter"] = {
-    config = { "\27LJ\2\n™\4\0\0\16\1\19\0Z6\0\0\0006\2\1\0-\3\0\0009\3\2\3B\0\3\3\14\0\0\0X\2\14€6\2\3\0009\2\4\0026\4\5\0009\4\6\4'\6\a\0-\a\0\0009\a\2\aB\4\3\0026\5\3\0009\5\b\0059\5\t\0059\5\n\5B\2\3\1K\0\1\0006\2\v\0-\4\0\0009\4\f\4B\2\2\2\a\2\r\0X\2*€4\2\0\0-\3\0\0009\3\14\3\15\0\3\0X\4\29€6\3\15\0-\5\0\0009\5\14\5B\3\2\4H\6\22€6\b\0\0006\n\1\0009\v\16\aB\b\3\3\14\0\b\0X\n\14€6\n\3\0009\n\4\n6\f\5\0009\f\6\f'\14\a\0-\15\0\0009\15\2\15B\f\3\0026\r\3\0009\r\b\r9\r\t\r9\r\n\rB\n\3\1K\0\1\0009\n\2\a<\t\n\2F\6\3\3R\6è\1279\3\17\1-\5\0\0009\5\f\5\18\a\1\0\18\b\2\0B\5\3\0A\3\0\1X\2\20€6\2\v\0-\4\0\0009\4\f\4B\2\2\2\a\2\18\0X\2\5€9\2\17\1-\4\0\0009\4\f\4B\2\2\1X\2\t€-\2\0\0009\2\f\2\v\2\0\0X\2\5€9\2\17\1\15\0\2\0X\3\2€9\2\17\1B\2\1\1K\0\1\0\0À\ntable\nsetup\vmodule\npairs\17dependencies\rfunction\vconfig\ttype\tWARN\vlevels\blog5module: %s not found, make sure it is installed.\vformat\vstring\vnotify\bvim\tname\frequire\npcall\0" },
     loaded = true,
     path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
     url = "https://github.com/nvim-treesitter/nvim-treesitter"
@@ -182,6 +209,11 @@ _G.packer_plugins = {
     path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/onedark.nvim",
     url = "https://github.com/navarasu/onedark.nvim"
   },
+  ["packer.nvim"] = {
+    loaded = true,
+    path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/packer.nvim",
+    url = "https://github.com/wbthomason/packer.nvim"
+  },
   ["plenary.nvim"] = {
     loaded = true,
     path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/plenary.nvim",
@@ -193,7 +225,6 @@ _G.packer_plugins = {
     url = "https://github.com/sainnhe/sonokai"
   },
   ["telescope.nvim"] = {
-    config = { "\27LJ\2\n™\4\0\0\16\1\19\0Z6\0\0\0006\2\1\0-\3\0\0009\3\2\3B\0\3\3\14\0\0\0X\2\14€6\2\3\0009\2\4\0026\4\5\0009\4\6\4'\6\a\0-\a\0\0009\a\2\aB\4\3\0026\5\3\0009\5\b\0059\5\t\0059\5\n\5B\2\3\1K\0\1\0006\2\v\0-\4\0\0009\4\f\4B\2\2\2\a\2\r\0X\2*€4\2\0\0-\3\0\0009\3\14\3\15\0\3\0X\4\29€6\3\15\0-\5\0\0009\5\14\5B\3\2\4H\6\22€6\b\0\0006\n\1\0009\v\16\aB\b\3\3\14\0\b\0X\n\14€6\n\3\0009\n\4\n6\f\5\0009\f\6\f'\14\a\0-\15\0\0009\15\2\15B\f\3\0026\r\3\0009\r\b\r9\r\t\r9\r\n\rB\n\3\1K\0\1\0009\n\2\a<\t\n\2F\6\3\3R\6è\1279\3\17\1-\5\0\0009\5\f\5\18\a\1\0\18\b\2\0B\5\3\0A\3\0\1X\2\20€6\2\v\0-\4\0\0009\4\f\4B\2\2\2\a\2\18\0X\2\5€9\2\17\1-\4\0\0009\4\f\4B\2\2\1X\2\t€-\2\0\0009\2\f\2\v\2\0\0X\2\5€9\2\17\1\15\0\2\0X\3\2€9\2\17\1B\2\1\1K\0\1\0\0À\ntable\nsetup\vmodule\npairs\17dependencies\rfunction\vconfig\ttype\tWARN\vlevels\blog5module: %s not found, make sure it is installed.\vformat\vstring\vnotify\bvim\tname\frequire\npcall\0" },
     loaded = true,
     path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
@@ -201,42 +232,6 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: bufferline.nvim
-time([[Config for bufferline.nvim]], true)
-try_loadstring("\27LJ\2\n™\4\0\0\16\1\19\0Z6\0\0\0006\2\1\0-\3\0\0009\3\2\3B\0\3\3\14\0\0\0X\2\14€6\2\3\0009\2\4\0026\4\5\0009\4\6\4'\6\a\0-\a\0\0009\a\2\aB\4\3\0026\5\3\0009\5\b\0059\5\t\0059\5\n\5B\2\3\1K\0\1\0006\2\v\0-\4\0\0009\4\f\4B\2\2\2\a\2\r\0X\2*€4\2\0\0-\3\0\0009\3\14\3\15\0\3\0X\4\29€6\3\15\0-\5\0\0009\5\14\5B\3\2\4H\6\22€6\b\0\0006\n\1\0009\v\16\aB\b\3\3\14\0\b\0X\n\14€6\n\3\0009\n\4\n6\f\5\0009\f\6\f'\14\a\0-\15\0\0009\15\2\15B\f\3\0026\r\3\0009\r\b\r9\r\t\r9\r\n\rB\n\3\1K\0\1\0009\n\2\a<\t\n\2F\6\3\3R\6è\1279\3\17\1-\5\0\0009\5\f\5\18\a\1\0\18\b\2\0B\5\3\0A\3\0\1X\2\20€6\2\v\0-\4\0\0009\4\f\4B\2\2\2\a\2\18\0X\2\5€9\2\17\1-\4\0\0009\4\f\4B\2\2\1X\2\t€-\2\0\0009\2\f\2\v\2\0\0X\2\5€9\2\17\1\15\0\2\0X\3\2€9\2\17\1B\2\1\1K\0\1\0\0À\ntable\nsetup\vmodule\npairs\17dependencies\rfunction\vconfig\ttype\tWARN\vlevels\blog5module: %s not found, make sure it is installed.\vformat\vstring\vnotify\bvim\tname\frequire\npcall\0", "config", "bufferline.nvim")
-time([[Config for bufferline.nvim]], false)
--- Config for: nvim-tree.lua
-time([[Config for nvim-tree.lua]], true)
-try_loadstring("\27LJ\2\n™\4\0\0\16\1\19\0Z6\0\0\0006\2\1\0-\3\0\0009\3\2\3B\0\3\3\14\0\0\0X\2\14€6\2\3\0009\2\4\0026\4\5\0009\4\6\4'\6\a\0-\a\0\0009\a\2\aB\4\3\0026\5\3\0009\5\b\0059\5\t\0059\5\n\5B\2\3\1K\0\1\0006\2\v\0-\4\0\0009\4\f\4B\2\2\2\a\2\r\0X\2*€4\2\0\0-\3\0\0009\3\14\3\15\0\3\0X\4\29€6\3\15\0-\5\0\0009\5\14\5B\3\2\4H\6\22€6\b\0\0006\n\1\0009\v\16\aB\b\3\3\14\0\b\0X\n\14€6\n\3\0009\n\4\n6\f\5\0009\f\6\f'\14\a\0-\15\0\0009\15\2\15B\f\3\0026\r\3\0009\r\b\r9\r\t\r9\r\n\rB\n\3\1K\0\1\0009\n\2\a<\t\n\2F\6\3\3R\6è\1279\3\17\1-\5\0\0009\5\f\5\18\a\1\0\18\b\2\0B\5\3\0A\3\0\1X\2\20€6\2\v\0-\4\0\0009\4\f\4B\2\2\2\a\2\18\0X\2\5€9\2\17\1-\4\0\0009\4\f\4B\2\2\1X\2\t€-\2\0\0009\2\f\2\v\2\0\0X\2\5€9\2\17\1\15\0\2\0X\3\2€9\2\17\1B\2\1\1K\0\1\0\0À\ntable\nsetup\vmodule\npairs\17dependencies\rfunction\vconfig\ttype\tWARN\vlevels\blog5module: %s not found, make sure it is installed.\vformat\vstring\vnotify\bvim\tname\frequire\npcall\0", "config", "nvim-tree.lua")
-time([[Config for nvim-tree.lua]], false)
--- Config for: telescope.nvim
-time([[Config for telescope.nvim]], true)
-try_loadstring("\27LJ\2\n™\4\0\0\16\1\19\0Z6\0\0\0006\2\1\0-\3\0\0009\3\2\3B\0\3\3\14\0\0\0X\2\14€6\2\3\0009\2\4\0026\4\5\0009\4\6\4'\6\a\0-\a\0\0009\a\2\aB\4\3\0026\5\3\0009\5\b\0059\5\t\0059\5\n\5B\2\3\1K\0\1\0006\2\v\0-\4\0\0009\4\f\4B\2\2\2\a\2\r\0X\2*€4\2\0\0-\3\0\0009\3\14\3\15\0\3\0X\4\29€6\3\15\0-\5\0\0009\5\14\5B\3\2\4H\6\22€6\b\0\0006\n\1\0009\v\16\aB\b\3\3\14\0\b\0X\n\14€6\n\3\0009\n\4\n6\f\5\0009\f\6\f'\14\a\0-\15\0\0009\15\2\15B\f\3\0026\r\3\0009\r\b\r9\r\t\r9\r\n\rB\n\3\1K\0\1\0009\n\2\a<\t\n\2F\6\3\3R\6è\1279\3\17\1-\5\0\0009\5\f\5\18\a\1\0\18\b\2\0B\5\3\0A\3\0\1X\2\20€6\2\v\0-\4\0\0009\4\f\4B\2\2\2\a\2\18\0X\2\5€9\2\17\1-\4\0\0009\4\f\4B\2\2\1X\2\t€-\2\0\0009\2\f\2\v\2\0\0X\2\5€9\2\17\1\15\0\2\0X\3\2€9\2\17\1B\2\1\1K\0\1\0\0À\ntable\nsetup\vmodule\npairs\17dependencies\rfunction\vconfig\ttype\tWARN\vlevels\blog5module: %s not found, make sure it is installed.\vformat\vstring\vnotify\bvim\tname\frequire\npcall\0", "config", "telescope.nvim")
-time([[Config for telescope.nvim]], false)
--- Config for: nvim-treesitter
-time([[Config for nvim-treesitter]], true)
-try_loadstring("\27LJ\2\n™\4\0\0\16\1\19\0Z6\0\0\0006\2\1\0-\3\0\0009\3\2\3B\0\3\3\14\0\0\0X\2\14€6\2\3\0009\2\4\0026\4\5\0009\4\6\4'\6\a\0-\a\0\0009\a\2\aB\4\3\0026\5\3\0009\5\b\0059\5\t\0059\5\n\5B\2\3\1K\0\1\0006\2\v\0-\4\0\0009\4\f\4B\2\2\2\a\2\r\0X\2*€4\2\0\0-\3\0\0009\3\14\3\15\0\3\0X\4\29€6\3\15\0-\5\0\0009\5\14\5B\3\2\4H\6\22€6\b\0\0006\n\1\0009\v\16\aB\b\3\3\14\0\b\0X\n\14€6\n\3\0009\n\4\n6\f\5\0009\f\6\f'\14\a\0-\15\0\0009\15\2\15B\f\3\0026\r\3\0009\r\b\r9\r\t\r9\r\n\rB\n\3\1K\0\1\0009\n\2\a<\t\n\2F\6\3\3R\6è\1279\3\17\1-\5\0\0009\5\f\5\18\a\1\0\18\b\2\0B\5\3\0A\3\0\1X\2\20€6\2\v\0-\4\0\0009\4\f\4B\2\2\2\a\2\18\0X\2\5€9\2\17\1-\4\0\0009\4\f\4B\2\2\1X\2\t€-\2\0\0009\2\f\2\v\2\0\0X\2\5€9\2\17\1\15\0\2\0X\3\2€9\2\17\1B\2\1\1K\0\1\0\0À\ntable\nsetup\vmodule\npairs\17dependencies\rfunction\vconfig\ttype\tWARN\vlevels\blog5module: %s not found, make sure it is installed.\vformat\vstring\vnotify\bvim\tname\frequire\npcall\0", "config", "nvim-treesitter")
-time([[Config for nvim-treesitter]], false)
--- Config for: git-conflict.nvim
-time([[Config for git-conflict.nvim]], true)
-try_loadstring("\27LJ\2\n™\4\0\0\16\1\19\0Z6\0\0\0006\2\1\0-\3\0\0009\3\2\3B\0\3\3\14\0\0\0X\2\14€6\2\3\0009\2\4\0026\4\5\0009\4\6\4'\6\a\0-\a\0\0009\a\2\aB\4\3\0026\5\3\0009\5\b\0059\5\t\0059\5\n\5B\2\3\1K\0\1\0006\2\v\0-\4\0\0009\4\f\4B\2\2\2\a\2\r\0X\2*€4\2\0\0-\3\0\0009\3\14\3\15\0\3\0X\4\29€6\3\15\0-\5\0\0009\5\14\5B\3\2\4H\6\22€6\b\0\0006\n\1\0009\v\16\aB\b\3\3\14\0\b\0X\n\14€6\n\3\0009\n\4\n6\f\5\0009\f\6\f'\14\a\0-\15\0\0009\15\2\15B\f\3\0026\r\3\0009\r\b\r9\r\t\r9\r\n\rB\n\3\1K\0\1\0009\n\2\a<\t\n\2F\6\3\3R\6è\1279\3\17\1-\5\0\0009\5\f\5\18\a\1\0\18\b\2\0B\5\3\0A\3\0\1X\2\20€6\2\v\0-\4\0\0009\4\f\4B\2\2\2\a\2\18\0X\2\5€9\2\17\1-\4\0\0009\4\f\4B\2\2\1X\2\t€-\2\0\0009\2\f\2\v\2\0\0X\2\5€9\2\17\1\15\0\2\0X\3\2€9\2\17\1B\2\1\1K\0\1\0\0À\ntable\nsetup\vmodule\npairs\17dependencies\rfunction\vconfig\ttype\tWARN\vlevels\blog5module: %s not found, make sure it is installed.\vformat\vstring\vnotify\bvim\tname\frequire\npcall\0", "config", "git-conflict.nvim")
-time([[Config for git-conflict.nvim]], false)
--- Config for: null-ls.nvim
-time([[Config for null-ls.nvim]], true)
-try_loadstring("\27LJ\2\n™\4\0\0\16\1\19\0Z6\0\0\0006\2\1\0-\3\0\0009\3\2\3B\0\3\3\14\0\0\0X\2\14€6\2\3\0009\2\4\0026\4\5\0009\4\6\4'\6\a\0-\a\0\0009\a\2\aB\4\3\0026\5\3\0009\5\b\0059\5\t\0059\5\n\5B\2\3\1K\0\1\0006\2\v\0-\4\0\0009\4\f\4B\2\2\2\a\2\r\0X\2*€4\2\0\0-\3\0\0009\3\14\3\15\0\3\0X\4\29€6\3\15\0-\5\0\0009\5\14\5B\3\2\4H\6\22€6\b\0\0006\n\1\0009\v\16\aB\b\3\3\14\0\b\0X\n\14€6\n\3\0009\n\4\n6\f\5\0009\f\6\f'\14\a\0-\15\0\0009\15\2\15B\f\3\0026\r\3\0009\r\b\r9\r\t\r9\r\n\rB\n\3\1K\0\1\0009\n\2\a<\t\n\2F\6\3\3R\6è\1279\3\17\1-\5\0\0009\5\f\5\18\a\1\0\18\b\2\0B\5\3\0A\3\0\1X\2\20€6\2\v\0-\4\0\0009\4\f\4B\2\2\2\a\2\18\0X\2\5€9\2\17\1-\4\0\0009\4\f\4B\2\2\1X\2\t€-\2\0\0009\2\f\2\v\2\0\0X\2\5€9\2\17\1\15\0\2\0X\3\2€9\2\17\1B\2\1\1K\0\1\0\0À\ntable\nsetup\vmodule\npairs\17dependencies\rfunction\vconfig\ttype\tWARN\vlevels\blog5module: %s not found, make sure it is installed.\vformat\vstring\vnotify\bvim\tname\frequire\npcall\0", "config", "null-ls.nvim")
-time([[Config for null-ls.nvim]], false)
--- Config for: gitsigns.nvim
-time([[Config for gitsigns.nvim]], true)
-try_loadstring("\27LJ\2\n™\4\0\0\16\1\19\0Z6\0\0\0006\2\1\0-\3\0\0009\3\2\3B\0\3\3\14\0\0\0X\2\14€6\2\3\0009\2\4\0026\4\5\0009\4\6\4'\6\a\0-\a\0\0009\a\2\aB\4\3\0026\5\3\0009\5\b\0059\5\t\0059\5\n\5B\2\3\1K\0\1\0006\2\v\0-\4\0\0009\4\f\4B\2\2\2\a\2\r\0X\2*€4\2\0\0-\3\0\0009\3\14\3\15\0\3\0X\4\29€6\3\15\0-\5\0\0009\5\14\5B\3\2\4H\6\22€6\b\0\0006\n\1\0009\v\16\aB\b\3\3\14\0\b\0X\n\14€6\n\3\0009\n\4\n6\f\5\0009\f\6\f'\14\a\0-\15\0\0009\15\2\15B\f\3\0026\r\3\0009\r\b\r9\r\t\r9\r\n\rB\n\3\1K\0\1\0009\n\2\a<\t\n\2F\6\3\3R\6è\1279\3\17\1-\5\0\0009\5\f\5\18\a\1\0\18\b\2\0B\5\3\0A\3\0\1X\2\20€6\2\v\0-\4\0\0009\4\f\4B\2\2\2\a\2\18\0X\2\5€9\2\17\1-\4\0\0009\4\f\4B\2\2\1X\2\t€-\2\0\0009\2\f\2\v\2\0\0X\2\5€9\2\17\1\15\0\2\0X\3\2€9\2\17\1B\2\1\1K\0\1\0\0À\ntable\nsetup\vmodule\npairs\17dependencies\rfunction\vconfig\ttype\tWARN\vlevels\blog5module: %s not found, make sure it is installed.\vformat\vstring\vnotify\bvim\tname\frequire\npcall\0", "config", "gitsigns.nvim")
-time([[Config for gitsigns.nvim]], false)
--- Config for: nvim-lspconfig
-time([[Config for nvim-lspconfig]], true)
-try_loadstring("\27LJ\2\n™\4\0\0\16\1\19\0Z6\0\0\0006\2\1\0-\3\0\0009\3\2\3B\0\3\3\14\0\0\0X\2\14€6\2\3\0009\2\4\0026\4\5\0009\4\6\4'\6\a\0-\a\0\0009\a\2\aB\4\3\0026\5\3\0009\5\b\0059\5\t\0059\5\n\5B\2\3\1K\0\1\0006\2\v\0-\4\0\0009\4\f\4B\2\2\2\a\2\r\0X\2*€4\2\0\0-\3\0\0009\3\14\3\15\0\3\0X\4\29€6\3\15\0-\5\0\0009\5\14\5B\3\2\4H\6\22€6\b\0\0006\n\1\0009\v\16\aB\b\3\3\14\0\b\0X\n\14€6\n\3\0009\n\4\n6\f\5\0009\f\6\f'\14\a\0-\15\0\0009\15\2\15B\f\3\0026\r\3\0009\r\b\r9\r\t\r9\r\n\rB\n\3\1K\0\1\0009\n\2\a<\t\n\2F\6\3\3R\6è\1279\3\17\1-\5\0\0009\5\f\5\18\a\1\0\18\b\2\0B\5\3\0A\3\0\1X\2\20€6\2\v\0-\4\0\0009\4\f\4B\2\2\2\a\2\18\0X\2\5€9\2\17\1-\4\0\0009\4\f\4B\2\2\1X\2\t€-\2\0\0009\2\f\2\v\2\0\0X\2\5€9\2\17\1\15\0\2\0X\3\2€9\2\17\1B\2\1\1K\0\1\0\0À\ntable\nsetup\vmodule\npairs\17dependencies\rfunction\vconfig\ttype\tWARN\vlevels\blog5module: %s not found, make sure it is installed.\vformat\vstring\vnotify\bvim\tname\frequire\npcall\0", "config", "nvim-lspconfig")
-time([[Config for nvim-lspconfig]], false)
--- Config for: lualine.nvim
-time([[Config for lualine.nvim]], true)
-try_loadstring("\27LJ\2\n™\4\0\0\16\1\19\0Z6\0\0\0006\2\1\0-\3\0\0009\3\2\3B\0\3\3\14\0\0\0X\2\14€6\2\3\0009\2\4\0026\4\5\0009\4\6\4'\6\a\0-\a\0\0009\a\2\aB\4\3\0026\5\3\0009\5\b\0059\5\t\0059\5\n\5B\2\3\1K\0\1\0006\2\v\0-\4\0\0009\4\f\4B\2\2\2\a\2\r\0X\2*€4\2\0\0-\3\0\0009\3\14\3\15\0\3\0X\4\29€6\3\15\0-\5\0\0009\5\14\5B\3\2\4H\6\22€6\b\0\0006\n\1\0009\v\16\aB\b\3\3\14\0\b\0X\n\14€6\n\3\0009\n\4\n6\f\5\0009\f\6\f'\14\a\0-\15\0\0009\15\2\15B\f\3\0026\r\3\0009\r\b\r9\r\t\r9\r\n\rB\n\3\1K\0\1\0009\n\2\a<\t\n\2F\6\3\3R\6è\1279\3\17\1-\5\0\0009\5\f\5\18\a\1\0\18\b\2\0B\5\3\0A\3\0\1X\2\20€6\2\v\0-\4\0\0009\4\f\4B\2\2\2\a\2\18\0X\2\5€9\2\17\1-\4\0\0009\4\f\4B\2\2\1X\2\t€-\2\0\0009\2\f\2\v\2\0\0X\2\5€9\2\17\1\15\0\2\0X\3\2€9\2\17\1B\2\1\1K\0\1\0\0À\ntable\nsetup\vmodule\npairs\17dependencies\rfunction\vconfig\ttype\tWARN\vlevels\blog5module: %s not found, make sure it is installed.\vformat\vstring\vnotify\bvim\tname\frequire\npcall\0", "config", "lualine.nvim")
-time([[Config for lualine.nvim]], false)
 
 _G._packer.inside_compile = false
 if _G._packer.needs_bufread == true then

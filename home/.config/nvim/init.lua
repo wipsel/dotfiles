@@ -26,22 +26,60 @@ local KIND_ICONS = {
     TypeParameter = "",
 }
 
-local modules = {
+-- The global config table defines all configuration for setting up nvim.
+local config = {
+    { plugin = "wbthomason/packer.nvim" },
+    { plugin = "nvim-lua/plenary.nvim" },
+    -- Neodev is used for neovim development
     {
-        name = "user.plugins",
+        plugin = "folke/neodev.nvim",
+        name = "neodev",
     },
+    -- Nice icons for a bunch of plugins
+    {
+        plugin = "nvim-tree/nvim-web-devicons",
+        name = "nvim-web-devicons",
+    },
+    -- Find and replace all across all files
+    {
+        plugin = "nvim-pack/nvim-spectre",
+        name = "spectre",
+    },
+    { plugin = "scrooloose/nerdcommenter" },
+
+    -- Nice rename window
+    { plugin = "stevearc/dressing.nvim" },
+    -- Colorize hex color string
+    {
+        plugin = "norcalli/nvim-colorizer.lua",
+        name = "colorizer",
+        config = function()
+            vim.opt.termguicolors = true
+
+            return {
+                "css",
+                "javascript",
+                "typescript",
+            }
+        end,
+    },
+    -- Easier surrounding tags brackets etc
+    { plugin = "tpope/vim-surround" },
+    { plugin = "olexsmir/gopher.nvim" },
     {
         name = "user.keymaps",
         dependencies = {
             { name = "themes",   module = "telescope.themes" },
             { name = "picker",   module = "telescope.builtin" },
             { name = "tree_api", module = "nvim-tree.api" },
+            { name = "spectre",  module = "spectre" },
         },
         config = function(keymaps, deps)
             local picker = deps.picker
             local dropdown = deps.themes.get_dropdown({ previewer = false })
             local cursor = deps.themes.get_cursor({ winblend = 0 })
             local tree = deps.tree_api.tree
+            local spectre = deps.spectre
 
             return {
                 leader = " ",
@@ -62,14 +100,15 @@ local modules = {
                     ["<leader>u"] = { fn = picker.lsp_implementation, opts = cursor },
                     ["<leader>t"] = tree.toggle,
                     ["<leader>r"] = tree.focus,
+                    ["<leader>s"] = spectre.toggle,
                     ["gd"] = vim.lsp.buf.definition,
-                    ["<C-k>"] = vim.lsp.buf.hover,
+                    ["<c-k>"] = vim.lsp.buf.hover,
                     ["gi"] = vim.lsp.buf.implementation,
                     ["rn"] = vim.lsp.buf.rename,
                     ["gr"] = vim.lsp.buf.references,
-                    ["<C-f>"] = { fn = vim.lsp.buf.format, opts = { timeout_ms = 2000 } },
+                    ["<c-f>"] = { fn = vim.lsp.buf.format, opts = { timeout_ms = 2000 } },
                     ["<c-n>"] = { fn = vim.diagnostic.goto_next, opts = { border = "rounded" } },
-                    ["<C-p>"] = { fn = vim.diagnostic.goto_prev, opts = { border = "rounded" } },
+                    ["<c-p>"] = { fn = vim.diagnostic.goto_prev, opts = { border = "rounded" } },
                     ["gl"] = { fn = vim.diagnostic.open_float, opts = { width = 400 } },
                     ["<leader>q"] = vim.diagnostic.setloclist,
                 },
@@ -77,8 +116,8 @@ local modules = {
         end,
     },
     {
-        plugin_name = "jose-elias-alvarez/null-ls.nvim",
         name = "null-ls",
+        plugin = "jose-elias-alvarez/null-ls.nvim",
         dependencies = {
             { name = "lsp", module = "user.lsp" },
         },
@@ -109,7 +148,7 @@ local modules = {
     },
     {
         name = "user.lsp",
-        plugin_name = "neovim/nvim-lspconfig",
+        plugin = "neovim/nvim-lspconfig",
         dependencies = {
             { name = "lspconfig", module = "lspconfig" },
             { name = "cmp",       module = "cmp_nvim_lsp" },
@@ -207,16 +246,18 @@ local modules = {
             }
         end,
     },
+    -- A bunch of sources that cmp uses as input.
+    { plugin = "hrsh7th/cmp-buffer" },
+    { plugin = "hrsh7th/cmp-path" },
+    { plugin = "hrsh7th/cmp-cmdline" },
+    { plugin = "hrsh7th/cmp-nvim-lsp" },
+    { plugin = "saadparwaiz1/cmp_luasnip" },
+    -- A snippet engine
+    { plugin = "L3MON4D3/LuaSnip" },
+    { plugin = "rafamadriz/friendly-snippets" }, -- a bunch of snippets to use
+    -- Completion using cmp.
     {
-        plugin_name = {
-            "hrsh7th/nvim-cmp",
-            -- A bunch of sources that cmp uses as input.
-            "hrsh7th/cmp-buffer",
-            "hrsh7th/cmp-path",
-            "hrsh7th/cmp-cmdline",
-            "hrsh7th/cmp-nvim-lsp",
-            "saadparwaiz1/cmp_luasnip",
-        },
+        plugin = "hrsh7th/nvim-cmp",
         name = "cmp",
         dependencies = {
             { name = "luasnip",        module = "luasnip" },
@@ -286,9 +327,11 @@ local modules = {
             }
         end,
     },
+    -- Telescope is defines multiple pickers that can be used to do stuff
+    -- like finding a file or a word. Or select a colorscheme.
     {
-        plugin_name = "nvim-telescope/telescope.nvim",
         name = "telescope",
+        plugin = "nvim-telescope/telescope.nvim",
         config = {
             defaults = {
                 find_cmd = "rg",
@@ -308,16 +351,14 @@ local modules = {
             },
         },
     },
+    -- A Tree file explorer mainly used for when I have to do nested file creation.
     {
-        plugin_name = "nvim-tree/nvim-tree.lua",
         name = "nvim-tree",
+        plugin = "nvim-tree/nvim-tree.lua",
     },
     {
-        name = "neodev",
-    },
-    {
-        plugin_name = "nvim-treesitter/nvim-treesitter",
         name = "nvim-treesitter.configs",
+        plugin = "nvim-treesitter/nvim-treesitter",
         config = {
             ensure_installed = "all",
             highlight = {
@@ -328,15 +369,17 @@ local modules = {
             },
         },
     },
+    --  Git integration stuff
     {
-        plugin_name = "akinsho/git-conflict.nvim",
         name = "git-conflict",
+        plugin = "akinsho/git-conflict.nvim",
     },
     {
-        plugin_name = "lewis6991/gitsigns.nvim",
         name = "gitsigns",
+        plugin = "lewis6991/gitsigns.nvim",
         config = {
             numhl = true,
+            signcolumn = false,
             current_line_blame = true,
             current_line_blame_opts = {
                 delay = 100,
@@ -345,7 +388,7 @@ local modules = {
     },
     {
         name = "bufferline",
-        plugin_name = "akinsho/bufferline.nvim",
+        plugin = "akinsho/bufferline.nvim",
         config = {
             options = {
                 close_icon = "",
@@ -358,15 +401,13 @@ local modules = {
             },
         },
     },
+    { plugin = "neanias/everforest-nvim" },
+    { plugin = "sainnhe/sonokai" },
+    { plugin = "navarasu/onedark.nvim" },
+    { plugin = "marko-cerovac/material.nvim" },
     {
         name = "kanagawa",
-        plugin_name = {
-            "neanias/everforest-nvim",
-            "sainnhe/sonokai",
-            "navarasu/onedark.nvim",
-            "marko-cerovac/material.nvim",
-            "rebelot/kanagawa.nvim",
-        },
+        plugin = "rebelot/kanagawa.nvim",
         config = {
             commentStyle = { italic = true },
             functionStyle = { bold = true },
@@ -382,17 +423,8 @@ local modules = {
         },
     },
     {
-        plugin_name= "nvim-tree/nvim-web-devicons",
-    },
-    {
-        plugin_name= "nvim-lua/plenary.nvim",
-    },
-    {
-        plugin_name = "scrooloose/nerdcommenter",
-    },
-    {
         name = "lualine",
-        plugin_name = "nvim-lualine/lualine.nvim",
+        plugin = { "nvim-lualine/lualine.nvim" },
         config = {
             options = {
                 icons_enabled = true,
@@ -427,11 +459,10 @@ local modules = {
     },
 }
 
-
 local ok, plugins = pcall(require, "user.plugins")
 if not ok then
     vim.notify("stuk")
     return
 end
 
-plugins.load_config(modules)
+plugins.load_config(config)
