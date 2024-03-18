@@ -28,6 +28,10 @@ local KIND_ICONS = {
 
 -- The global config table defines all configuration for setting up nvim.
 local config = {
+    {
+        plugin = "stevearc/oil.nvim",
+        name = "oil",
+    },
     { plugin = "wbthomason/packer.nvim" },
     { plugin = "nvim-lua/plenary.nvim" },
     -- Neodev is used for neovim development
@@ -77,6 +81,7 @@ local config = {
         config = function(keymaps, deps)
             local picker = deps.picker
             local dropdown = deps.themes.get_dropdown({ previewer = false })
+            local dropdown_with_previewer = deps.themes.get_dropdown({ previewer = true })
             local cursor = deps.themes.get_cursor({ winblend = 0 })
             local tree = deps.tree_api.tree
             local spectre = deps.spectre
@@ -95,18 +100,20 @@ local config = {
                     ["<CR>"] = keymaps.write_file,
                     ["<leader>k"] = { fn = picker.colorscheme, opts = dropdown },
                     ["<leader>p"] = { fn = picker.find_files, opts = dropdown },
-                    ["<leader>o"] = { fn = picker.live_grep, opts = dropdown },
+                    ["<leader>o"] = { fn = picker.live_grep, opts = dropdown_with_previewer },
                     ["<leader>i"] = { fn = picker.git_commits, opts = dropdown },
-                    ["<leader>u"] = { fn = picker.lsp_implementation, opts = cursor },
+                    ["gi"] = { fn = picker.lsp_implementations, opts = dropdown_with_previewer },
+                    ["-"] = "<CMD> Oil --float <CR>",
                     ["<leader>t"] = tree.toggle,
                     ["<leader>r"] = tree.focus,
                     ["<leader>s"] = spectre.toggle,
                     ["gd"] = vim.lsp.buf.definition,
                     ["<c-k>"] = vim.lsp.buf.hover,
-                    ["gi"] = vim.lsp.buf.implementation,
+                    --["gi"] = vim.lsp.buf.implementation,
                     ["rn"] = vim.lsp.buf.rename,
                     ["gr"] = vim.lsp.buf.references,
                     ["<c-f>"] = { fn = vim.lsp.buf.format, opts = { timeout_ms = 2000 } },
+                    ["<c-a>"] = { fn = vim.lsp.buf.code_action, opts = cursor },
                     ["<c-n>"] = { fn = vim.diagnostic.goto_next, opts = { border = "rounded" } },
                     ["<c-p>"] = { fn = vim.diagnostic.goto_prev, opts = { border = "rounded" } },
                     ["gl"] = { fn = vim.diagnostic.open_float, opts = { width = 400 } },
@@ -119,7 +126,8 @@ local config = {
         name = "null-ls",
         plugin = "jose-elias-alvarez/null-ls.nvim",
         dependencies = {
-            { name = "lsp", module = "user.lsp" },
+            { name = "lsp",   module = "user.lsp" },
+            { name = "utils", module = "null-ls.utils" },
         },
         config = function(null_ls, deps)
             return {
@@ -131,9 +139,19 @@ local config = {
                     null_ls.builtins.formatting.gofumpt,
                     null_ls.builtins.formatting.isort,
                     null_ls.builtins.formatting.black,
-                    null_ls.builtins.diagnostics.eslint_d,
+                    null_ls.builtins.formatting.eslint_d.with({
+                        cwd = function(param)
+                            deps.utils.root_pattern("package.json")(param.bufname)
+                        end,
+                    }),
+                    null_ls.builtins.diagnostics.eslint_d.with({
+                        cwd = function(param)
+                            deps.utils.root_pattern("package.json")(param.bufname)
+                        end,
+                    }),
                     null_ls.builtins.diagnostics.stylelint,
                     null_ls.builtins.diagnostics.golangci_lint.with({
+                        prefer_local = ".bin",
                         args = {
                             "run",
                             "--fix=false",
