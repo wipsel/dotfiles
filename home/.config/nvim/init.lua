@@ -1,29 +1,44 @@
-local KIND_ICONS = {
-    Text = "",
-    Method = "m",
-    Function = "",
-    Constructor = "",
-    Field = "",
-    Variable = "",
-    Class = "",
+KIND_ICONS = {
+    Namespace = "󰌗",
+    Text = "󰉿",
+    Method = "󰆧",
+    Function = "󰆧",
+    Constructor = "",
+    Field = "󰜢",
+    Variable = "󰀫",
+    Class = "󰠱",
     Interface = "",
     Module = "",
-    Property = "",
-    Unit = "",
-    Value = "",
+    Property = "󰜢",
+    Unit = "󰑭",
+    Value = "󰎠",
     Enum = "",
-    Keyword = "",
-    Snippet = "",
-    Color = "",
-    File = "",
-    Reference = "",
-    Folder = "",
+    Keyword = "󰌋",
+    Snippet = "",
+    Color = "󰏘",
+    File = "󰈚",
+    Reference = "󰈇",
+    Folder = "󰉋",
     EnumMember = "",
-    Constant = "",
-    Struct = "",
+    Constant = "󰏿",
+    Struct = "󰙅",
     Event = "",
-    Operator = "",
-    TypeParameter = "",
+    Operator = "󰆕",
+    TypeParameter = "󰊄",
+    Table = "",
+    Object = "󰅩",
+    Tag = "",
+    Array = "[]",
+    Boolean = "",
+    Number = "",
+    Null = "󰟢",
+    String = "󰉿",
+    Calendar = "",
+    Watch = "󰥔",
+    Package = "",
+    Copilot = "",
+    Codeium = "",
+    TabNine = "",
 }
 
 -- The global config table defines all configuration for setting up nvim.
@@ -67,27 +82,34 @@ local config = {
             }
         end,
     },
+    -- Harpooning files
+    {
+        plugin = "ThePrimeagen/harpoon",
+    },
     -- Easier surrounding tags brackets etc
     { plugin = "tpope/vim-surround" },
     { plugin = "olexsmir/gopher.nvim" },
     {
         name = "user.keymaps",
         dependencies = {
-            { name = "themes",   module = "telescope.themes" },
-            { name = "picker",   module = "telescope.builtin" },
-            { name = "tree_api", module = "nvim-tree.api" },
-            { name = "spectre",  module = "spectre" },
+            { name = "themes",       module = "telescope.themes" },
+            { name = "picker",       module = "telescope.builtin" },
+            { name = "spectre",      module = "spectre" },
+            { name = "harpoon_mark", module = "harpoon.mark" },
+            { name = "harpoon_ui",   module = "harpoon.ui" },
         },
         config = function(keymaps, deps)
             local picker = deps.picker
             local dropdown = deps.themes.get_dropdown({ previewer = false })
             local dropdown_with_previewer = deps.themes.get_dropdown({ previewer = true })
             local cursor = deps.themes.get_cursor({ winblend = 0 })
-            local tree = deps.tree_api.tree
             local spectre = deps.spectre
 
             return {
                 leader = " ",
+                visual = {
+                    ["<leader>y"] = '"+y',
+                },
                 insert = {
                     ["jj"] = "<ESC>",
                 },
@@ -95,6 +117,8 @@ local config = {
                     ["<leader>h"] = vim.cmd.bp,
                     ["<leader>j"] = vim.cmd.bd,
                     ["<leader>l"] = vim.cmd.bn,
+                    ["<leader>y"] = deps.harpoon_ui.toggle_quick_menu,
+                    ["<leader>u"] = deps.harpoon_mark.add_file,
                     -- is this the way to do a no op?
                     ["<Space>"] = function() end,
                     ["<CR>"] = keymaps.write_file,
@@ -104,12 +128,9 @@ local config = {
                     ["<leader>i"] = { fn = picker.git_commits, opts = dropdown },
                     ["gi"] = { fn = picker.lsp_implementations, opts = dropdown_with_previewer },
                     ["-"] = "<CMD> Oil --float <CR>",
-                    ["<leader>t"] = tree.toggle,
-                    ["<leader>r"] = tree.focus,
                     ["<leader>s"] = spectre.toggle,
                     ["gd"] = vim.lsp.buf.definition,
                     ["<c-k>"] = vim.lsp.buf.hover,
-                    --["gi"] = vim.lsp.buf.implementation,
                     ["rn"] = vim.lsp.buf.rename,
                     ["gr"] = vim.lsp.buf.references,
                     ["<c-f>"] = { fn = vim.lsp.buf.format, opts = { timeout_ms = 2000 } },
@@ -318,17 +339,14 @@ local config = {
                     end, { "i", "s" }),
                 },
                 formatting = {
-                    fields = { "kind", "abbr", "menu" },
-                    format = function(entry, vim_item)
-                        vim_item.kind = string.format("%s", KIND_ICONS[vim_item.kind])
-                        vim_item.menu = ({
-                            nvim_lsp = "[Lsp]",
-                            luasnip = "[Snippet]",
-                            buffer = "[Buffer]",
-                            path = "[Path]",
-                        })[entry.source.name]
+                    fields = { "abbr", "kind", "menu" },
+                    format = function(_, item)
+                        local icon = KIND_ICONS[item.kind] or ""
 
-                        return vim_item
+                        icon = (" " .. icon .. " ")
+                        item.kind = string.format("%s %s", icon, item.kind or "")
+
+                        return item
                     end,
                 },
                 sources = {
@@ -369,11 +387,6 @@ local config = {
             },
         },
     },
-    -- A Tree file explorer mainly used for when I have to do nested file creation.
-    {
-        name = "nvim-tree",
-        plugin = "nvim-tree/nvim-tree.lua",
-    },
     {
         name = "nvim-treesitter.configs",
         plugin = "nvim-treesitter/nvim-treesitter",
@@ -407,17 +420,20 @@ local config = {
     {
         name = "bufferline",
         plugin = "akinsho/bufferline.nvim",
-        config = {
-            options = {
-                close_icon = "",
-                buffer_close_icon = "",
-                diagnostics = "nvim_lsp",
-                diagnostics_indicator = function(count, level)
-                    local icon = level:match("error") and " " or " "
-                    return " " .. icon .. count
-                end,
-            },
-        },
+        config = function(bufferline)
+            return {
+                options = {
+                    separator_style = "slant",
+                    close_icon = "",
+                    buffer_close_icon = "",
+                    diagnostics = "nvim_lsp",
+                    diagnostics_indicator = function(count, level)
+                        local icon = level:match("error") and " " or " "
+                        return " " .. icon .. count
+                    end,
+                },
+            }
+        end,
     },
     { plugin = "neanias/everforest-nvim" },
     { plugin = "sainnhe/sonokai" },
@@ -479,7 +495,7 @@ local config = {
 
 local ok, plugins = pcall(require, "user.plugins")
 if not ok then
-    vim.notify("stuk")
+    vim.notify("Failed to initialize nvim")
     return
 end
 

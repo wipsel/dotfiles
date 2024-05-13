@@ -38,6 +38,7 @@ return {
 
         apply_keymaps("i", config.insert)
         apply_keymaps("n", config.normal)
+        apply_keymaps("v", config.visual)
     end,
     write_file = write_file,
 }

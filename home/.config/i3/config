@@ -155,7 +155,7 @@ bar {
         status_command i3status -c /home/wipsel/.config/i3/i3status.conf
         position top
         separator_symbol  "|"
-	colors {
+        colors {
            background #1e2127
            statusline #ebdbb2
            separator #83a598
@@ -164,7 +164,7 @@ bar {
            active_workspace   #1e2127 #1e2127 #8ec07c
            inactive_workspace #1e2127 #1e2127 #928374
            urgent_workspace   #1e2127 #1e2127 #fb4934
-	}
+        }
 }
 
 client.focused          #1e2127 #1e2127 #8ec07c

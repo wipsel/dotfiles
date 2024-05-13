@@ -4,6 +4,8 @@ export GO111MODULE=on
 export GOPRIVATE=gitlab.advancedclimate.nl
 export TERM=xterm-256color ssh
 
+
+
 # Path to your oh-my-zsh installation.
 export ZSH="/home/wipsel/.oh-my-zsh"
 
@@ -137,3 +139,16 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 eval "$(pyenv virtualenv-init -)"
+
+# find and replace strings in all files recursively
+rename () {
+    from=$1 
+    shift
+    to=$1 
+    shift
+    for file in $*
+    do
+            perl -i -p -e "s{$from}{$to}g;" $file
+            echo "Changing $from to $to in $file"
+    done
+}
