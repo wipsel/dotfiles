@@ -43,10 +43,6 @@ KIND_ICONS = {
 
 -- The global config table defines all configuration for setting up nvim.
 local config = {
-    {
-        plugin = "stevearc/oil.nvim",
-        name = "oil",
-    },
     { plugin = "wbthomason/packer.nvim" },
     { plugin = "nvim-lua/plenary.nvim" },
     -- Neodev is used for neovim development
@@ -386,6 +382,11 @@ local config = {
                 set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
             },
         },
+    },
+    -- Treat file structure like a buffer.
+    {
+        plugin = "stevearc/oil.nvim",
+        name = "oil",
     },
     {
         name = "nvim-treesitter.configs",
