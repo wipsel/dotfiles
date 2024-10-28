@@ -44,6 +44,23 @@ KIND_ICONS = {
 -- The global config table defines all configuration for setting up nvim.
 local config = {
     {
+        name = "kanagawa",
+        plugin = "rebelot/kanagawa.nvim",
+        config = {
+            commentStyle = { italic = true },
+            functionStyle = { bold = true },
+            overrides = function(colors)
+                local theme = colors.theme
+                return {
+                    NormalFloat = { bg = "none" },
+                    FloatBorder = { bg = "none" },
+                    FloatTitle = { bg = "none" },
+                    NormalDark = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m3 },
+                }
+            end,
+        },
+    },
+    {
         name = "user.options",
     },
     { plugin = "wbthomason/packer.nvim" },
@@ -427,23 +444,6 @@ local config = {
     { plugin = "sainnhe/sonokai" },
     { plugin = "navarasu/onedark.nvim" },
     { plugin = "marko-cerovac/material.nvim" },
-    {
-        name = "kanagawa",
-        plugin = "rebelot/kanagawa.nvim",
-        config = {
-            commentStyle = { italic = true },
-            functionStyle = { bold = true },
-            overrides = function(colors)
-                local theme = colors.theme
-                return {
-                    NormalFloat = { bg = "none" },
-                    FloatBorder = { bg = "none" },
-                    FloatTitle = { bg = "none" },
-                    NormalDark = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m3 },
-                }
-            end,
-        },
-    },
     {
         name = "lualine",
         plugin = { "nvim-lualine/lualine.nvim" },
