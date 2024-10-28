@@ -14,7 +14,7 @@ export ZSH="/home/wipsel/.oh-my-zsh"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 #ZSH_THEME="robbyrussell"
-ZSH_THEME="steeef"
+ZSH_THEME="wipsel"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -110,6 +110,8 @@ source /usr/share/fzf/completion.zsh && source /usr/share/fzf/key-bindings.zsh
 function zvm_after_init() {
     source /usr/share/fzf/completion.zsh && source /usr/share/fzf/key-bindings.zsh
 }
+
+export FZF_DEFAULT_OPTS='--color=fg:#dcd7ba,bg:#1e1f28,hl:#9cabca,fg+:#727169,bg+:#2a2a37,hl+:#7e9cd8,info:#7aa89f,prompt:#e46876,pointer:#957fb8,marker:#98bb6c,spinner:#938aa9,header:#7aa89f'
 
 source "$HOME/.homesick/repos/homeshick/homeshick.sh"
 # source environment variables

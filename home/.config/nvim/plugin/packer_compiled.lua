@@ -49,8 +49,8 @@ local function save_profiles(threshold)
 end
 
 time([[Luarocks path setup]], true)
-local package_path_str = "/home/wipsel/.cache/nvim/packer_hererocks/2.1.1699392533/share/lua/5.1/?.lua;/home/wipsel/.cache/nvim/packer_hererocks/2.1.1699392533/share/lua/5.1/?/init.lua;/home/wipsel/.cache/nvim/packer_hererocks/2.1.1699392533/lib/luarocks/rocks-5.1/?.lua;/home/wipsel/.cache/nvim/packer_hererocks/2.1.1699392533/lib/luarocks/rocks-5.1/?/init.lua"
-local install_cpath_pattern = "/home/wipsel/.cache/nvim/packer_hererocks/2.1.1699392533/lib/lua/5.1/?.so"
+local package_path_str = "/home/wipsel/.cache/nvim/packer_hererocks/2.1.1725453128/share/lua/5.1/?.lua;/home/wipsel/.cache/nvim/packer_hererocks/2.1.1725453128/share/lua/5.1/?/init.lua;/home/wipsel/.cache/nvim/packer_hererocks/2.1.1725453128/lib/luarocks/rocks-5.1/?.lua;/home/wipsel/.cache/nvim/packer_hererocks/2.1.1725453128/lib/luarocks/rocks-5.1/?/init.lua"
+local install_cpath_pattern = "/home/wipsel/.cache/nvim/packer_hererocks/2.1.1725453128/lib/lua/5.1/?.so"
 if not string.find(package.path, package_path_str, 1, true) then
   package.path = package.path .. ';' .. package_path_str
 end
@@ -139,6 +139,11 @@ _G.packer_plugins = {
     path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/gopher.nvim",
     url = "https://github.com/olexsmir/gopher.nvim"
   },
+  harpoon = {
+    loaded = true,
+    path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/harpoon",
+    url = "https://github.com/ThePrimeagen/harpoon"
+  },
   ["kanagawa.nvim"] = {
     loaded = true,
     path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/kanagawa.nvim",
@@ -154,11 +159,6 @@ _G.packer_plugins = {
     path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/material.nvim",
     url = "https://github.com/marko-cerovac/material.nvim"
   },
-  ["mini.surround"] = {
-    loaded = true,
-    path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/mini.surround",
-    url = "https://github.com/echasnovski/mini.surround"
-  },
   ["neodev.nvim"] = {
     loaded = true,
     path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/neodev.nvim",
@@ -169,10 +169,10 @@ _G.packer_plugins = {
     path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/nerdcommenter",
     url = "https://github.com/scrooloose/nerdcommenter"
   },
-  ["null-ls.nvim"] = {
+  ["none-ls.nvim"] = {
     loaded = true,
-    path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/null-ls.nvim",
-    url = "https://github.com/jose-elias-alvarez/null-ls.nvim"
+    path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/none-ls.nvim",
+    url = "https://github.com/nvimtools/none-ls.nvim"
   },
   ["nvim-cmp"] = {
     loaded = true,
@@ -189,10 +189,10 @@ _G.packer_plugins = {
     path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
     url = "https://github.com/neovim/nvim-lspconfig"
   },
-  ["nvim-tree.lua"] = {
+  ["nvim-spectre"] = {
     loaded = true,
-    path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/nvim-tree.lua",
-    url = "https://github.com/nvim-tree/nvim-tree.lua"
+    path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/nvim-spectre",
+    url = "https://github.com/nvim-pack/nvim-spectre"
   },
   ["nvim-treesitter"] = {
     loaded = true,
@@ -203,6 +203,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
     url = "https://github.com/nvim-tree/nvim-web-devicons"
+  },
+  ["oil.nvim"] = {
+    loaded = true,
+    path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/oil.nvim",
+    url = "https://github.com/stevearc/oil.nvim"
   },
   ["onedark.nvim"] = {
     loaded = true,
@@ -228,6 +233,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
+  },
+  ["vim-surround"] = {
+    loaded = true,
+    path = "/home/wipsel/.local/share/nvim/site/pack/packer/start/vim-surround",
+    url = "https://github.com/tpope/vim-surround"
   }
 }
 

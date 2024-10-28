@@ -1,6 +1,5 @@
 local function setup()
     vim.cmd.colorscheme("kanagawa")
-
     vim.g.python3_host_prog = "$HOME" .. "/.pyenv/versions/nvim/bin/python3"
     vim.opt.backup = false
     vim.opt.cursorline = true
@@ -18,8 +17,6 @@ local function setup()
     vim.opt.shiftwidth = 4
     vim.opt.tabstop = 8
     vim.opt.expandtab = true
-    --vim.opt.list = true
-    --vim.opt.listchars = "tab:>-"
     vim.opt.softtabstop = 8
     vim.opt.numberwidth = 4
     vim.opt.wrap = false

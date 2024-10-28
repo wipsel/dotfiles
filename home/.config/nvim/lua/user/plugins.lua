@@ -1,5 +1,5 @@
--- This file contains a wrapper around packer.
-
+-- This file contains a wrapper around packer. And setup all plugins.
+-- TODO document spec
 local function setup_module(module)
     local ok, loaded = pcall(require, module.name)
     if not ok then
@@ -9,25 +9,25 @@ local function setup_module(module)
     end
 
     if type(module.config) == "function" then
-        local dependencies = {}
+        local deps = {}
 
-        if module.dependencies then
-            for _, dependencie in pairs(module.dependencies) do
-                local dep_ok, dep_loaded = pcall(require, dependencie.module)
+        if module.deps then
+            for _, dep in pairs(module.deps) do
+                local dep_ok, dep_loaded = pcall(require, dep.module)
                 if not dep_ok then
                     vim.notify(
-                        string.format("dep module: %s not found, make sure it is installed.", module.name),
+                        string.format("dependency module: %s not found, make sure it is installed.", module.name),
                         vim.log.levels.WARN
                     )
 
                     return
                 end
 
-                dependencies[dependencie.name] = dep_loaded
+                deps[dep.name] = dep_loaded
             end
         end
 
-        loaded.setup(module.config(loaded, dependencies))
+        loaded.setup(module.config(loaded, deps))
     elseif type(module.config) == "table" then
         loaded.setup(module.config)
     elseif module.config == nil and loaded.setup then

@@ -43,6 +43,9 @@ KIND_ICONS = {
 
 -- The global config table defines all configuration for setting up nvim.
 local config = {
+    {
+        name = "user.options",
+    },
     { plugin = "wbthomason/packer.nvim" },
     { plugin = "nvim-lua/plenary.nvim" },
     -- Neodev is used for neovim development
@@ -68,31 +71,21 @@ local config = {
     {
         plugin = "norcalli/nvim-colorizer.lua",
         name = "colorizer",
-        config = function()
-            vim.opt.termguicolors = true
-
-            return {
-                "css",
-                "javascript",
-                "typescript",
-            }
-        end,
-    },
-    -- Harpooning files
-    {
-        plugin = "ThePrimeagen/harpoon",
+        config = {
+            "css",
+            "javascript",
+            "typescript",
+        },
     },
     -- Easier surrounding tags brackets etc
     { plugin = "tpope/vim-surround" },
     { plugin = "olexsmir/gopher.nvim" },
     {
         name = "user.keymaps",
-        dependencies = {
-            { name = "themes",       module = "telescope.themes" },
-            { name = "picker",       module = "telescope.builtin" },
-            { name = "spectre",      module = "spectre" },
-            { name = "harpoon_mark", module = "harpoon.mark" },
-            { name = "harpoon_ui",   module = "harpoon.ui" },
+        deps = {
+            { name = "themes",  module = "telescope.themes" },
+            { name = "picker",  module = "telescope.builtin" },
+            { name = "spectre", module = "spectre" },
         },
         config = function(keymaps, deps)
             local picker = deps.picker
@@ -113,8 +106,6 @@ local config = {
                     ["<leader>h"] = vim.cmd.bp,
                     ["<leader>j"] = vim.cmd.bd,
                     ["<leader>l"] = vim.cmd.bn,
-                    ["<leader>y"] = deps.harpoon_ui.toggle_quick_menu,
-                    ["<leader>u"] = deps.harpoon_mark.add_file,
                     -- is this the way to do a no op?
                     ["<Space>"] = function() end,
                     ["<CR>"] = keymaps.write_file,
@@ -122,15 +113,17 @@ local config = {
                     ["<leader>p"] = { fn = picker.find_files, opts = dropdown },
                     ["<leader>o"] = { fn = picker.live_grep, opts = dropdown_with_previewer },
                     ["<leader>i"] = { fn = picker.git_commits, opts = dropdown },
-                    ["gi"] = { fn = picker.lsp_implementations, opts = dropdown_with_previewer },
                     ["-"] = "<CMD> Oil --float <CR>",
                     ["<leader>s"] = spectre.toggle,
+
+                    ["gi"] = { fn = picker.lsp_implementations, opts = dropdown_with_previewer },
+                    ["gr"] = { fn = picker.lsp_references, opts = dropdown_with_previewer },
                     ["gd"] = vim.lsp.buf.definition,
                     ["<c-k>"] = vim.lsp.buf.hover,
                     ["rn"] = vim.lsp.buf.rename,
-                    ["gr"] = vim.lsp.buf.references,
                     ["<c-f>"] = { fn = vim.lsp.buf.format, opts = { timeout_ms = 2000 } },
                     ["<c-a>"] = { fn = vim.lsp.buf.code_action, opts = cursor },
+
                     ["<c-n>"] = { fn = vim.diagnostic.goto_next, opts = { border = "rounded" } },
                     ["<c-p>"] = { fn = vim.diagnostic.goto_prev, opts = { border = "rounded" } },
                     ["gl"] = { fn = vim.diagnostic.open_float, opts = { width = 400 } },
@@ -141,10 +134,9 @@ local config = {
     },
     {
         name = "null-ls",
-        plugin = "jose-elias-alvarez/null-ls.nvim",
-        dependencies = {
-            { name = "lsp",   module = "user.lsp" },
-            { name = "utils", module = "null-ls.utils" },
+        plugin = "nvimtools/none-ls.nvim",
+        deps = {
+            { name = "lsp", module = "user.lsp" },
         },
         config = function(null_ls, deps)
             return {
@@ -156,16 +148,6 @@ local config = {
                     null_ls.builtins.formatting.gofumpt,
                     null_ls.builtins.formatting.isort,
                     null_ls.builtins.formatting.black,
-                    null_ls.builtins.formatting.eslint_d.with({
-                        cwd = function(param)
-                            deps.utils.root_pattern("package.json")(param.bufname)
-                        end,
-                    }),
-                    null_ls.builtins.diagnostics.eslint_d.with({
-                        cwd = function(param)
-                            deps.utils.root_pattern("package.json")(param.bufname)
-                        end,
-                    }),
                     null_ls.builtins.diagnostics.stylelint,
                     null_ls.builtins.diagnostics.golangci_lint.with({
                         prefer_local = ".bin",
@@ -184,7 +166,7 @@ local config = {
     {
         name = "user.lsp",
         plugin = "neovim/nvim-lspconfig",
-        dependencies = {
+        deps = {
             { name = "lspconfig", module = "lspconfig" },
             { name = "cmp",       module = "cmp_nvim_lsp" },
             { name = "util",      module = "lspconfig/util" },
@@ -235,7 +217,14 @@ local config = {
                         },
                     },
                     {
-                        server = lspconfig.tsserver,
+                        server = lspconfig.eslint,
+                        config = {
+                            capabilities = capabilities,
+                            on_attach = lsp.on_attach,
+                        },
+                    },
+                    {
+                        server = lspconfig.ts_ls,
                         config = {
                             capabilities = capabilities,
                             on_attach = function(client, bufnr)
@@ -294,7 +283,7 @@ local config = {
     {
         plugin = "hrsh7th/nvim-cmp",
         name = "cmp",
-        dependencies = {
+        deps = {
             { name = "luasnip",        module = "luasnip" },
             { name = "luasnip_loader", module = "luasnip/loaders/from_vscode" },
         },
@@ -389,8 +378,8 @@ local config = {
         name = "oil",
     },
     {
-        name = "nvim-treesitter.configs",
         plugin = "nvim-treesitter/nvim-treesitter",
+        name = "nvim-treesitter.configs",
         config = {
             ensure_installed = "all",
             highlight = {
@@ -421,20 +410,18 @@ local config = {
     {
         name = "bufferline",
         plugin = "akinsho/bufferline.nvim",
-        config = function(bufferline)
-            return {
-                options = {
-                    separator_style = "slant",
-                    close_icon = "",
-                    buffer_close_icon = "",
-                    diagnostics = "nvim_lsp",
-                    diagnostics_indicator = function(count, level)
-                        local icon = level:match("error") and " " or " "
-                        return " " .. icon .. count
-                    end,
-                },
-            }
-        end,
+        config = {
+            options = {
+                separator_style = "slant",
+                close_icon = "",
+                buffer_close_icon = "",
+                diagnostics = "nvim_lsp",
+                diagnostics_indicator = function(count, level)
+                    local icon = level:match("error") and " " or " "
+                    return " " .. icon .. count
+                end,
+            },
+        },
     },
     { plugin = "neanias/everforest-nvim" },
     { plugin = "sainnhe/sonokai" },
@@ -488,9 +475,6 @@ local config = {
             tabline = {},
             extensions = {},
         },
-    },
-    {
-        name = "user.options",
     },
 }
 
