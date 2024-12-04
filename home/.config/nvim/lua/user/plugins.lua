@@ -1,5 +1,4 @@
--- This file contains a wrapper around packer. And setup all plugins.
--- TODO document spec
+-- This file contains a wrapper around packer.
 local function setup_module(module)
     local ok, loaded = pcall(require, module.name)
     if not ok then

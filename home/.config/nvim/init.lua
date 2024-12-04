@@ -1,51 +1,38 @@
-KIND_ICONS = {
-    Namespace = "󰌗",
-    Text = "󰉿",
-    Method = "󰆧",
-    Function = "󰆧",
-    Constructor = "",
-    Field = "󰜢",
-    Variable = "󰀫",
-    Class = "󰠱",
-    Interface = "",
-    Module = "",
-    Property = "󰜢",
-    Unit = "󰑭",
-    Value = "󰎠",
-    Enum = "",
-    Keyword = "󰌋",
-    Snippet = "",
-    Color = "󰏘",
-    File = "󰈚",
-    Reference = "󰈇",
-    Folder = "󰉋",
-    EnumMember = "",
-    Constant = "󰏿",
-    Struct = "󰙅",
-    Event = "",
-    Operator = "󰆕",
-    TypeParameter = "󰊄",
-    Table = "",
-    Object = "󰅩",
-    Tag = "",
-    Array = "[]",
-    Boolean = "",
-    Number = "",
-    Null = "󰟢",
-    String = "󰉿",
-    Calendar = "",
-    Watch = "󰥔",
-    Package = "",
-    Copilot = "",
-    Codeium = "",
-    TabNine = "",
-}
+--
+-- Below is my neovim config. The package manager used is packer but
+-- the idea is that it could be used with a different package manager in the
+-- future. The config table specifies the plugins and their configuration.
 --
 --
+-- The goal of this configuration was that it is small and independent of a package
+-- manager.
 --
+-- Here is how it works: The config table below specifies all the plugins
+-- and their options. It uses the following format:
 --
--- The global config table defines all configuration for setting up nvim.
+-- {
+-- name: Name of the module used in the `require` call for loading the module/plugin
+-- plugin: The name of the plugin as used by packer (and many others)
+-- config: The configuration passed into the setup function of a module/plugin
+--         can be either a function returning a table or a table
+-- deps: Optional dependency table that can be used in the config function for
+--       a plugin.
+--       For example: `lsp_config` needs `cmp` in its setup. So cmp will be
+--       loaded and can be accessed within the config function using deps.cmp
+-- }
+--
+-- These plugins are loaded using `require(name)`
+-- and for each plugin the  `setup()`
+-- is called with the provided `config`. The `config` field can either be a
+-- For the implementation see ./lua/user/plugins.lua
+--
+-- The config table defines all configuration for setting up nvim.
+--
 local config = {
+    { plugin = "neanias/everforest-nvim" },
+    { plugin = "sainnhe/sonokai" },
+    { plugin = "navarasu/onedark.nvim" },
+    { plugin = "marko-cerovac/material.nvim" },
     {
         name = "kanagawa",
         plugin = "rebelot/kanagawa.nvim",
@@ -63,9 +50,7 @@ local config = {
             end,
         },
     },
-    {
-        name = "user.options",
-    },
+    { name = "user.options" },
     { plugin = "wbthomason/packer.nvim" },
     { plugin = "nvim-lua/plenary.nvim" },
     -- Neodev is used for neovim development
@@ -123,18 +108,22 @@ local config = {
                     ["jj"] = "<ESC>",
                 },
                 normal = {
+                    -- Buffer navigation
                     ["<leader>h"] = vim.cmd.bp,
                     ["<leader>j"] = vim.cmd.bd,
                     ["<leader>l"] = vim.cmd.bn,
-                    -- is this the way to do a no op?
                     ["<Space>"] = function() end,
+                    -- File related stuff
                     ["<CR>"] = keymaps.write_file,
+                    ["-"] = "<CMD>Oil --float<CR>",
+                    -- Telescope pickers
                     ["<leader>k"] = { fn = picker.colorscheme, opts = dropdown },
                     ["<leader>p"] = { fn = picker.find_files, opts = dropdown },
                     ["<leader>o"] = { fn = picker.live_grep, opts = dropdown_with_previewer },
                     ["<leader>i"] = { fn = picker.git_commits, opts = dropdown },
-                    ["-"] = "<CMD> Oil --float <CR>",
+
                     ["<leader>s"] = spectre.toggle,
+                    -- LSP functionality
                     ["gi"] = { fn = picker.lsp_implementations, opts = dropdown_with_previewer },
                     ["gr"] = { fn = picker.lsp_references, opts = dropdown_with_previewer },
                     ["gd"] = vim.lsp.buf.definition,
@@ -142,7 +131,7 @@ local config = {
                     ["rn"] = vim.lsp.buf.rename,
                     ["<c-f>"] = { fn = vim.lsp.buf.format, opts = { timeout_ms = 2000 } },
                     ["<c-a>"] = { fn = vim.lsp.buf.code_action, opts = cursor },
-
+                    -- LSP diagnostics
                     ["<c-n>"] = { fn = vim.diagnostic.goto_next, opts = { border = "rounded" } },
                     ["<c-p>"] = { fn = vim.diagnostic.goto_prev, opts = { border = "rounded" } },
                     ["gl"] = { fn = vim.diagnostic.open_float, opts = { width = 400 } },
@@ -189,11 +178,13 @@ local config = {
             { name = "lspconfig", module = "lspconfig" },
             { name = "cmp",       module = "cmp_nvim_lsp" },
             { name = "util",      module = "lspconfig/util" },
+            { name = "icons",          module = "user.icons" },
         },
         config = function(lsp, deps)
             local lspconfig = deps.lspconfig
             local capabilities = deps.cmp.default_capabilities(vim.lsp.protocol.make_client_capabilities())
             local util = deps.util
+            local icons = deps.icons.diagnostic
 
             return {
                 servers = {
@@ -268,10 +259,10 @@ local config = {
                     virtual_text = false,
                     signs = {
                         active = {
-                            { name = "DiagnosticSignError", text = "" },
-                            { name = "DiagnosticSignWarn", text = "" },
-                            { name = "DiagnosticSignHint", text = "" },
-                            { name = "DiagnosticSignInfo", text = "" },
+                            { name = "DiagnosticSignError", text = icons.Error },
+                            { name = "DiagnosticSignWarn", text = icons.Warn },
+                            { name = "DiagnosticSignHint", text = icons.Hint },
+                            { name = "DiagnosticSignInfo", text = icons.Info },
                         },
                     },
                     underline = true,
@@ -305,12 +296,12 @@ local config = {
         deps = {
             { name = "luasnip",        module = "luasnip" },
             { name = "luasnip_loader", module = "luasnip/loaders/from_vscode" },
-            --{ name = "icons",          module = "user.icons" },
+            { name = "icons",          module = "user.icons" },
         },
         config = function(cmp, deps)
             deps.luasnip_loader.lazy_load()
             local luasnip = deps.luasnip
-            --local icons = deps.icons
+            local icons = deps.icons
 
             return {
                 snippet = {
@@ -347,7 +338,7 @@ local config = {
                 formatting = {
                     fields = { "abbr", "kind", "menu" },
                     format = function(_, item)
-                        local icon = KIND_ICONS[item.kind] or ""
+                        local icon = icons.cmp[item.kind] or ""
 
                         icon = (" " .. icon .. " ")
                         item.kind = string.format("%s %s", icon, item.kind or "")
@@ -444,10 +435,6 @@ local config = {
             },
         },
     },
-    { plugin = "neanias/everforest-nvim" },
-    { plugin = "sainnhe/sonokai" },
-    { plugin = "navarasu/onedark.nvim" },
-    { plugin = "marko-cerovac/material.nvim" },
     {
         name = "lualine",
         plugin = { "nvim-lualine/lualine.nvim" },

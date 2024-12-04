@@ -41,6 +41,14 @@ local cmp_kind_icons = {
     TabNine = "",
 }
 
+local diagnostic_icons = {
+    Error = "",
+    Warn = "",
+    Hint = "",
+    Info = "",
+}
+
 return {
     cmp = cmp_kind_icons,
+    diagnostic = diagnostic_icons,
 }
