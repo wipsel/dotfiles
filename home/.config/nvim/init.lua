@@ -40,7 +40,10 @@ KIND_ICONS = {
     Codeium = "",
     TabNine = "",
 }
-
+--
+--
+--
+--
 -- The global config table defines all configuration for setting up nvim.
 local config = {
     {
@@ -132,7 +135,6 @@ local config = {
                     ["<leader>i"] = { fn = picker.git_commits, opts = dropdown },
                     ["-"] = "<CMD> Oil --float <CR>",
                     ["<leader>s"] = spectre.toggle,
-
                     ["gi"] = { fn = picker.lsp_implementations, opts = dropdown_with_previewer },
                     ["gr"] = { fn = picker.lsp_references, opts = dropdown_with_previewer },
                     ["gd"] = vim.lsp.buf.definition,
@@ -196,7 +198,7 @@ local config = {
             return {
                 servers = {
                     {
-                        server = lspconfig.ruff_lsp,
+                        server = lspconfig.ruff,
                         config = {
                             capabilities = capabilities,
                         },
@@ -217,7 +219,7 @@ local config = {
                                 },
                             },
                             on_attach = function(client, bufnr)
-                                -- disable formatting for gopls since we want null-ls to
+                                -- disable formatting for gopls since we want none-ls to
                                 -- take care of this.
                                 client.server_capabilities.documentFormattingProvider = false
                                 client.server_capabilities.documentRangeFormattingProvider = false
@@ -246,7 +248,7 @@ local config = {
                             capabilities = capabilities,
                             on_attach = function(client, bufnr)
                                 -- disable formatting for tsserver since we want to use prettier
-                                -- trhought null-ls
+                                -- trought none-ls
                                 client.server_capabilities.documentFormattingProvider = false
                                 client.server_capabilities.documentRangeFormattingProvider = false
 
@@ -303,10 +305,12 @@ local config = {
         deps = {
             { name = "luasnip",        module = "luasnip" },
             { name = "luasnip_loader", module = "luasnip/loaders/from_vscode" },
+            --{ name = "icons",          module = "user.icons" },
         },
         config = function(cmp, deps)
             deps.luasnip_loader.lazy_load()
             local luasnip = deps.luasnip
+            --local icons = deps.icons
 
             return {
                 snippet = {
@@ -373,7 +377,7 @@ local config = {
         config = {
             defaults = {
                 find_cmd = "rg",
-                prompt_prefix = "  ",
+                prompt_prefix = " ",
                 selection_caret = "  ",
                 selection_strategy = "reset",
                 sorting_strategy = "ascending",

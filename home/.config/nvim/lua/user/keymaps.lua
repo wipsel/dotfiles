@@ -17,17 +17,19 @@ local function apply_keymaps(mode, keymaps)
 end
 
 local function write_file()
+    local prompt = "Please provide a file name"
+
     local ok, _ = pcall(vim.cmd.w)
     if not ok and vim.fn.win_gettype() == "" then
         local on_confirm = function(file_name)
-            if file_name == "" then
+            if file_name == "" or file_name == nil then
                 return
             else
                 vim.cmd.w(file_name)
             end
         end
 
-        vim.ui.input({ prompt = "Please provide file name" }, on_confirm)
+        vim.ui.input({ prompt = prompt }, on_confirm)
     end
 end
 
