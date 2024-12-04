@@ -178,7 +178,7 @@ local config = {
             { name = "lspconfig", module = "lspconfig" },
             { name = "cmp",       module = "cmp_nvim_lsp" },
             { name = "util",      module = "lspconfig/util" },
-            { name = "icons",          module = "user.icons" },
+            { name = "icons",     module = "user.icons" },
         },
         config = function(lsp, deps)
             local lspconfig = deps.lspconfig
@@ -260,9 +260,9 @@ local config = {
                     signs = {
                         active = {
                             { name = "DiagnosticSignError", text = icons.Error },
-                            { name = "DiagnosticSignWarn", text = icons.Warn },
-                            { name = "DiagnosticSignHint", text = icons.Hint },
-                            { name = "DiagnosticSignInfo", text = icons.Info },
+                            { name = "DiagnosticSignWarn",  text = icons.Warn },
+                            { name = "DiagnosticSignHint",  text = icons.Hint },
+                            { name = "DiagnosticSignInfo",  text = icons.Info },
                         },
                     },
                     underline = true,
