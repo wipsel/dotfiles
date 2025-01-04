@@ -9,7 +9,17 @@ local function apply_keymaps(mode, keymaps)
 
     for key, value in pairs(keymaps) do
         if type(value) == "table" then
-            vim.keymap.set(mode, key, wrap(value.fn, value.opts), options)
+            if value.desc then
+                options = { noremap = true, silent = true, desc = value.desc }
+            else
+                options = { noremap = true, silent = true }
+            end
+
+            if value.opts then
+                vim.keymap.set(mode, key, wrap(value.fn, value.opts), options)
+            else
+                vim.keymap.set(mode, key, value.fn, options)
+            end
         else
             vim.keymap.set(mode, key, value, options)
         end
@@ -42,5 +52,6 @@ return {
         apply_keymaps("n", config.normal)
         apply_keymaps("v", config.visual)
     end,
+
     write_file = write_file,
 }

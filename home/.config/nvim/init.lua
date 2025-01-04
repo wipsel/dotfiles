@@ -41,6 +41,7 @@ local config = {
             functionStyle = { bold = true },
             overrides = function(colors)
                 local theme = colors.theme
+
                 return {
                     NormalFloat = { bg = "none" },
                     FloatBorder = { bg = "none" },
@@ -88,9 +89,11 @@ local config = {
     {
         name = "user.keymaps",
         deps = {
-            { name = "themes",  module = "telescope.themes" },
-            { name = "picker",  module = "telescope.builtin" },
-            { name = "spectre", module = "spectre" },
+            { name = "themes",        module = "telescope.themes" },
+            { name = "picker",        module = "telescope.builtin" },
+            { name = "spectre",       module = "spectre" },
+            { name = "oil",           module = "oil" },
+            { name = "git_conflicts", module = "git-conflict" },
         },
         config = function(keymaps, deps)
             local picker = deps.picker
@@ -98,6 +101,8 @@ local config = {
             local dropdown_with_previewer = deps.themes.get_dropdown({ previewer = true })
             local cursor = deps.themes.get_cursor({ winblend = 0 })
             local spectre = deps.spectre
+            local oil = deps.oil
+            local git_conflicts = deps.git_conflicts
 
             return {
                 leader = " ",
@@ -109,33 +114,105 @@ local config = {
                 },
                 normal = {
                     -- Buffer navigation
-                    ["<leader>h"] = vim.cmd.bp,
-                    ["<leader>j"] = vim.cmd.bd,
-                    ["<leader>l"] = vim.cmd.bn,
-                    ["<Space>"] = function() end,
-                    -- File related stuff
-                    ["<CR>"] = keymaps.write_file,
-                    ["-"] = "<CMD>Oil --float<CR>",
-                    -- Telescope pickers
-                    ["<leader>k"] = { fn = picker.colorscheme, opts = dropdown },
-                    ["<leader>p"] = { fn = picker.find_files, opts = dropdown },
-                    ["<leader>o"] = { fn = picker.live_grep, opts = dropdown_with_previewer },
-                    ["<leader>i"] = { fn = picker.git_commits, opts = dropdown },
+                    ["<leader>h"] = { fn = vim.cmd.bp, desc = "Buffer prev" },
+                    ["<leader>l"] = { fn = vim.cmd.bn, desc = "Buffer next" },
+                    ["<leader>j"] = { fn = vim.cmd.bd, desc = "Buffer close" },
 
-                    ["<leader>s"] = spectre.toggle,
+                    -- File related stuff
+                    ["<CR>"] = { fn = keymaps.write_file, desc = "Write file" },
+                    ["-"] = { fn = oil.open_float, desc = "Open oil" },
+                    ["="] = { fn = oil.close, desc = "Close oil" },
+                    -- pickers
+                    ["<leader>k"] = {
+                        fn = picker.colorscheme,
+                        opts = dropdown,
+                        desc = "[K]olor Scheme",
+                    },
+                    ["<leader>p"] = {
+                        fn = picker.find_files,
+                        opts = dropdown,
+                        desc = "Control [P]",
+                    },
+                    ["<leader>o"] = {
+                        fn = picker.live_grep,
+                        opts = dropdown_with_previewer,
+                        desc = "Grep",
+                    },
+                    ["<leader>b"] = {
+                        fn = picker.buffers,
+                        opts = dropdown_with_previewer,
+                        desc = "[B]uffers",
+                    },
+                    ["<leader>gc"] = {
+                        fn = picker.git_commits,
+                        opts = dropdown,
+                        desc = "[G]it [C]ommits",
+                    },
+                    ["<leader>s"] = { fn = spectre.toggle, desc = "[S]pectre" },
                     -- LSP functionality
-                    ["gi"] = { fn = picker.lsp_implementations, opts = dropdown_with_previewer },
-                    ["gr"] = { fn = picker.lsp_references, opts = dropdown_with_previewer },
-                    ["gd"] = vim.lsp.buf.definition,
+                    ["gi"] = {
+                        fn = picker.lsp_implementations,
+                        opts = dropdown_with_previewer,
+                        desc = "[G]oto [I]implementation",
+                    },
+                    ["gr"] = {
+                        fn = picker.lsp_references,
+                        opts = dropdown_with_previewer,
+                        desc = "[G]oto [R]eferences",
+                    },
+                    ["gd"] = {
+                        fn = vim.lsp.buf.definition,
+                        desc = "[G]oto [R]eferences",
+                    },
+                    ["rn"] = { fn = vim.lsp.buf.rename, desc = "[R]e[N]ame" },
+                    ["<c-f>"] = {
+                        fn = vim.lsp.buf.format,
+                        opts = { timeout_ms = 2000 },
+                        desc = "[F]ormat",
+                    },
+                    ["<c-a>"] = {
+                        fn = vim.lsp.buf.code_action,
+                        opts = cursor,
+                        desc = "[C]ode [A]ctions",
+                    },
                     ["<c-k>"] = vim.lsp.buf.hover,
-                    ["rn"] = vim.lsp.buf.rename,
-                    ["<c-f>"] = { fn = vim.lsp.buf.format, opts = { timeout_ms = 2000 } },
-                    ["<c-a>"] = { fn = vim.lsp.buf.code_action, opts = cursor },
-                    -- LSP diagnostics
-                    ["<c-n>"] = { fn = vim.diagnostic.goto_next, opts = { border = "rounded" } },
-                    ["<c-p>"] = { fn = vim.diagnostic.goto_prev, opts = { border = "rounded" } },
-                    ["gl"] = { fn = vim.diagnostic.open_float, opts = { width = 400 } },
-                    ["<leader>q"] = vim.diagnostic.setloclist,
+                    ["<c-n>"] = {
+                        fn = vim.diagnostic.goto_next,
+                        opts = { border = "rounded" },
+                        desc = "[N]ext diagnostic",
+                    },
+                    ["<c-p>"] = {
+                        fn = vim.diagnostic.goto_prev,
+                        opts = { border = "rounded" },
+                        desc = "[P]rev diagnostic",
+                    },
+                    ["gl"] = {
+                        fn = vim.diagnostic.open_float,
+                        opts = { width = 400 },
+                        desc = "Open diagnostic float",
+                    },
+
+                    -- Git stuff
+                    ["<leader>gn"] = {
+                        fn = git_conflicts.find_next,
+                        opts = "none",
+                        desc = "[G]it conflict [N]ext",
+                    },
+                    ["<leader>gp"] = {
+                        fn = git_conflicts.find_next,
+                        opts = "none",
+                        desc = "[G]it conflict [P]rev",
+                    },
+                    ["<leader>gt"] = {
+                        fn = git_conflicts.choose,
+                        opts = "theirs",
+                        desc = "[G]it conflict [T]heirs",
+                    },
+                    ["<leader>go"] = {
+                        fn = git_conflicts.choose,
+                        opts = "ours",
+                        desc = "[G]it conflict [O]urs",
+                    },
                 },
             }
         end,
@@ -259,10 +336,13 @@ local config = {
                     virtual_text = false,
                     signs = {
                         active = {
-                            { name = "DiagnosticSignError", text = icons.Error },
-                            { name = "DiagnosticSignWarn",  text = icons.Warn },
-                            { name = "DiagnosticSignHint",  text = icons.Hint },
-                            { name = "DiagnosticSignInfo",  text = icons.Info },
+                            {
+                                name = "DiagnosticSignError",
+                                text = icons.Error,
+                            },
+                            { name = "DiagnosticSignWarn", text = icons.Warn },
+                            { name = "DiagnosticSignHint", text = icons.Hint },
+                            { name = "DiagnosticSignInfo", text = icons.Info },
                         },
                     },
                     underline = true,
@@ -420,22 +500,6 @@ local config = {
         },
     },
     {
-        name = "bufferline",
-        plugin = "akinsho/bufferline.nvim",
-        config = {
-            options = {
-                separator_style = "slant",
-                close_icon = "",
-                buffer_close_icon = "",
-                diagnostics = "nvim_lsp",
-                diagnostics_indicator = function(count, level)
-                    local icon = level:match("error") and " " or " "
-                    return " " .. icon .. count
-                end,
-            },
-        },
-    },
-    {
         name = "lualine",
         plugin = { "nvim-lualine/lualine.nvim" },
         config = {
@@ -463,7 +527,23 @@ local config = {
                 lualine_y = {},
                 lualine_z = {},
             },
-            tabline = {},
+            tabline = {
+                lualine_b = {
+                    {
+                        "buffers",
+                        buffers_color = {
+                            active = { bg = "#7e9cd8", fg = "#16161d" },
+                            inactive = { bg = "#16161d", fg = "#7e9cd8" },
+                        },
+                        filetype_names = {
+                            TelescopePrompt = "  ",
+                        },
+                        symbols = {
+                            alternate_file = "",
+                        },
+                    },
+                },
+            },
             extensions = {},
         },
     },

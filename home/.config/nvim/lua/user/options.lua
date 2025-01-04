@@ -2,10 +2,12 @@ local function setup()
     vim.cmd.colorscheme("kanagawa")
 
     -- sync the system clipboard.
-    vim.schedule(function()
-        vim.opt.clipboard = "unnamedplus"
-    end)
+    --vim.schedule(function()
+    --vim.opt.clipboard = "unnamedplus"
+    --end)
 
+    vim.opt.foldmethod = "expr"
+    vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
     vim.opt.list = true
     vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 
