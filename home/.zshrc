@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:/usr/local/go/bin:/home/wipsel/go/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:/usr/local/go/bin:/home/wipsel/go/bin:/home/wipsel/.local/bin:$PATH
 export GO111MODULE=on
 export GOPRIVATE=gitlab.advancedclimate.nl
 export TERM=xterm-256color ssh
@@ -123,9 +123,15 @@ alias vim="nvim"
 alias bus="./.screenlayout/bus.sh"
 alias thuis="./.screenlayout/thuis.sh"
 alias tsserver="npx tsserver"
+
+export UV_AUTO_VENV=1
 # alias pnpm="npx pnpm"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 export PYENV_ROOT="$HOME/.pyenv"
+
+eval "$(ssh-agent -s)" > /dev/null
+ssh-add ~/.ssh/github > /dev/null
+
 
 
 export PATH="$PYENV_ROOT/bin:$PATH"
@@ -141,6 +147,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 eval "$(pyenv virtualenv-init -)"
+eval "$(zoxide init zsh)"
 
 # find and replace strings in all files recursively
 rename () {

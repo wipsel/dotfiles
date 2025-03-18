@@ -1,4 +1,3 @@
---
 -- Below is my neovim config. The package manager used is packer but
 -- the idea is that it could be used with a different package manager in the
 -- future. The config table specifies the plugins and their configuration.
@@ -96,14 +95,6 @@ local config = {
             { name = "git_conflicts", module = "git-conflict" },
         },
         config = function(keymaps, deps)
-            local picker = deps.picker
-            local dropdown = deps.themes.get_dropdown({ previewer = false })
-            local dropdown_with_previewer = deps.themes.get_dropdown({ previewer = true })
-            local cursor = deps.themes.get_cursor({ winblend = 0 })
-            local spectre = deps.spectre
-            local oil = deps.oil
-            local git_conflicts = deps.git_conflicts
-
             return {
                 leader = " ",
                 visual = {
@@ -120,44 +111,43 @@ local config = {
 
                     -- File related stuff
                     ["<CR>"] = { fn = keymaps.write_file, desc = "Write file" },
-                    ["-"] = { fn = oil.open_float, desc = "Open oil" },
-                    ["="] = { fn = oil.close, desc = "Close oil" },
+                    ["-"] = { fn = deps.oil.open_float, desc = "Open oil" },
+                    ["="] = { fn = deps.oil.close, desc = "Close oil" },
                     -- pickers
                     ["<leader>k"] = {
-                        fn = picker.colorscheme,
-                        opts = dropdown,
+                        fn = deps.picker.colorscheme,
+                        opts = deps.themes.get_dropdown({ previewer = false }),
                         desc = "[K]olor Scheme",
                     },
                     ["<leader>p"] = {
-                        fn = picker.find_files,
-                        opts = dropdown,
+                        fn = deps.picker.find_files,
+                        opts = deps.themes.get_dropdown({ previewer = false }),
                         desc = "Control [P]",
                     },
                     ["<leader>o"] = {
-                        fn = picker.live_grep,
-                        opts = dropdown_with_previewer,
+                        fn = deps.picker.live_grep,
+                        opts = deps.themes.get_dropdown({ previewer = true }),
                         desc = "Grep",
                     },
                     ["<leader>b"] = {
-                        fn = picker.buffers,
-                        opts = dropdown_with_previewer,
+                        fn = deps.picker.buffers,
+                        opts = deps.themes.get_dropdown({ previewer = true }),
                         desc = "[B]uffers",
                     },
                     ["<leader>gc"] = {
-                        fn = picker.git_commits,
-                        opts = dropdown,
+                        fn = deps.picker.git_commits,
+                        opts = deps.themes.get_dropdown({ previewer = false }),
                         desc = "[G]it [C]ommits",
                     },
-                    ["<leader>s"] = { fn = spectre.toggle, desc = "[S]pectre" },
                     -- LSP functionality
                     ["gi"] = {
-                        fn = picker.lsp_implementations,
-                        opts = dropdown_with_previewer,
+                        fn = deps.picker.lsp_implementations,
+                        opts = deps.themes.get_dropdown({ previewer = false }),
                         desc = "[G]oto [I]implementation",
                     },
                     ["gr"] = {
-                        fn = picker.lsp_references,
-                        opts = dropdown_with_previewer,
+                        fn = deps.picker.lsp_references,
+                        opts = deps.themes.get_dropdown({ previewer = true }),
                         desc = "[G]oto [R]eferences",
                     },
                     ["gd"] = {
@@ -172,7 +162,7 @@ local config = {
                     },
                     ["<c-a>"] = {
                         fn = vim.lsp.buf.code_action,
-                        opts = cursor,
+                        opts = deps.themes.get_cursor({ winblend = 0 }),
                         desc = "[C]ode [A]ctions",
                     },
                     ["<c-k>"] = vim.lsp.buf.hover,
@@ -194,22 +184,22 @@ local config = {
 
                     -- Git stuff
                     ["<leader>gn"] = {
-                        fn = git_conflicts.find_next,
+                        fn = deps.git_conflicts.find_next,
                         opts = "none",
                         desc = "[G]it conflict [N]ext",
                     },
                     ["<leader>gp"] = {
-                        fn = git_conflicts.find_next,
+                        fn = deps.git_conflicts.find_next,
                         opts = "none",
                         desc = "[G]it conflict [P]rev",
                     },
                     ["<leader>gt"] = {
-                        fn = git_conflicts.choose,
+                        fn = deps.git_conflicts.choose,
                         opts = "theirs",
                         desc = "[G]it conflict [T]heirs",
                     },
                     ["<leader>go"] = {
-                        fn = git_conflicts.choose,
+                        fn = deps.git_conflicts.choose,
                         opts = "ours",
                         desc = "[G]it conflict [O]urs",
                     },
@@ -307,7 +297,14 @@ local config = {
                         server = lspconfig.eslint,
                         config = {
                             capabilities = capabilities,
-                            on_attach = lsp.on_attach,
+                            on_attach = function(client, bufnr)
+                                vim.api.nvim_create_autocmd("BufWritePre", {
+                                    buffer = bufnr,
+                                    command = "EslintFixAll",
+                                })
+
+                                lsp.on_attach(client, bufnr)
+                            end,
                         },
                     },
                     {
