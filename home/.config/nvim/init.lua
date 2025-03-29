@@ -1,3 +1,8 @@
+if vim.g.neovide then
+    vim.g.neovide_cursor_animation_length = 0
+    vim.o.guifont = "Fira code"
+end
+
 -- Below is my neovim config. The package manager used is packer but
 -- the idea is that it could be used with a different package manager in the
 -- future. The config table specifies the plugins and their configuration.
@@ -26,7 +31,6 @@
 -- For the implementation see ./lua/user/plugins.lua
 --
 -- The config table defines all configuration for setting up nvim.
---
 local config = {
     { plugin = "neanias/everforest-nvim" },
     { plugin = "sainnhe/sonokai" },
@@ -249,7 +253,9 @@ local config = {
         },
         config = function(lsp, deps)
             local lspconfig = deps.lspconfig
-            local capabilities = deps.cmp.default_capabilities(vim.lsp.protocol.make_client_capabilities())
+            local capabilities = deps.cmp.default_capabilities(
+                vim.lsp.protocol.make_client_capabilities()
+            )
             local util = deps.util
             local icons = deps.icons.diagnostic
 
@@ -266,7 +272,11 @@ local config = {
                         config = {
                             capabilities = capabilities,
                             filetypes = { "go", "gomod", "gowork", "gotmpl" },
-                            root_dir = util.root_pattern("go.work", "go.mod", ".git"),
+                            root_dir = util.root_pattern(
+                                "go.work",
+                                "go.mod",
+                                ".git"
+                            ),
                             settings = {
                                 gopls = {
                                     completeUnimported = true,
@@ -279,8 +289,10 @@ local config = {
                             on_attach = function(client, bufnr)
                                 -- disable formatting for gopls since we want none-ls to
                                 -- take care of this.
-                                client.server_capabilities.documentFormattingProvider = false
-                                client.server_capabilities.documentRangeFormattingProvider = false
+                                client.server_capabilities.documentFormattingProvider =
+                                    false
+                                client.server_capabilities.documentRangeFormattingProvider =
+                                    false
 
                                 lsp.on_attach(client, bufnr)
                             end,
@@ -314,8 +326,10 @@ local config = {
                             on_attach = function(client, bufnr)
                                 -- disable formatting for tsserver since we want to use prettier
                                 -- trought none-ls
-                                client.server_capabilities.documentFormattingProvider = false
-                                client.server_capabilities.documentRangeFormattingProvider = false
+                                client.server_capabilities.documentFormattingProvider =
+                                    false
+                                client.server_capabilities.documentRangeFormattingProvider =
+                                    false
 
                                 lsp.on_attach(client, bufnr)
                             end,
@@ -418,7 +432,8 @@ local config = {
                         local icon = icons.cmp[item.kind] or ""
 
                         icon = (" " .. icon .. " ")
-                        item.kind = string.format("%s %s", icon, item.kind or "")
+                        item.kind =
+                            string.format("%s %s", icon, item.kind or "")
 
                         return item
                     end,

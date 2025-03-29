@@ -129,8 +129,8 @@ export UV_AUTO_VENV=1
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 export PYENV_ROOT="$HOME/.pyenv"
 
-eval "$(ssh-agent -s)" > /dev/null
-ssh-add ~/.ssh/github > /dev/null
+#eval "$(ssh-agent -s)" > /dev/null
+#ssh-add ~/.ssh/github > /dev/null
 
 
 
