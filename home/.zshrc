@@ -119,7 +119,6 @@ source "$HOME/.homesick/repos/homeshick/homeshick.sh"
 # alias zshconfig="mate ~/.zshrc"
 alias activate="source .env/bin/activate"
 alias ls="exa"
-alias vim="nvim"
 alias bus="./.screenlayout/bus.sh"
 alias thuis="./.screenlayout/thuis.sh"
 alias tsserver="npx tsserver"
@@ -148,6 +147,15 @@ export NVM_DIR="$HOME/.nvm"
 
 eval "$(pyenv virtualenv-init -)"
 eval "$(zoxide init zsh)"
+
+vim () {
+  if [[ -f uv.lock ]]; then
+    command uv run nvim "$@"
+  else
+    command nvim "$@"
+  fi
+}
+
 
 # find and replace strings in all files recursively
 rename () {

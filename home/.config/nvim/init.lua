@@ -1,6 +1,6 @@
 if vim.g.neovide then
     vim.g.neovide_cursor_animation_length = 0
-    vim.o.guifont = "Fira code"
+    vim.o.guifont = "FiraCode Nerd Font"
 end
 
 -- Below is my neovim config. The package manager used is packer but
@@ -247,19 +247,19 @@ local config = {
         plugin = "neovim/nvim-lspconfig",
         deps = {
             { name = "lspconfig", module = "lspconfig" },
-            { name = "cmp",       module = "cmp_nvim_lsp" },
             { name = "util",      module = "lspconfig/util" },
+            { name = "blink",     module = "blink.cmp" },
             { name = "icons",     module = "user.icons" },
+            { name = "telescope", module = "telescope.builtin" },
         },
         config = function(lsp, deps)
             local lspconfig = deps.lspconfig
-            local capabilities = deps.cmp.default_capabilities(
-                vim.lsp.protocol.make_client_capabilities()
-            )
+            local capabilities = deps.blink.get_lsp_capabilities()
             local util = deps.util
             local icons = deps.icons.diagnostic
 
             return {
+                lsp_definitions = deps.telescope.lsp_definitions,
                 servers = {
                     {
                         server = lspconfig.ruff,
@@ -371,83 +371,65 @@ local config = {
             }
         end,
     },
-    -- A bunch of sources that cmp uses as input.
-    { plugin = "hrsh7th/cmp-buffer" },
-    { plugin = "hrsh7th/cmp-path" },
-    { plugin = "hrsh7th/cmp-cmdline" },
-    { plugin = "hrsh7th/cmp-nvim-lsp" },
-    { plugin = "saadparwaiz1/cmp_luasnip" },
     -- A snippet engine
     { plugin = "L3MON4D3/LuaSnip" },
     { plugin = "rafamadriz/friendly-snippets" }, -- a bunch of snippets to use
     -- Completion using cmp.
     {
-        plugin = "hrsh7th/nvim-cmp",
-        name = "cmp",
+        name = "blink.cmp",
+        plugin = "saghen/blink.cmp",
         deps = {
-            { name = "luasnip",        module = "luasnip" },
-            { name = "luasnip_loader", module = "luasnip/loaders/from_vscode" },
-            { name = "icons",          module = "user.icons" },
+            { name = "icons", module = "user.icons" },
         },
-        config = function(cmp, deps)
-            deps.luasnip_loader.lazy_load()
-            local luasnip = deps.luasnip
-            local icons = deps.icons
-
+        config = function(blink, deps)
             return {
-                snippet = {
-                    expand = function(args)
-                        deps.luasnip.lsp_expand(args.body)
-                    end,
+                completion = {
+                    documentation = {
+                        auto_show = true,
+                    },
+                    menu = {
+                        min_width = 20,
+                        border = "rounded",
+                        winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None",
+                        draw = {
+                            components = {
+                                label_description = {
+                                    width = { max = 30 },
+                                    text = function(ctx)
+                                        return ctx.label_description
+                                    end,
+                                    highlight = "NonText",
+                                },
+                            },
+                            columns = {
+                                { "label" },
+                                { "kind_icon",         "kind", gap = 1 },
+                                { "label_description", gap = 1 },
+                            },
+                        },
+                    },
                 },
-                mapping = {
-                    ["<CR>"] = cmp.mapping.confirm({
-                        behavior = cmp.ConfirmBehavior.Insert,
-                        select = true,
-                    }),
-                    ["<Tab>"] = cmp.mapping(function(fallback)
-                        if cmp.visible() then
-                            cmp.select_next_item()
-                        elseif luasnip.expandable() then
-                            luasnip.expand()
-                        elseif luasnip.expand_or_jumpable() then
-                            luasnip.expand_or_jump()
-                        else
-                            fallback()
-                        end
-                    end, { "i", "s" }),
-                    ["<S-Tab>"] = cmp.mapping(function(fallback)
-                        if cmp.visible() then
-                            cmp.select_prev_item()
-                        elseif luasnip.jumpable(-1) then
-                            luasnip.jump(-1)
-                        else
-                            fallback()
-                        end
-                    end, { "i", "s" }),
+                enabled = function()
+                    return not vim.list_contains(
+                        { "DressingInput" },
+                        vim.bo.filetype
+                    ) and vim.bo.buftype ~= "prompt" and vim.b.completion ~= false
+                end,
+                appearance = {
+                    kind_icons = deps.icons.cmp,
                 },
-                formatting = {
-                    fields = { "abbr", "kind", "menu" },
-                    format = function(_, item)
-                        local icon = icons.cmp[item.kind] or ""
-
-                        icon = (" " .. icon .. " ")
-                        item.kind =
-                            string.format("%s %s", icon, item.kind or "")
-
-                        return item
-                    end,
-                },
-                sources = {
-                    { name = "nvim_lsp" },
-                    { name = "luasnip" },
-                    { name = "buffer" },
-                    { name = "nvim_lsp_signature_help" },
-                    { name = "path" },
-                },
-                window = {
-                    completion = cmp.config.window.bordered(),
-                    documentation = cmp.config.window.bordered(),
+                keymap = {
+                    preset = "default",
+                    ["<S-Tab>"] = {
+                        "select_prev",
+                        "snippet_backward",
+                        "fallback",
+                    },
+                    ["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
+                    ["<CR>"] = { "accept", "fallback" },
+                    --["<Esc>"] = { "hide", "fallback" },
+                    ["<PageUp>"] = { "scroll_documentation_up", "fallback" },
+                    ["<PageDown>"] = { "scroll_documentation_down", "fallback" },
                 },
             }
         end,
@@ -480,6 +462,18 @@ local config = {
     {
         plugin = "stevearc/oil.nvim",
         name = "oil",
+        config = {
+            default_file_explorer = true,
+            view_options = {
+                show_hidden = true,
+            },
+            float = {
+                padding = 4,
+                max_width = 80,
+                max_height = 30,
+                border = "rounded",
+            },
+        },
     },
     {
         plugin = "nvim-treesitter/nvim-treesitter",

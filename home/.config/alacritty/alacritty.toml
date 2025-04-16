@@ -30,10 +30,10 @@ padding = {x = 5, y = 5}
 dynamic_padding = true
 
 [font.bold]
-family = "Fira Code"
+family = "FiraCode Nerd Font"
 
 [font.italic]
-family = "Fira Code"
+family = "FiraCode Nerd Font"
 
 [font.normal]
-family = "Fira Code"
+family = "FiraCode Nerd Font"
