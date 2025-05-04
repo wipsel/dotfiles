@@ -2,7 +2,13 @@
 local function setup_module(module)
     local ok, loaded = pcall(require, module.name)
     if not ok then
-        vim.notify(string.format("module: %s not found, make sure it is installed.", module.name), vim.log.levels.WARN)
+        vim.notify(
+            string.format(
+                "module: %s not found, make sure it is installed.",
+                module.name
+            ),
+            vim.log.levels.WARN
+        )
 
         return
     end
@@ -15,7 +21,10 @@ local function setup_module(module)
                 local dep_ok, dep_loaded = pcall(require, dep.module)
                 if not dep_ok then
                     vim.notify(
-                        string.format("dependency module: %s not found, make sure it is installed.", module.name),
+                        string.format(
+                            "dependency module: %s not found, make sure it is installed.",
+                            module.name
+                        ),
                         vim.log.levels.WARN
                     )
 

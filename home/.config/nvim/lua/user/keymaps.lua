@@ -28,11 +28,23 @@ end
 
 local function write_file()
     local prompt = "Please provide a file name"
+    local buf = vim.api.nvim_get_current_buf()
 
     local ok, _ = pcall(vim.cmd.w)
-    if not ok and vim.fn.win_gettype() == "" then
+    if not ok and vim.api.nvim_buf_get_name(buf) == "" then
+        if not vim.bo.modifiable then
+            vim.notify("Buffer is not modifiable.", vim.log.levels.ERROR)
+            return
+        end
+
+        if vim.bo.readonly then
+            vim.notify("Buffer is readonly.", vim.log.levels.ERROR)
+            return
+        end
+
         local on_confirm = function(file_name)
             if file_name == "" or file_name == nil then
+                vim.notify("No file name", vim.log.levels.WARN)
                 return
             else
                 vim.cmd.w(file_name)
@@ -45,9 +57,6 @@ end
 
 return {
     setup = function(config)
-        vim.g.mapleader = config.leader
-        vim.g.maplocalleader = config.leader
-
         apply_keymaps("i", config.insert)
         apply_keymaps("n", config.normal)
         apply_keymaps("v", config.visual)

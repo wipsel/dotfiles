@@ -1,8 +1,3 @@
-if vim.g.neovide then
-    vim.g.neovide_cursor_animation_length = 0
-    vim.o.guifont = "FiraCode Nerd Font"
-end
-
 -- Below is my neovim config. The package manager used is packer but
 -- the idea is that it could be used with a different package manager in the
 -- future. The config table specifies the plugins and their configuration.
@@ -100,7 +95,6 @@ local config = {
         },
         config = function(keymaps, deps)
             return {
-                leader = " ",
                 visual = {
                     ["<leader>y"] = '"+y',
                 },
@@ -108,6 +102,7 @@ local config = {
                     ["jj"] = "<ESC>",
                 },
                 normal = {
+                    ["<leader>v"] = '"+p',
                     -- Buffer navigation
                     ["<leader>h"] = { fn = vim.cmd.bp, desc = "Buffer prev" },
                     ["<leader>l"] = { fn = vim.cmd.bn, desc = "Buffer next" },
@@ -386,6 +381,9 @@ local config = {
                 completion = {
                     documentation = {
                         auto_show = true,
+                        window = {
+                            border = "rounded",
+                        },
                     },
                     menu = {
                         min_width = 20,
@@ -427,7 +425,6 @@ local config = {
                     },
                     ["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
                     ["<CR>"] = { "accept", "fallback" },
-                    --["<Esc>"] = { "hide", "fallback" },
                     ["<PageUp>"] = { "scroll_documentation_up", "fallback" },
                     ["<PageDown>"] = { "scroll_documentation_down", "fallback" },
                 },

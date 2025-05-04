@@ -1,5 +1,15 @@
 local function setup()
     vim.cmd.colorscheme("kanagawa")
+        vim.g.mapleader = " "
+        vim.g.maplocalleader = " "
+
+    vim.filetype.add({
+        extension = { rasi = "rasi" },
+        pattern = {
+            [".*/waybar/config"] = "jsonc",
+            [".*/hypr/.*%.conf"] = "hyprlang",
+        },
+    })
 
     vim.opt.foldmethod = "expr"
     vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
