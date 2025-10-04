@@ -103,6 +103,7 @@ local config = {
                 },
                 normal = {
                     ["<leader>v"] = '"+p',
+                    ["<leader>y"] = '"+y',
                     -- Buffer navigation
                     ["<leader>h"] = { fn = vim.cmd.bp, desc = "Buffer prev" },
                     ["<leader>l"] = { fn = vim.cmd.bn, desc = "Buffer next" },
@@ -150,8 +151,9 @@ local config = {
                         desc = "[G]oto [R]eferences",
                     },
                     ["gd"] = {
-                        fn = vim.lsp.buf.definition,
-                        desc = "[G]oto [R]eferences",
+                        fn = deps.picker.lsp_definitions,
+                        opts = deps.themes.get_dropdown({ previewer = true }),
+                        desc = "[G]oto [D]efinitions",
                     },
                     ["rn"] = { fn = vim.lsp.buf.rename, desc = "[R]e[N]ame" },
                     ["<c-f>"] = {
@@ -166,13 +168,13 @@ local config = {
                     },
                     ["<c-k>"] = vim.lsp.buf.hover,
                     ["<c-n>"] = {
-                        fn = vim.diagnostic.goto_next,
-                        opts = { border = "rounded" },
+                        fn = vim.diagnostic.jump,
+                        opts = { border = "rounded", count = 1, float = true },
                         desc = "[N]ext diagnostic",
                     },
                     ["<c-p>"] = {
-                        fn = vim.diagnostic.goto_prev,
-                        opts = { border = "rounded" },
+                        fn = vim.diagnostic.jump,
+                        opts = { border = "rounded", count = -1, float = true },
                         desc = "[P]rev diagnostic",
                     },
                     ["gl"] = {
@@ -180,7 +182,6 @@ local config = {
                         opts = { width = 400 },
                         desc = "Open diagnostic float",
                     },
-
                     -- Git stuff
                     ["<leader>gn"] = {
                         fn = deps.git_conflicts.find_next,
@@ -223,15 +224,16 @@ local config = {
                     null_ls.builtins.formatting.isort,
                     null_ls.builtins.formatting.black,
                     null_ls.builtins.diagnostics.stylelint,
-                    null_ls.builtins.diagnostics.golangci_lint.with({
-                        prefer_local = ".bin",
-                        args = {
-                            "run",
-                            "--fix=false",
-                            "--fast",
-                            "--out-format=json",
-                        },
-                    }),
+                    --null_ls.builtins.diagnostics.golangci_lint.with({
+                    --prefer_local = ".bin",
+                    --args = {
+                    --"run",
+                    --"--fix=false",
+                    --"--fast-only",
+                    ---- Fixes for golang-ci lint v2
+                    --"--output.json.path stdout",
+                    --},
+                    --}),
                 },
                 on_attach = deps.lsp.on_attach,
             }
@@ -260,6 +262,28 @@ local config = {
                         server = lspconfig.ruff,
                         config = {
                             capabilities = capabilities,
+                        },
+                    },
+                    {
+                        server = lspconfig.golangci_lint_ls,
+                        config = {
+                            default_config = {
+                                cmd = { "golangci-lint-langserver" },
+                                root_dir = lspconfig.util.root_pattern(
+                                    ".git",
+                                    "go.mod"
+                                ),
+                                init_options = {
+                                    command = {
+                                        "golangci-lint",
+                                        "run",
+                                        "--output.json.path",
+                                        "stdout",
+                                        "--show-stats=false",
+                                        "--issues-exit-code=1",
+                                    },
+                                },
+                            },
                         },
                     },
                     {
@@ -369,7 +393,7 @@ local config = {
     -- A snippet engine
     { plugin = "L3MON4D3/LuaSnip" },
     { plugin = "rafamadriz/friendly-snippets" }, -- a bunch of snippets to use
-    -- Completion using cmp.
+    -- Completion using blink.
     {
         name = "blink.cmp",
         plugin = "saghen/blink.cmp",
@@ -378,6 +402,13 @@ local config = {
         },
         config = function(blink, deps)
             return {
+                fuzzy = {
+                    prebuilt_binaries = {
+                        download = true,
+                        ignore_version_mismatch = true,
+                        force_version = "v1.4.1",
+                    },
+                },
                 completion = {
                     documentation = {
                         auto_show = true,
