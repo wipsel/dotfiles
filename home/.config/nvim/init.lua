@@ -224,16 +224,15 @@ local config = {
                     null_ls.builtins.formatting.isort,
                     null_ls.builtins.formatting.black,
                     null_ls.builtins.diagnostics.stylelint,
-                    --null_ls.builtins.diagnostics.golangci_lint.with({
-                    --prefer_local = ".bin",
-                    --args = {
-                    --"run",
-                    --"--fix=false",
-                    --"--fast-only",
-                    ---- Fixes for golang-ci lint v2
-                    --"--output.json.path stdout",
-                    --},
-                    --}),
+                    null_ls.builtins.diagnostics.golangci_lint.with({
+                        prefer_local = ".bin",
+                        args = {
+                            "run",
+                            "--fix=false",
+                            -- Fixes for golang-ci lint v2
+                            "--output-format=json",
+                        },
+                    }),
                 },
                 on_attach = deps.lsp.on_attach,
             }
@@ -277,6 +276,7 @@ local config = {
                                     command = {
                                         "golangci-lint",
                                         "run",
+                                        --"--out-format=json",
                                         "--output.json.path",
                                         "stdout",
                                         "--show-stats=false",
@@ -355,12 +355,19 @@ local config = {
                         },
                     },
                     {
-                        server = lspconfig.pyright,
+                        server = lspconfig.ty,
                         config = {
                             capabilities = capabilities,
                             on_attach = lsp.on_attach,
                         },
                     },
+                    --{
+                    --server = lspconfig.pyright,
+                    --config = {
+                    --capabilities = capabilities,
+                    --on_attach = lsp.on_attach,
+                    --},
+                    --},
                 },
                 diagnostic = {
                     virtual_text = false,
