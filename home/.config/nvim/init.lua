@@ -166,7 +166,10 @@ local config = {
                         opts = deps.themes.get_cursor({ winblend = 0 }),
                         desc = "[C]ode [A]ctions",
                     },
-                    ["<c-k>"] = vim.lsp.buf.hover,
+                    ["<c-k>"] = {
+                        fn = vim.lsp.buf.hover,
+                        opts = { border = "rounded" },
+                    },
                     ["<c-n>"] = {
                         fn = vim.diagnostic.jump,
                         opts = { border = "rounded", count = 1, float = true },
@@ -452,7 +455,7 @@ local config = {
                     ) and vim.bo.buftype ~= "prompt" and vim.b.completion ~= false
                 end,
                 appearance = {
-                    kind_icons = deps.icons.cmp,
+                    kind_icons = deps.icons.completion,
                 },
                 keymap = {
                     preset = "default",

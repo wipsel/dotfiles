@@ -43,32 +43,6 @@ end
 return {
     on_attach = on_attach,
     setup = function(config)
-        vim.lsp.handlers["textDocument/hover"] =
-            vim.lsp.with(vim.lsp.handlers.hover, config.diagnostic.float)
-        vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
-            vim.lsp.handlers.signature_help,
-            config.diagnostic.float
-        )
-
-        vim.lsp.handlers["textDocument/definition"] = function(
-            _,
-            result,
-            ctx,
-            _
-        )
-            if result == nil or vim.tbl_isempty(result) then
-                vim.notify("[LSP] Definition not found", vim.log.levels.WARN)
-                return
-            end
-
-            if #result == 1 then
-                vim.lsp.util.jump_to_location(result[1], "utf-8")
-                return
-            end
-
-            config.lsp_definitions()
-        end
-
         for _, lsp in pairs(config.servers) do
             lsp.server.setup(lsp.config)
         end

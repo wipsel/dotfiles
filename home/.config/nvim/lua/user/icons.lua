@@ -1,4 +1,4 @@
-local cmp_kind_icons = {
+local completion = {
     Namespace = "󰌗",
     Text = "󰉿",
     Method = "󰆧",
@@ -41,14 +41,14 @@ local cmp_kind_icons = {
     TabNine = "",
 }
 
-local diagnostic_icons = {
+local diagnostic = {
     Error = "",
     Warn = "",
-    Hint = "",
-    Info = "",
+    Info = "",
+    Hint = "",
 }
 
 return {
-    cmp = cmp_kind_icons,
-    diagnostic = diagnostic_icons,
+    completion = completion,
+    diagnostic = diagnostic,
 }
