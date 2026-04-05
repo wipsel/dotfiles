@@ -3,6 +3,7 @@
 -- future. The config table specifies the plugins and their configuration.
 --
 --
+--
 -- The goal of this configuration was that it is small and independent of a package
 -- manager.
 --
@@ -26,6 +27,7 @@
 -- For the implementation see ./lua/user/plugins.lua
 --
 -- The config table defines all configuration for setting up nvim.
+--
 local config = {
     { plugin = "neanias/everforest-nvim" },
     { plugin = "sainnhe/sonokai" },
@@ -52,6 +54,7 @@ local config = {
     { name = "user.options" },
     { plugin = "wbthomason/packer.nvim" },
     { plugin = "nvim-lua/plenary.nvim" },
+    { plugin = "stevearc/dressing.nvim" },
     -- Neodev is used for neovim development
     {
         plugin = "folke/neodev.nvim",
@@ -69,8 +72,6 @@ local config = {
     },
     { plugin = "scrooloose/nerdcommenter" },
 
-    -- Nice rename window
-    { plugin = "stevearc/dressing.nvim" },
     -- Colorize hex color string
     {
         plugin = "norcalli/nvim-colorizer.lua",
@@ -89,7 +90,6 @@ local config = {
         deps = {
             { name = "themes",        module = "telescope.themes" },
             { name = "picker",        module = "telescope.builtin" },
-            { name = "spectre",       module = "spectre" },
             { name = "oil",           module = "oil" },
             { name = "git_conflicts", module = "git-conflict" },
         },
@@ -223,19 +223,9 @@ local config = {
                     null_ls.builtins.formatting.stylua,
                     null_ls.builtins.formatting.prettier,
                     null_ls.builtins.formatting.goimports,
-                    null_ls.builtins.formatting.gofumpt,
                     null_ls.builtins.formatting.isort,
                     null_ls.builtins.formatting.black,
                     null_ls.builtins.diagnostics.stylelint,
-                    null_ls.builtins.diagnostics.golangci_lint.with({
-                        prefer_local = ".bin",
-                        args = {
-                            "run",
-                            "--fix=false",
-                            -- Fixes for golang-ci lint v2
-                            "--output-format=json",
-                        },
-                    }),
                 },
                 on_attach = deps.lsp.on_attach,
             }
@@ -249,37 +239,23 @@ local config = {
             { name = "util",      module = "lspconfig/util" },
             { name = "blink",     module = "blink.cmp" },
             { name = "icons",     module = "user.icons" },
-            { name = "telescope", module = "telescope.builtin" },
         },
         config = function(lsp, deps)
-            local lspconfig = deps.lspconfig
             local capabilities = deps.blink.get_lsp_capabilities()
             local util = deps.util
             local icons = deps.icons.diagnostic
 
             return {
-                lsp_definitions = deps.telescope.lsp_definitions,
                 servers = {
                     {
-                        server = lspconfig.ruff,
-                        config = {
-                            capabilities = capabilities,
-                        },
-                    },
-                    {
-                        server = lspconfig.golangci_lint_ls,
+                        server = "golangci_lint_ls",
                         config = {
                             default_config = {
                                 cmd = { "golangci-lint-langserver" },
-                                root_dir = lspconfig.util.root_pattern(
-                                    ".git",
-                                    "go.mod"
-                                ),
                                 init_options = {
                                     command = {
                                         "golangci-lint",
                                         "run",
-                                        --"--out-format=json",
                                         "--output.json.path",
                                         "stdout",
                                         "--show-stats=false",
@@ -290,15 +266,10 @@ local config = {
                         },
                     },
                     {
-                        server = lspconfig.gopls,
+                        server = "gopls",
                         config = {
+                            on_attach = lsp.on_attach,
                             capabilities = capabilities,
-                            filetypes = { "go", "gomod", "gowork", "gotmpl" },
-                            root_dir = util.root_pattern(
-                                "go.work",
-                                "go.mod",
-                                ".git"
-                            ),
                             settings = {
                                 gopls = {
                                     completeUnimported = true,
@@ -308,41 +279,24 @@ local config = {
                                     },
                                 },
                             },
-                            on_attach = function(client, bufnr)
-                                -- disable formatting for gopls since we want none-ls to
-                                -- take care of this.
-                                client.server_capabilities.documentFormattingProvider =
-                                    false
-                                client.server_capabilities.documentRangeFormattingProvider =
-                                    false
-
-                                lsp.on_attach(client, bufnr)
-                            end,
                         },
                     },
                     {
-                        server = lspconfig.lua_ls,
+                        server = "lua_ls",
                         config = {
                             capabilities = capabilities,
                             on_attach = lsp.on_attach,
                         },
                     },
                     {
-                        server = lspconfig.eslint,
+                        server = "eslint",
                         config = {
                             capabilities = capabilities,
-                            on_attach = function(client, bufnr)
-                                vim.api.nvim_create_autocmd("BufWritePre", {
-                                    buffer = bufnr,
-                                    command = "EslintFixAll",
-                                })
-
-                                lsp.on_attach(client, bufnr)
-                            end,
+                            on_attach = lsp.on_attach,
                         },
                     },
                     {
-                        server = lspconfig.ts_ls,
+                        server = "ts_ls",
                         config = {
                             capabilities = capabilities,
                             on_attach = function(client, bufnr)
@@ -358,31 +312,30 @@ local config = {
                         },
                     },
                     {
-                        server = lspconfig.ty,
+                        server = "ruff",
+                        config = {
+                            capabilities = capabilities,
+                        },
+                    },
+                    {
+                        server = "ty",
                         config = {
                             capabilities = capabilities,
                             on_attach = lsp.on_attach,
+                            cmd = { "uv", "run", "ty", "server" },
+                            filetypes = { "python" },
+                            root_dir = vim.fs.root(0, { "pyproject.toml" }),
                         },
                     },
-                    --{
-                    --server = lspconfig.pyright,
-                    --config = {
-                    --capabilities = capabilities,
-                    --on_attach = lsp.on_attach,
-                    --},
-                    --},
                 },
                 diagnostic = {
                     virtual_text = false,
                     signs = {
-                        active = {
-                            {
-                                name = "DiagnosticSignError",
-                                text = icons.Error,
-                            },
-                            { name = "DiagnosticSignWarn", text = icons.Warn },
-                            { name = "DiagnosticSignHint", text = icons.Hint },
-                            { name = "DiagnosticSignInfo", text = icons.Info },
+                        text = {
+                            [vim.diagnostic.severity.ERROR] = icons.Error,
+                            [vim.diagnostic.severity.WARN] = icons.Warn,
+                            [vim.diagnostic.severity.INFO] = icons.Info,
+                            [vim.diagnostic.severity.HINT] = icons.Hint,
                         },
                     },
                     underline = true,

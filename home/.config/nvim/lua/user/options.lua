@@ -1,7 +1,7 @@
 local function setup()
     vim.cmd.colorscheme("kanagawa")
-        vim.g.mapleader = " "
-        vim.g.maplocalleader = " "
+    vim.g.mapleader = " "
+    vim.g.maplocalleader = " "
 
     vim.filetype.add({
         extension = { rasi = "rasi" },
@@ -37,7 +37,6 @@ local function setup()
     vim.opt.expandtab = true
     vim.opt.shiftwidth = 4
     vim.opt.tabstop = 8
-    vim.opt.expandtab = true
     vim.opt.softtabstop = 8
     vim.opt.numberwidth = 4
 

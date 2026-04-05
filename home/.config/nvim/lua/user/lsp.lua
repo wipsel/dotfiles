@@ -44,14 +44,8 @@ return {
     on_attach = on_attach,
     setup = function(config)
         for _, lsp in pairs(config.servers) do
-            lsp.server.setup(lsp.config)
-        end
-
-        for _, sign in ipairs(config.diagnostic.signs.active) do
-            vim.fn.sign_define(
-                sign.name,
-                { texthl = sign.name, text = sign.text, numhl = "" }
-            )
+            vim.lsp.config(lsp.server, lsp.config)
+            vim.lsp.enable(lsp.server)
         end
 
         vim.diagnostic.config(config.diagnostic)
