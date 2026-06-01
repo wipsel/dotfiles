@@ -52,14 +52,8 @@ local config = {
         },
     },
     { name = "user.options" },
-    { plugin = "wbthomason/packer.nvim" },
     { plugin = "nvim-lua/plenary.nvim" },
     { plugin = "stevearc/dressing.nvim" },
-    -- Neodev is used for neovim development
-    {
-        plugin = "folke/neodev.nvim",
-        name = "neodev",
-    },
     -- Nice icons for a bunch of plugins
     {
         plugin = "nvim-tree/nvim-web-devicons",
@@ -223,8 +217,6 @@ local config = {
                     null_ls.builtins.formatting.stylua,
                     null_ls.builtins.formatting.prettier,
                     null_ls.builtins.formatting.goimports,
-                    null_ls.builtins.formatting.isort,
-                    null_ls.builtins.formatting.black,
                     null_ls.builtins.diagnostics.stylelint,
                 },
                 on_attach = deps.lsp.on_attach,
@@ -286,6 +278,18 @@ local config = {
                         config = {
                             capabilities = capabilities,
                             on_attach = lsp.on_attach,
+                            settings = {
+                                Lua = {
+                                    runtime = { version = "LuaJIT" },
+                                    workspace = {
+                                        library = vim.api.nvim_get_runtime_file(
+                                            "",
+                                            true
+                                        ),
+                                        checkThirdParty = false,
+                                    },
+                                },
+                            },
                         },
                     },
                     {
@@ -338,7 +342,7 @@ local config = {
                             [vim.diagnostic.severity.HINT] = icons.Hint,
                         },
                     },
-                    underline = true,
+                    underline = false,
                     update_in_insert = false,
                     severity_sort = true,
                     float = {
@@ -468,7 +472,7 @@ local config = {
     },
     {
         plugin = "nvim-treesitter/nvim-treesitter",
-        name = "nvim-treesitter.configs",
+        name = "nvim-treesitter",
         config = {
             ensure_installed = "all",
             highlight = {
@@ -498,7 +502,7 @@ local config = {
     },
     {
         name = "lualine",
-        plugin = { "nvim-lualine/lualine.nvim" },
+        plugin = "nvim-lualine/lualine.nvim",
         config = {
             options = {
                 icons_enabled = true,

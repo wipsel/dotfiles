@@ -12,10 +12,18 @@ local function setup()
     })
 
     vim.opt.foldmethod = "expr"
-    vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+    vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+
+    vim.api.nvim_create_autocmd("FileType", {
+        callback = function(args)
+            pcall(vim.treesitter.start, args.buf)
+        end,
+    })
     vim.opt.list = true
 
-    vim.g.python3_host_prog = "$HOME" .. "/.pyenv/versions/nvim/bin/python3"
+    vim.g.python3_host_prog = vim.fn.expand("$HOME") .. "/.pyenv/versions/nvim/bin/python3"
+    vim.g.loaded_perl_provider = 0
+    vim.g.loaded_ruby_provider = 0
 
     vim.opt.undofile = true
     vim.opt.backup = false

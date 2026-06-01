@@ -1,4 +1,3 @@
--- This file contains a wrapper around packer.
 local function setup_module(module)
     local ok, loaded = pcall(require, module.name)
     if not ok then
@@ -43,44 +42,19 @@ local function setup_module(module)
     end
 end
 
-local function use_plugins(plugin_specs)
-    return function(use)
-        for _, plugin in pairs(plugin_specs) do
-            use(plugin)
-        end
-    end
-end
-
 return {
     load_config = function(config)
-        local p_ok, packer = pcall(require, "packer")
-        if not p_ok then
-            vim.notify("packer not found, make sure it is installed.")
-            return
-        end
-
-        local u_ok, util = pcall(require, "packer.util")
-        if not u_ok then
-            vim.notify("packer not found, make sure it is installed.")
-            return
-        end
-
-        local plugins = {}
+        local specs = {}
         for _, module in pairs(config) do
             if module.plugin then
-                table.insert(plugins, module.plugin)
+                local plugin = module.plugin
+                if not plugin:match("^https?://") then
+                    plugin = "https://github.com/" .. plugin
+                end
+                table.insert(specs, plugin)
             end
         end
-
-        packer.init({
-            display = {
-                open_fn = function()
-                    return util.float({ border = "rounded" })
-                end,
-            },
-        })
-
-        packer.startup(use_plugins(plugins))
+        vim.pack.add(specs)
 
         for _, module in pairs(config) do
             if module.name then
