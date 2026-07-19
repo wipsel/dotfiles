@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+# Managed by chezmoi (run_onchange). Installs the pacman packages declared in
+# .chezmoidata/packages.yaml. Re-runs only when this rendered script changes, i.e.
+# when the package list changes. Idempotent: skips already-installed packages, so a
+# machine that's already set up triggers no sudo prompt.
+#
+# AUR / hyprpm / external deps are intentionally NOT handled here — the machine-setup
+# skill reports them (they need judgment, a session, or a helper).
+set -euo pipefail
+
+{{ if eq .chezmoi.osRelease.id "arch" -}}
+pkgs=(
+{{- range .packages.arch.core }}
+  {{ . }}
+{{- end }}
+{{- range .packages.arch.desktop }}
+  {{ . }}
+{{- end }}
+)
+
+available=(); missing=()
+for p in "${pkgs[@]}"; do
+  if pacman -Si -- "$p" >/dev/null 2>&1; then available+=("$p"); else missing+=("$p"); fi
+done
+
+to_install=()
+for p in "${available[@]}"; do
+  pacman -Qq -- "$p" >/dev/null 2>&1 || to_install+=("$p")
+done
+
+if ((${#to_install[@]})); then
+  echo ">> installing ${#to_install[@]} package(s): ${to_install[*]}"
+  sudo pacman -S --needed "${to_install[@]}"
+else
+  echo ">> all pacman packages already installed"
+fi
+
+if ((${#missing[@]})); then
+  echo ">> NOT in the official repos (AUR, a wrong name, or a stale sync db — try 'sudo pacman -Sy'):"
+  printf '     - %s\n' "${missing[@]}"
+fi
+{{- else }}
+echo ">> Non-Arch host ({{ .chezmoi.osRelease.id }}) — install these with your package manager:"
+{{- range .packages.arch.core }}
+echo "     - {{ . }}"
+{{- end }}
+{{- range .packages.arch.desktop }}
+echo "     - {{ . }}"
+{{- end }}
+{{- end }}

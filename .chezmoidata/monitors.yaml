@@ -1,0 +1,17 @@
+# Per-host monitor layouts, read by dot_config/hypr/hyprland.conf.tmpl as `.monitors`,
+# keyed by hostname. A new host is an unmergeable hardware difference: add its entry
+# here from `hyprctl monitors` (the `desc:` strings), then `chezmoi apply`.
+# Hosts without an entry fall back to `monitor=,preferred,auto,auto`.
+
+monitors:
+  obelix:
+    - "desc:Lenovo Group Limited 0x8AC2, preferred, 0x0, 1.9166,"
+    # At home
+    - "desc:Samsung Electric Company LS24D60xU HNAY201650,2560x1440@100,1840x0,1.333,"
+    - "desc:Samsung Electric Company LS24D60xU HNAXC01129,2560x1440@100,auto,1.333,transform,1"
+    # Groningen
+    - "desc:Samsung Electric Company LS24D60xU HNAYC00326,2560x1440@100,1840x0,1.333,"
+    - "desc:Samsung Electric Company LS24D60xU HNAYC00417,2560x1440@100,auto,1.333,transform,1"
+    # Alternatives (commented in the original config, kept for reference):
+    #   desc:Philips Consumer Electronics Company Philips UHDTV,3840x2160@100,1840x0,2.4,
+    #   desc:Philips Consumer Electronics Company Philips UHDTV 0x01010101,3840x2160@30.00000,1840x0,1.666667,

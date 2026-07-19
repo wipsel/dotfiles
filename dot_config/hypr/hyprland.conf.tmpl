@@ -8,22 +8,15 @@ env = ELECTRON_OZONE_PLATFORM_HINT,auto
 ################
 ### MONITORS ###
 ################
-{{- if eq .chezmoi.hostname "obelix" }}
-monitor=desc:Lenovo Group Limited 0x8AC2, preferred, 0x0, 1.9166,
-## At home
-monitor=desc:Samsung Electric Company LS24D60xU HNAY201650,2560x1440@100,1840x0,1.333,
-monitor=desc:Samsung Electric Company LS24D60xU HNAXC01129,2560x1440@100,auto,1.333,transform,1
-
-## Groningen
-monitor=desc:Samsung Electric Company LS24D60xU HNAYC00326,2560x1440@100,1840x0,1.333,
-monitor=desc:Samsung Electric Company LS24D60xU HNAYC00417,2560x1440@100,auto,1.333,transform,1
-
-#monitor=desc:Philips Consumer Electronics Company Philips UHDTV,3840x2160@100,1840x0,2.4,
-## Remote 
-#monitor=desc:Philips Consumer Electronics Company Philips UHDTV 0x01010101,3840x2160@30.00000,1840x0,1.666667,
+# Per-host layouts live in .chezmoidata/monitors.yaml, keyed by hostname.
+{{- $mons := index .monitors .chezmoi.hostname }}
+{{- if $mons }}
+{{- range $mons }}
+monitor={{ . }}
+{{- end }}
 {{- else }}
-# Fallback for hosts other than obelix — replace with this machine's outputs
-# (run `hyprctl monitors` for the desc: strings), then commit + push.
+# No monitor profile for host '{{ .chezmoi.hostname }}'. Add one to
+# .chezmoidata/monitors.yaml from `hyprctl monitors`, then `chezmoi apply`.
 monitor=,preferred,auto,auto
 {{- end }}
 

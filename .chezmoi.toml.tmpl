@@ -1,0 +1,8 @@
+# chezmoi config for THIS machine — generated once by `chezmoi init`, never committed.
+# Per-machine secret values live under [data] and are read by templates by their data key.
+# Leave the token blank at init to set it later: paste it here, then `chezmoi apply`.
+{{- $token := promptStringOnce . "exampleToken" "Secret token for EXAMPLE_TOKEN (blank = set later)" "" -}}
+{{- if $token }}
+[data]
+    exampleToken = {{ $token | quote }}
+{{- end }}

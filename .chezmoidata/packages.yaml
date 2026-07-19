@@ -1,0 +1,51 @@
+# Declarative dependency manifest, read by chezmoi as `.packages`.
+# - The pacman groups are installed on `chezmoi apply` by
+#   run_onchange_before_install-packages.sh.tmpl (idempotent, --needed).
+# - aur / hyprpm / external are NOT force-installed: the machine-setup skill
+#   reports them so a human (or Claude, for user-level ones like wt) handles them.
+# Seeded from obelix 2026-07-19; keep in sync with what the configs actually need.
+
+packages:
+  arch:
+    # Core CLI — every machine, graphical or not.
+    core:
+      - fish
+      - starship
+      - fzf
+      - neovim
+      - alacritty
+      - git
+      - openssh
+      - go
+      - nodejs
+    # Wayland / Hyprland desktop — graphical workstations only.
+    desktop:
+      - hyprland
+      - waybar
+      - dunst
+      - wofi
+      - hyprpaper
+      - wlsunset
+      - grim
+      - slurp
+      - swappy
+      - network-manager-applet
+      - xdg-desktop-portal-hyprland
+      - qt6-wayland
+      - noto-fonts
+
+  # Arch User Repository — needs an AUR helper (paru/yay) or a manual build.
+  aur:
+    - brillo   # screen brightness (hypr XF86MonBrightness binds)
+
+  # Hyprland plugins via `hyprpm` — must match the running hyprland version and
+  # need a live session. Reported, never auto-installed.
+  hyprpm:
+    - name: hy3
+      url: https://github.com/outfoxxed/hy3
+
+  # Tools installed outside the package manager (user-level; Claude can do these).
+  external:
+    - name: wt
+      install: go install github.com/wipsel/wt@latest
+      private: true   # private repo — needs GOPRIVATE + SSH access
