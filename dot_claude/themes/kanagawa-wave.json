@@ -1,0 +1,54 @@
+{
+  "name": "Kanagawa Wave",
+  "base": "dark",
+  "overrides": {
+    "claude": "#7E9CD8",
+    "claudeShimmer": "#9CABCA",
+    "text": "#DCD7BA",
+    "inverseText": "#1F1F28",
+    "inactive": "#727169",
+    "inactiveShimmer": "#938AA9",
+    "subtle": "#54546D",
+    "suggestion": "#2D4F67",
+    "permission": "#957FB8",
+    "permissionShimmer": "#b8b4d0",
+    "remember": "#9CABCA",
+
+    "success": "#98BB6C",
+    "error": "#E82424",
+    "warning": "#FF9E3B",
+    "warningShimmer": "#FFA066",
+    "merged": "#957FB8",
+
+    "promptBorder": "#7E9CD8",
+    "promptBorderShimmer": "#9CABCA",
+    "planMode": "#7FB4CA",
+    "autoAccept": "#98BB6C",
+    "bashBorder": "#76946A",
+    "ide": "#658594",
+    "fastMode": "#FFA066",
+    "fastModeShimmer": "#FF9E3B",
+
+    "diffAdded": "#2B3328",
+    "diffRemoved": "#43242B",
+    "diffAddedDimmed": "#20251d",
+    "diffRemovedDimmed": "#2f1c20",
+    "diffAddedWord": "#76946A",
+    "diffRemovedWord": "#C34043",
+
+    "briefLabelYou": "#E6C384",
+    "briefLabelClaude": "#7E9CD8",
+
+    "rate_limit_fill": "#7E9CD8",
+    "rate_limit_empty": "#363646",
+
+    "red_FOR_SUBAGENTS_ONLY": "#C34043",
+    "blue_FOR_SUBAGENTS_ONLY": "#7E9CD8",
+    "green_FOR_SUBAGENTS_ONLY": "#98BB6C",
+    "yellow_FOR_SUBAGENTS_ONLY": "#E6C384",
+    "purple_FOR_SUBAGENTS_ONLY": "#957FB8",
+    "orange_FOR_SUBAGENTS_ONLY": "#FFA066",
+    "pink_FOR_SUBAGENTS_ONLY": "#D27E99",
+    "cyan_FOR_SUBAGENTS_ONLY": "#7AA89F"
+  }
+}

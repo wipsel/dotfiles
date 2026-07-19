@@ -1,1 +1,32 @@
 README.md
+
+# Claude Code — only a curated public-safe subset is tracked (settings.json, statusline.sh,
+# themes/, skills/write-go-test). Ignore secrets + machine-local state so an accidental
+# `chezmoi add ~/.claude` can never publish them.
+.claude.json
+.claude/.credentials.json
+.claude/settings.local.json
+.claude/CLAUDE.md
+.claude/skills/oplever-rapport
+.claude/skills/oplever-rapport-progressief
+.claude/projects
+.claude/sessions
+.claude/session-env
+.claude/history.jsonl
+.claude/file-history
+.claude/homunculus
+.claude/plugins
+.claude/cache
+.claude/image-cache
+.claude/paste-cache
+.claude/shell-snapshots
+.claude/telemetry
+.claude/metrics
+.claude/backups
+.claude/debug
+.claude/downloads
+.claude/tasks
+.claude/jobs
+.claude/plans
+.claude/daemon
+.claude/bin
