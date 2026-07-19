@@ -1,0 +1,16 @@
+# Managed by chezmoi — source: private_fish/conf.d/creds.fish.tmpl
+#
+# Credential EXPORT mechanism (synced across machines). The secret VALUE is not here and
+# never enters git: it lives per-machine in ~/.config/chezmoi/chezmoi.toml under [data],
+# pasted once. This template reads it via {{ "{{ .exampleToken }}" }} and only emits the
+# export when the key is present (so a machine that hasn't pasted it yet is a clean no-op).
+#
+# To activate on a machine: add the value under [data] in that box's local chezmoi.toml,
+# then `chezmoi apply`. Rename exampleToken / EXAMPLE_TOKEN to your real credential name(s).
+#
+# Upgrade to a real backend later with a one-line change, e.g.:
+#   set -gx EXAMPLE_TOKEN (pass show work/example-token)
+# — no other part of this setup changes.
+{{- if hasKey . "exampleToken" }}
+set -gx EXAMPLE_TOKEN {{ .exampleToken | quote }}
+{{- end }}

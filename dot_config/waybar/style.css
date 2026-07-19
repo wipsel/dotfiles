@@ -1,0 +1,99 @@
+* {
+  font-size: 12px;
+  font-family: "Fira code light";
+}
+
+window#waybar {
+  /*background: linear-gradient(90deg, #7e9cd8 0%, #e46876 100%);*/
+  background: linear-gradient(90deg, #223249 0%, #e46876 100%);
+  color: #fdf6e3;
+}
+
+#workspaces button {
+  color: #fdf6e3;
+  border: 2px solid transparent;
+}
+
+#workspaces button.focused {
+  color: #268bd2;
+  border: 2px solid transparent;
+}
+
+#workspaces button.active {
+  color: #abe9b3;
+  border: 2px solid transparent;
+  border-top: 2px solid #abe9b3;
+  border-bottom: 2px solid #abe9b3;
+}
+
+/*#workspaces button:hover {*/
+/*}*/
+
+#workspaces button:hover {
+  box-shadow: inherit;
+  text-shadow: inherit;
+  background: #223249;
+  border: #223249;
+  color: #2aa198;
+  border: 2px solid transparent;
+  border-top: 2px solid #2aa198;
+  border-bottom: 2px solid #2aa198;
+}
+
+#workspaces {
+  padding-left: 10px;
+  padding-right: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+#clock {
+  padding-left: 10px;
+  font-weight: bold;
+  padding-right: 10px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+#pulseaudio,
+#memory,
+#cpu,
+#battery,
+#tray,
+#network,
+#disk {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#pulseaudio {
+  border-bottom-left-radius: 10px;
+}
+
+#custom-data_usage {
+  padding: 0 10px;
+}
+
+#custom-data_usage.usage-0 {
+  color: #a8ffa8;
+}
+
+#custom-data_usage.usage-20 {
+  color: #8dff8d;
+}
+
+#custom-data_usage.usage-40 {
+  color: #ffd966;
+}
+
+#custom-data_usage.usage-60 {
+  color: #ffb84d;
+}
+
+#custom-data_usage.usage-80 {
+  color: #ff704d;
+}
+
+#custom-data_usage.usage-100 {
+  color: #ff3333;
+  font-weight: bold;
+}

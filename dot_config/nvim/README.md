@@ -2,9 +2,7 @@
 
 ---
 
-Plugins are managed using [packer](https://github.com/wbthomason/packer.nvim)
-Note that packer is currently unmaintained and I should probably move to something
-else.
+Plugins are managed using neovim's built-in `vim.pack` (see `:help vim.pack`, nvim 0.12+).
 
 The `init.lua` calls setup for each installed plugin. I add plugins
 and optional user config using a lua table.
@@ -12,7 +10,7 @@ For adding a plugin use the following format:
 
 ```lua
 {
-    plugin = "plugin-name" -- name of the plugin according to the packer plugin spec.
+    plugin = "plugin-name" -- name of the plugin (owner/repo), as used by vim.pack
     name = "module-name" -- name of the module that should be loaded for a plugin
     dependencies = {name = "identifier", module="module-name"} --
     config = {} or function(module, deps) -- the table that you would pass into the setup function for the plugin

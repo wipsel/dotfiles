@@ -1,4 +1,4 @@
--- Below is my neovim config. The package manager used is packer but
+-- Below is my neovim config. The package manager used is nvim's built-in vim.pack but
 -- the idea is that it could be used with a different package manager in the
 -- future. The config table specifies the plugins and their configuration.
 --
@@ -12,7 +12,7 @@
 --
 -- {
 -- name: Name of the module used in the `require` call for loading the module/plugin
--- plugin: The name of the plugin as used by packer (and many others)
+-- plugin: The name of the plugin as used by vim.pack (and many others)
 -- config: The configuration passed into the setup function of a module/plugin
 --         can be either a function returning a table or a table
 -- deps: Optional dependency table that can be used in the config function for
@@ -31,6 +31,7 @@
 local config = {
     { plugin = "neanias/everforest-nvim" },
     { plugin = "sainnhe/sonokai" },
+    { plugin = "sindrets/diffview.nvim" },
     { plugin = "navarasu/onedark.nvim" },
     { plugin = "marko-cerovac/material.nvim" },
     {
@@ -53,6 +54,7 @@ local config = {
     },
     { name = "user.options" },
     { plugin = "nvim-lua/plenary.nvim" },
+    { plugin = "MeanderingProgrammer/render-markdown.nvim" },
     { plugin = "stevearc/dressing.nvim" },
     -- Nice icons for a bunch of plugins
     {
@@ -133,6 +135,34 @@ local config = {
                         opts = deps.themes.get_dropdown({ previewer = false }),
                         desc = "[G]it [C]ommits",
                     },
+
+                    -- Split resizing (mirrors Hyprland's SUPER+hjkl, which
+                    -- can't reach nvim, so Ctrl+arrows are used instead).
+                    ["<C-Right>"] = {
+                        fn = function()
+                            vim.cmd("vertical resize +3")
+                        end,
+                        desc = "Split wider",
+                    },
+                    ["<C-Left>"] = {
+                        fn = function()
+                            vim.cmd("vertical resize -3")
+                        end,
+                        desc = "Split narrower",
+                    },
+                    ["<C-Down>"] = {
+                        fn = function()
+                            vim.cmd("resize +3")
+                        end,
+                        desc = "Split taller",
+                    },
+                    ["<C-Up>"] = {
+                        fn = function()
+                            vim.cmd("resize -3")
+                        end,
+                        desc = "Split shorter",
+                    },
+
                     -- LSP functionality
                     ["gi"] = {
                         fn = deps.picker.lsp_implementations,

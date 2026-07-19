@@ -1,3 +1,3 @@
 ## Dotfiles
 
-Always wip dotfiles, managed with homeshick.
+Always wip dotfiles, managed with chezmoi.

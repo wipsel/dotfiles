@@ -113,7 +113,6 @@ function zvm_after_init() {
 
 export FZF_DEFAULT_OPTS='--color=fg:#dcd7ba,bg:#1e1f28,hl:#9cabca,fg+:#727169,bg+:#2a2a37,hl+:#7e9cd8,info:#7aa89f,prompt:#e46876,pointer:#957fb8,marker:#98bb6c,spinner:#938aa9,header:#7aa89f'
 
-source "$HOME/.homesick/repos/homeshick/homeshick.sh"
 # source environment variables
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
