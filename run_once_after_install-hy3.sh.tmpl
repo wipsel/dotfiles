@@ -1,0 +1,36 @@
+{{- if lookPath "hyprpm" -}}
+#!/bin/bash
+# Ensure the hy3 Hyprland layout plugin is installed & enabled via hyprpm.
+#
+# IMPORTANT: this intentionally does NOT run `hyprpm update`. When the running
+# Hyprland is newer than hy3's published commit_pins (e.g. Hyprland 0.55.2 while
+# hy3 only pins up to 0.55.1), `hyprpm update` fails at "write plugin state" AND
+# leaves ~/.local/share/hyprpm missing, which breaks hy3 loading at next boot.
+# `hyprpm reload` (used at Hyprland startup) is safe and does not rebuild.
+#
+# After a Hyprland upgrade, once upstream hy3 catches up, rebuild manually:
+#   hyprpm update && hyprpm reload
+# If `update` ever wipes the state dir, restore it from the newest backup:
+#   cp -a ~/.local/share/hyprpm.bak.* ~/.local/share/hyprpm   # (pick the latest)
+
+set -uo pipefail
+HY3_URL="https://github.com/outfoxxed/hy3"
+
+if hyprpm list 2>/dev/null | grep -qiw hy3; then
+  echo ">> hy3: already installed via hyprpm"
+else
+  echo ">> hy3: installing from $HY3_URL"
+  if ! hyprpm add "$HY3_URL"; then
+    echo "!! hyprpm add hy3 failed (Hyprland may be ahead of hy3's commit_pins);"
+    echo "   install manually later with: hyprpm add $HY3_URL && hyprpm enable hy3"
+    exit 0
+  fi
+  hyprpm enable hy3 || true
+fi
+
+# Load into the running compositor if one is up (safe; no rebuild).
+if hyprctl version >/dev/null 2>&1; then
+  hyprpm reload || true
+fi
+echo ">> hy3: ready"
+{{- end -}}

@@ -1,0 +1,16 @@
+{{- if eq .chezmoi.hostname "obelix" }}
+wallpaper {
+    monitor = eDP-1
+    path = /home/wipsel/.wallpaper/wallpaper.jpg
+    fit_mode = cover
+}
+{{- else }}
+# All monitors on this host get the same wallpaper (empty monitor = every output).
+wallpaper {
+    monitor =
+    path = /home/wipsel/.wallpaper/wallpaper.jpg
+    fit_mode = cover
+}
+{{- end }}
+
+splash=false
