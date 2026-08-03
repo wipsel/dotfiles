@@ -1,14 +1,13 @@
 README.md
 SETUP.md
 
-# Claude Code — only a curated public-safe subset is tracked (settings.json, statusline.sh,
+# Claude Code — only a curated subset is tracked (CLAUDE.md, settings.json, statusline.sh,
 # themes/, and the domain-agnostic skills write-go-test, machine-setup, dotfiles-sync).
 # Ignore secrets + machine-local state so an accidental `chezmoi add ~/.claude` can never
 # publish them.
 .claude.json
 .claude/.credentials.json
 .claude/settings.local.json
-.claude/CLAUDE.md
 .claude/skills/oplever-rapport
 .claude/skills/oplever-rapport-progressief
 .claude/projects
