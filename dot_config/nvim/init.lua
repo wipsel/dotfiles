@@ -503,15 +503,25 @@ local config = {
     {
         plugin = "nvim-treesitter/nvim-treesitter",
         name = "nvim-treesitter",
-        config = {
-            ensure_installed = "all",
-            highlight = {
-                enable = true,
-            },
-            indent = {
-                enable = false,
-            },
-        },
+        -- Parsers have to be requested by name; there is no `ensure_installed`.
+        -- `comment` is what gives TODO/FIXME/NOTE markers their highlight: every
+        -- language's `injections.scm` injects it into comments, and without the
+        -- parser that injection silently does nothing.
+        -- Highlighting itself is started from user.options, not from here.
+        config = function(treesitter)
+            treesitter.install({
+                "comment",
+                "go",
+                "gomod",
+                "gitcommit",
+                "json",
+                "markdown",
+                "markdown_inline",
+                "python",
+                "tsx",
+                "typescript",
+            })
+        end,
     },
     --  Git integration stuff
     {
