@@ -21,7 +21,8 @@ local function setup()
     })
     vim.opt.list = true
 
-    vim.g.python3_host_prog = vim.fn.expand("$HOME") .. "/.pyenv/versions/nvim/bin/python3"
+    vim.g.python3_host_prog = vim.fn.expand("$HOME")
+        .. "/.pyenv/versions/nvim/bin/python3"
     vim.g.loaded_perl_provider = 0
     vim.g.loaded_ruby_provider = 0
 

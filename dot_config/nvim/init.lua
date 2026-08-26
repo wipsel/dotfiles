@@ -84,9 +84,9 @@ local config = {
     {
         name = "user.keymaps",
         deps = {
-            { name = "themes",        module = "telescope.themes" },
-            { name = "picker",        module = "telescope.builtin" },
-            { name = "oil",           module = "oil" },
+            { name = "themes", module = "telescope.themes" },
+            { name = "picker", module = "telescope.builtin" },
+            { name = "oil", module = "oil" },
             { name = "git_conflicts", module = "git-conflict" },
         },
         config = function(keymaps, deps)
@@ -258,9 +258,9 @@ local config = {
         plugin = "neovim/nvim-lspconfig",
         deps = {
             { name = "lspconfig", module = "lspconfig" },
-            { name = "util",      module = "lspconfig/util" },
-            { name = "blink",     module = "blink.cmp" },
-            { name = "icons",     module = "user.icons" },
+            { name = "util", module = "lspconfig/util" },
+            { name = "blink", module = "blink.cmp" },
+            { name = "icons", module = "user.icons" },
         },
         config = function(lsp, deps)
             local capabilities = deps.blink.get_lsp_capabilities()
@@ -429,7 +429,7 @@ local config = {
                             },
                             columns = {
                                 { "label" },
-                                { "kind_icon",         "kind", gap = 1 },
+                                { "kind_icon", "kind", gap = 1 },
                                 { "label_description", gap = 1 },
                             },
                         },
