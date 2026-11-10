@@ -12,12 +12,18 @@ Fuller rationale and more preferences live in memory (see MEMORY.md).
   flag code smells. Be a thinking partner, not an autocomplete — disagreeing is welcome.
 - **Stay in scope.** One branch = one concern. Small boy-scout cleanups in code you're
   already touching are fine; don't let them creep into unrelated files or broader refactors.
+- **At most 3 subagents.** Never have more than 3 subagents (Agent tool, workflow agents)
+  in flight at once; prefer doing work inline over delegating.
 
 ## Code
 
 - **Sparse comments.** Prefer self-explanatory code; comment only when something unexpected
   is done, and explain _why_, not _how_. Never let conversation context or self-corrections
   leak into comments, commit messages, or issue descriptions ("prompt leaking").
+- **Comments assert only what the file controls.** Test each sentence of a comment or
+  docstring: if an edit to a _different_ file could make it false, cut it. A component's
+  docstring says what it renders and how it is used, not what its callers pass, what an
+  endpoint returns, or what a mockup draws.
 - **Reuse before building.** Extend existing components/patterns/props/styles rather than
   adding parallel ones; introduce something new only when nothing fits, and say why.
 - **Name for meaning.** Full words, no shorthands; reuse the codebase's established Dutch
