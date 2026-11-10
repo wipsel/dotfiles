@@ -16,6 +16,8 @@ push unless the user asks** (pushing to a public remote is an outward action to 
 
 ## Capture — a local config change → the repo
 1. `chezmoi re-add` (or `chezmoi add <path>` for a new file) pulls the live edit into source.
+   `~/.claude/settings.json` is the exception: a `modify_` script manages only some of its keys,
+   so `re-add` skips it — capture a settings change by editing `dot_claude/modify_settings.json`.
 2. Review: `chezmoi diff` and `git -C ~/.local/share/chezmoi diff`.
 3. Commit with the convention below. **Do not push** — say it's committed locally and offer to
    push if they want.

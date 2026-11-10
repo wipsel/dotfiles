@@ -33,7 +33,7 @@ is a one-line template change.
 
 ## Day to day — the `dotfiles-sync` skill
 - Pull: `chezmoi update`.
-- Save a local edit: `chezmoi re-add` → commit (convention below) → push only when you choose.
+- Save a local edit: `chezmoi re-add` (Claude's `settings.json` is the exception: edit `dot_claude/modify_settings.json`) → commit (convention below) → push only when you choose.
 - See drift: `chezmoi status` / `chezmoi diff`.
 
 ## Commit convention

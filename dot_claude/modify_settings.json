@@ -1,0 +1,60 @@
+#!/bin/sh
+# Claude Code rewrites settings.json itself and keeps machine-local state in it
+# (autoMode.environment describes this machine's repos), so the file is not tracked
+# whole: the keys below are deep-merged over whatever the machine already has.
+# Objects merge key by key, arrays are replaced, unlisted keys are left alone.
+# `chezmoi re-add` skips modify scripts, so capture a settings change by editing here.
+exec jq -n --arg home "$HOME" '([inputs][0] // {}) * {
+  "permissions": {
+    "defaultMode": "auto"
+  },
+  "model": "opus[1m]",
+  "env": {
+    "CLAUDE_CODE_TMPDIR": "\($home)/.cache/claude-tmp"
+  },
+  "idleCompaction": false,
+  "skillOverrides": {
+    "anthropic-skills:docs": "off",
+    "anthropic-skills:google-workspace": "off",
+    "anthropic-skills:morning": "off",
+    "anthropic-skills:import-memory": "off",
+    "anthropic-skills:skill-creator": "off"
+  },
+  "workflowSizeGuideline": "small",
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.claude/hooks/herdr-namer.py"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "\($home)/.claude/statusline.sh"
+  },
+  "enabledPlugins": {
+    "gopls-lsp@claude-plugins-official": true,
+    "pyright-lsp@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true,
+    "frontend-design@claude-plugins-official": false
+  },
+  "extraKnownMarketplaces": {},
+  "feedbackDrafts": "off",
+  "effortLevel": "xhigh",
+  "modelSettings": {
+    "claude-opus-5-5": {
+      "effortLevel": "xhigh"
+    }
+  },
+  "tui": "fullscreen",
+  "skipWorkflowUsageWarning": true,
+  "theme": "custom:kanagawa-wave",
+  "agentPushNotifEnabled": true,
+  "skipAutoPermissionPrompt": true,
+  "switchModelsOnFlag": false
+}'

@@ -15,6 +15,7 @@ packages:
       - neovim
       - alacritty
       - git
+      - jq       # merges managed keys into ~/.claude/settings.json
       - openssh
       - go
       - nodejs
