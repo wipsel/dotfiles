@@ -45,3 +45,18 @@ monitors:
     #
     #   output: "desc:Philips Consumer Electronics Company Philips UHDTV 0x01010101"
     #   mode: "3840x2160@30.00000", position: "1840x0", scale: 1.666667
+
+  # Desktop (GeForce GTX 1050 Ti): Acer CB241HY on DP-1, Iiyama PL2483H on HDMI-A-1 (portrait).
+  # Workspaces 7-9 are left unpinned.
+  wipsel:
+    - output: "desc:Acer Technologies Acer CB241HY T53EE0094203"
+      mode: "1920x1080@60"
+      position: "2880x0"
+      scale: 1
+      workspaces: [1]
+    - output: "desc:Iiyama North America PL2483H 1156291662875"
+      mode: "1920x1080@60"
+      position: "4800x0"
+      scale: 1
+      transform: 1
+      workspaces: [2, 3, 4, 5, 6]
