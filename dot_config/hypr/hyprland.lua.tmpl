@@ -1,0 +1,273 @@
+-- Hyprland config. Docs: https://wiki.hypr.land/Configuring/Start/
+-- Autocompletion: point your LSP at /usr/share/hypr/stubs.
+
+------------------
+---- MONITORS ----
+------------------
+-- Per-host layouts live in .chezmoidata/monitors.yaml, keyed by hostname.
+{{- $mons := index .monitors .chezmoi.hostname }}
+{{- if $mons }}
+{{- range $mons }}
+hl.monitor({ output = "{{ .output }}", mode = "{{ .mode }}", position = "{{ .position }}", scale = {{ .scale }}{{ if hasKey . "transform" }}, transform = {{ .transform }}{{ end }} })
+{{- end }}
+{{- else }}
+-- No monitor profile for host '{{ .chezmoi.hostname }}'. Add one to
+-- .chezmoidata/monitors.yaml from `hyprctl monitors`, then `chezmoi apply`.
+hl.monitor({ output = "", mode = "preferred", position = "auto", scale = "auto" })
+{{- end }}
+
+
+---------------------
+---- MY PROGRAMS ----
+---------------------
+
+local mod         = "ALT"
+local terminal    = "alacritty -e fish"
+local fileManager = "dolphin"
+local menu        = "wofi --show drun"
+
+
+-------------------
+---- AUTOSTART ----
+-------------------
+
+hl.on("hyprland.start", function()
+    hl.exec_cmd("hyprpm reload -n")
+    hl.exec_cmd("waybar & hyprpaper & nm-applet")
+    hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
+    hl.exec_cmd("dunst")
+    hl.exec_cmd("wlsunset -l=5321917 -L=6.5667")
+end)
+
+
+-------------------------------
+---- ENVIRONMENT VARIABLES ----
+-------------------------------
+
+hl.env("ELECTRON_OZONE_PLATFORM_HINT", "auto")
+hl.env("ELECTRON_ENABLE_WAYLAND", "1")
+hl.env("XCURSOR_SIZE", "24")
+hl.env("HYPRCURSOR_SIZE", "24")
+hl.env("XDG_SESSION_TYPE", "wayland")
+hl.env("GTK_THEME", "Nord")
+hl.env("QT_QPA_PLATFORM", "wayland")
+
+
+-----------------------
+---- LOOK AND FEEL ----
+-----------------------
+
+hl.config({
+    general = {
+        gaps_in     = 4,
+        gaps_out    = 4,
+        border_size = 2,
+
+        col = {
+            active_border   = { colors = { "rgba(7e9cd8ee)", "rgba(e46876ee)" }, angle = 45 },
+            inactive_border = "rgba(595959aa)",
+        },
+
+        resize_on_border = false,
+        allow_tearing    = false,
+
+        layout = "hy3",
+    },
+
+    decoration = {
+        rounding         = 10,
+        active_opacity   = 1.0,
+        inactive_opacity = 1.0,
+
+        blur = {
+            enabled  = true,
+            size     = 3,
+            passes   = 1,
+            vibrancy = 0.1696,
+        },
+    },
+
+    animations = {
+        enabled = true,
+    },
+
+    master = {
+        new_status = "master",
+    },
+
+    misc = {
+        force_default_wallpaper = 1,
+        disable_hyprland_logo   = false,
+    },
+
+    group = {
+        focus_removed_window = false,
+    },
+
+    cursor = {
+        no_hardware_cursors = 1,
+    },
+})
+
+hl.curve("myBezier", { type = "bezier", points = { { 0.05, 0.9 }, { 0.1, 1.05 } } })
+
+hl.animation({ leaf = "windows",     enabled = true, speed = 7,  bezier = "myBezier" })
+hl.animation({ leaf = "windowsOut",  enabled = true, speed = 7,  bezier = "default", style = "popin 80%" })
+hl.animation({ leaf = "border",      enabled = true, speed = 10, bezier = "default" })
+hl.animation({ leaf = "borderangle", enabled = true, speed = 8,  bezier = "default" })
+hl.animation({ leaf = "fade",        enabled = true, speed = 7,  bezier = "default" })
+hl.animation({ leaf = "workspaces",  enabled = true, speed = 6,  bezier = "default" })
+
+
+---------------
+---- INPUT ----
+---------------
+
+hl.config({
+    input = {
+        kb_layout  = "us",
+        kb_variant = "",
+        kb_model   = "",
+        kb_rules   = "",
+        -- For a mac keyboard, add altwin:swap_alt_win
+        kb_options = "ctrl:nocaps,compose:ralt",
+
+        follow_mouse = 1,
+        sensitivity  = 0, -- -1.0 - 1.0, 0 means no modification.
+
+        touchpad = {
+            natural_scroll = true,
+        },
+    },
+})
+
+hl.gesture({ fingers = 4, direction = "horizontal", action = "workspace" })
+
+hl.device({ name = "epic-mouse-v1", sensitivity = -0.4 })
+
+
+---------------------
+---- KEYBINDINGS ----
+---------------------
+
+hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd("brillo -A 5"))
+hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brillo -U 5"))
+
+hl.bind(mod .. " + P", hl.dsp.exec_cmd([[grim -g "$(slurp)" - | swappy -f -]]))
+
+hl.bind(mod .. " + return",  hl.dsp.exec_cmd(terminal))
+hl.bind(mod .. " + D",       hl.dsp.exec_cmd(menu))
+hl.bind(mod .. " + SHIFT + Q", hl.dsp.window.close())
+hl.bind(mod .. " + M",       hl.dsp.exit())
+hl.bind(mod .. " + SHIFT + V", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mod .. " + F",       hl.dsp.window.fullscreen())
+
+hl.bind("SUPER + L", hl.dsp.window.resize({ x = 100,  y = 0,    relative = true }))
+hl.bind("SUPER + H", hl.dsp.window.resize({ x = -100, y = 0,    relative = true }))
+hl.bind("SUPER + K", hl.dsp.window.resize({ x = 0,    y = -100, relative = true }))
+hl.bind("SUPER + J", hl.dsp.window.resize({ x = 0,    y = 100,  relative = true }))
+
+-- Switch workspaces with mod + [0-9], move the active window with mod + SHIFT + [0-9]
+for i = 1, 10 do
+    local key = i % 10 -- 10 maps to key 0
+    hl.bind(mod .. " + " .. key,           hl.dsp.focus({ workspace = i }))
+    hl.bind(mod .. " + SHIFT + " .. key,   hl.dsp.window.move({ workspace = i }))
+end
+
+hl.bind(mod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
+hl.bind(mod .. " + mouse_up",   hl.dsp.focus({ workspace = "e-1" }))
+
+hl.bind(mod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
+hl.bind(mod .. " + R",         hl.dsp.window.resize(), { mouse = true })
+
+
+-------------------------
+---- WORKSPACE RULES ----
+-------------------------
+
+for i = 1, 9 do
+    hl.workspace_rule({ workspace = tostring(i), layout_opts = { orientation = "left" } })
+end
+
+-- A host can list the same workspaces on screens at different locations, and Hyprland
+-- merges repeated rules for one workspace (last monitor wins). So bind only to connected
+-- screens, and rebind on hotplug; Hyprland then moves bound workspaces onto the new screen.
+local workspaceScreens = {
+{{- range $mons }}{{ if hasKey . "workspaces" }}
+    { output = "{{ .output }}", workspaces = { {{ join ", " .workspaces }} } },
+{{- end }}{{ end }}
+}
+
+local function bindWorkspaces(monitor)
+    for _, screen in ipairs(workspaceScreens) do
+        if screen.output == "desc:" .. monitor.description then
+            for index, workspace in ipairs(screen.workspaces) do
+                hl.workspace_rule({ workspace = tostring(workspace), monitor = screen.output, default = index == 1 })
+            end
+        end
+    end
+end
+
+for _, monitor in ipairs(hl.get_monitors()) do
+    bindWorkspaces(monitor)
+end
+hl.on("monitor.added", bindWorkspaces)
+
+
+-------------
+---- HY3 ----
+-------------
+-- hy3 is loaded by `hyprpm reload` on start, so it is absent on the first parse of
+-- this file. Hyprland reloads the config once a plugin loads, and this block applies
+-- on that second pass.
+
+if hl.plugin.hy3 then
+    local hy3 = hl.plugin.hy3
+
+    hl.config({
+        plugin = {
+            hy3 = {
+                tabs = {
+                    height       = 8,
+                    padding      = 4,
+                    render_text  = false,
+                    border_width = 0,
+                    --col = { active = "rgba(7e9cd8ee)" },
+                },
+
+                autotile = {
+                    enable         = true,
+                    trigger_width  = 800,
+                    trigger_height = 500,
+                },
+            },
+        },
+    })
+
+    -- Move focus, i3 style
+    hl.bind(mod .. " + J",         hy3.move_focus("l"))
+    hl.bind(mod .. " + K",         hy3.move_focus("d"))
+    hl.bind(mod .. " + L",         hy3.move_focus("u"))
+    hl.bind(mod .. " + semicolon", hy3.move_focus("right"))
+
+    hl.bind(mod .. " + left",  hy3.move_focus("l"))
+    hl.bind(mod .. " + down",  hy3.move_focus("d"))
+    hl.bind(mod .. " + up",    hy3.move_focus("u"))
+    hl.bind(mod .. " + right", hy3.move_focus("right"))
+
+    -- Move windows, i3 style
+    hl.bind(mod .. " + SHIFT + H", hy3.move_window("l"))
+    hl.bind(mod .. " + SHIFT + L", hy3.move_window("r"))
+    hl.bind(mod .. " + SHIFT + K", hy3.move_window("u"))
+    hl.bind(mod .. " + SHIFT + J", hy3.move_window("d"))
+
+    hl.bind(mod .. " + SHIFT + left",  hy3.move_window("l"))
+    hl.bind(mod .. " + SHIFT + right", hy3.move_window("r"))
+    hl.bind(mod .. " + SHIFT + up",    hy3.move_window("u"))
+    hl.bind(mod .. " + SHIFT + down",  hy3.move_window("d"))
+
+    hl.bind(mod .. " + T", hy3.change_group("tab"))
+    hl.bind(mod .. " + V", hy3.make_group("v"))
+    hl.bind(mod .. " + H", hy3.make_group("h"))
+    hl.bind(mod .. " + E", hy3.change_group("toggletab"))
+end

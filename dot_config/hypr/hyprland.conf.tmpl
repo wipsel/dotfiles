@@ -9,10 +9,11 @@ env = ELECTRON_OZONE_PLATFORM_HINT,auto
 ### MONITORS ###
 ################
 # Per-host layouts live in .chezmoidata/monitors.yaml, keyed by hostname.
+# Superseded by hyprland.lua; kept only as a rollback target until that has proven itself.
 {{- $mons := index .monitors .chezmoi.hostname }}
 {{- if $mons }}
 {{- range $mons }}
-monitor={{ . }}
+monitor={{ .output }},{{ .mode }},{{ .position }},{{ .scale }}{{ if hasKey . "transform" }},transform,{{ .transform }}{{ end }}
 {{- end }}
 {{- else }}
 # No monitor profile for host '{{ .chezmoi.hostname }}'. Add one to

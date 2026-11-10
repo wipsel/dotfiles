@@ -1,17 +1,47 @@
-# Per-host monitor layouts, read by dot_config/hypr/hyprland.conf.tmpl as `.monitors`,
+# Per-host monitor layouts, read by dot_config/hypr/hyprland.lua.tmpl as `.monitors`,
 # keyed by hostname. A new host is an unmergeable hardware difference: add its entry
 # here from `hyprctl monitors` (the `desc:` strings), then `chezmoi apply`.
-# Hosts without an entry fall back to `monitor=,preferred,auto,auto`.
+# Hosts without an entry fall back to a preferred/auto catch-all.
+#
+# Fields map 1:1 onto hl.monitor(): output, mode, position, scale, transform.
+# Only `output` is mandatory; anything omitted falls back to Hyprland's default.
+# `workspaces` binds those workspaces to the screen while it is connected; the first
+# one is what the screen opens on.
 
 monitors:
   obelix:
-    - "desc:Lenovo Group Limited 0x8AC2, preferred, 0x0, 1.9166,"
+    - output: "desc:Lenovo Group Limited 0x8AC2"
+      mode: preferred
+      position: "0x0"
+      scale: 1.9166
+      workspaces: [10]
     # At home
-    - "desc:Samsung Electric Company LS24D60xU HNAY201650,2560x1440@100,1840x0,1.333,"
-    - "desc:Samsung Electric Company LS24D60xU HNAXC01129,2560x1440@100,auto,1.333,transform,1"
+    - output: "desc:Samsung Electric Company LS24D60xU HNAY201650"
+      mode: "2560x1440@100"
+      position: "1840x0"
+      scale: 1.333
+      workspaces: [1, 2]
+    - output: "desc:Samsung Electric Company LS24D60xU HNAXC01129"
+      mode: "2560x1440@100"
+      position: auto
+      scale: 1.333
+      transform: 1
+      workspaces: [3, 4, 5, 6, 7, 8, 9]
     # Groningen
-    - "desc:Samsung Electric Company LS24D60xU HNAYC00326,2560x1440@100,1840x0,1.333,"
-    - "desc:Samsung Electric Company LS24D60xU HNAYC00417,2560x1440@100,auto,1.333,transform,1"
+    - output: "desc:Samsung Electric Company LS24D60xU HNAYC00326"
+      mode: "2560x1440@100"
+      position: "1840x0"
+      scale: 1.333
+      workspaces: [1, 2]
+    - output: "desc:Samsung Electric Company LS24D60xU HNAYC00417"
+      mode: "2560x1440@100"
+      position: auto
+      scale: 1.333
+      transform: 1
+      workspaces: [3, 4, 5, 6, 7, 8, 9]
     # Alternatives (commented in the original config, kept for reference):
-    #   desc:Philips Consumer Electronics Company Philips UHDTV,3840x2160@100,1840x0,2.4,
-    #   desc:Philips Consumer Electronics Company Philips UHDTV 0x01010101,3840x2160@30.00000,1840x0,1.666667,
+    #   output: "desc:Philips Consumer Electronics Company Philips UHDTV"
+    #   mode: "3840x2160@100", position: "1840x0", scale: 2.4
+    #
+    #   output: "desc:Philips Consumer Electronics Company Philips UHDTV 0x01010101"
+    #   mode: "3840x2160@30.00000", position: "1840x0", scale: 1.666667
