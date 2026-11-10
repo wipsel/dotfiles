@@ -3,8 +3,11 @@ local function setup()
     vim.g.mapleader = " "
     vim.g.maplocalleader = " "
 
+    -- There is no tree-sitter grammar for mdx in nvim-treesitter, so mdx rides
+    -- on the markdown one: prose, frontmatter and the component tags highlight,
+    -- the bare `import` lines do not.
     vim.filetype.add({
-        extension = { rasi = "rasi" },
+        extension = { mdx = "markdown", rasi = "rasi" },
         pattern = {
             [".*/waybar/config"] = "jsonc",
             [".*/hypr/.*%.conf"] = "hyprlang",
