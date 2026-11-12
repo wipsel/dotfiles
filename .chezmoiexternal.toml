@@ -1,0 +1,7 @@
+# Repos chezmoi clones (target missing) or pulls (target present). These are private:
+# a machine without SSH access to the GitLab fails `chezmoi apply` on them.
+
+[".config/herdr-app"]
+    type = "git-repo"
+    url = "git@gitlab.advancedclimate.nl:wisse/herdr-config.git"
+    pull.args = ["--ff-only"]

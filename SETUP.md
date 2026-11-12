@@ -22,6 +22,9 @@ Package install needs `sudo`; Claude can't type your password, so it will ask yo
   `external` tools are *reported* by the setup skill, not force-installed.
 - **Per-host monitors** — `.chezmoidata/monitors.yaml`, keyed by hostname. Add a new host from
   `hyprctl monitors`.
+- **Private repos** — `.chezmoiexternal.toml` clones them over SSH (e.g. `~/.config/herdr-app`
+  from `wisse/herdr-config`) and `chezmoi update` pulls them. A clone only happens while the
+  target folder doesn't exist: apply before herdr's first start, or move its folder aside first.
 - **Per-machine data** — `.chezmoi.toml.tmpl` → generates local `~/.config/chezmoi/chezmoi.toml`
   on `chezmoi init`; never committed.
 
