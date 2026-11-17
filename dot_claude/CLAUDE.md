@@ -26,8 +26,7 @@ Fuller rationale and more preferences live in memory (see MEMORY.md).
   endpoint returns, or what a mockup draws.
 - **Reuse before building.** Extend existing components/patterns/props/styles rather than
   adding parallel ones; introduce something new only when nothing fits, and say why.
-- **Name for meaning.** Full words, no shorthands; reuse the codebase's established Dutch
-  domain vocabulary.
+- **Name for meaning.** Full words, no shorthands.
 - **Prefer latest stable** dependency and tool versions; don't silently downgrade or pin old.
 - **Python:** don't default to `_`-prefixing; reserve it for specific class internals.
 
