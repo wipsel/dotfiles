@@ -59,12 +59,6 @@ hl.env("HYPRCURSOR_SIZE", "24")
 hl.env("XDG_SESSION_TYPE", "wayland")
 hl.env("GTK_THEME", "Nord")
 hl.env("QT_QPA_PLATFORM", "wayland")
-{{- if eq .chezmoi.hostname "wipsel" }}
--- NVIDIA (GeForce GTX 1050 Ti)
-hl.env("LIBVA_DRIVER_NAME", "nvidia")
-hl.env("GBM_BACKEND", "nvidia-drm")
-hl.env("__GLX_VENDOR_LIBRARY_NAME", "nvidia")
-{{- end }}
 
 
 -----------------------
