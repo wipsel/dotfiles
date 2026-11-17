@@ -54,7 +54,7 @@ monitors:
       position: "2880x0"
       scale: 1
       workspaces: [1]
-    - output: "desc:Iiyama North America PL2483H 1156291662875"
+    - output: "desc:iiyama Corporation PL2483H 1156291662875"
       mode: "1920x1080@60"
       position: "4800x0"
       scale: 1
