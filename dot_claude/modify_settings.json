@@ -8,7 +8,7 @@ exec jq -n --arg home "$HOME" '([inputs][0] // {}) * {
   "permissions": {
     "defaultMode": "auto"
   },
-  "model": "opus[1m]",
+  "model": "opus",
   "env": {
     "CLAUDE_CODE_TMPDIR": "\($home)/.cache/claude-tmp"
   },
