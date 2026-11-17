@@ -2,7 +2,7 @@ README.md
 SETUP.md
 
 # Claude Code — only a curated subset is tracked (CLAUDE.md, settings.json, statusline.sh,
-# themes/, and the domain-agnostic skills write-go-test, machine-setup, dotfiles-sync).
+# themes/, and the domain-agnostic skills write-go-test, machine-setup, dotfiles-sync, spin).
 # Ignore secrets + machine-local state so an accidental `chezmoi add ~/.claude` can never
 # publish them.
 .claude.json
