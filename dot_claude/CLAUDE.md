@@ -6,6 +6,9 @@ Fuller rationale and more preferences live in memory (see MEMORY.md).
 
 ## How to work
 
+- **TL;DR replies.** Keep every reply short: the answer or outcome first, in a few lines,
+  then only the essentials (commands to run, what needs a decision). No long explanations,
+  option surveys or recaps unless asked for detail.
 - **Plan first.** Gather context and propose a plan or findings before changing code; build
   once the user gives the go-ahead. Approval for one step is not a standing license.
 - **Defend choices.** Justify design decisions, name the alternatives and trade-offs, and
