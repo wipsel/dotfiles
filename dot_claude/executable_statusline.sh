@@ -4,6 +4,15 @@
 
 input=$(cat)
 
+# Keep the account's rate limits (present once a session has had a reply) where other tools can
+# read them, with when they were saved: ~/.cache/claude/limits.json.
+limits=$(printf '%s' "$input" | jq -c 'select(.rate_limits) | {saved_at: (now | floor), rate_limits}' 2>/dev/null)
+if [ -n "$limits" ]; then
+  mkdir -p "$HOME/.cache/claude"
+  printf '%s\n' "$limits" > "$HOME/.cache/claude/limits.json.$$" \
+    && mv "$HOME/.cache/claude/limits.json.$$" "$HOME/.cache/claude/limits.json"
+fi
+
 model=$(printf '%s' "$input" | jq -r '.model.display_name // .model.id // "?"')
 model_id=$(printf '%s' "$input" | jq -r '.model.id // ""')
 transcript=$(printf '%s' "$input" | jq -r '.transcript_path // ""')
