@@ -304,6 +304,20 @@ local config = {
                         },
                     },
                     {
+                        server = "rust_analyzer",
+                        config = {
+                            capabilities = capabilities,
+                            on_attach = lsp.on_attach,
+                            -- Arch's rustup package has no rust-analyzer proxy on PATH.
+                            cmd = { "rustup", "run", "stable", "rust-analyzer" },
+                            settings = {
+                                ["rust-analyzer"] = {
+                                    check = { command = "clippy" },
+                                },
+                            },
+                        },
+                    },
+                    {
                         server = "lua_ls",
                         config = {
                             capabilities = capabilities,
@@ -519,6 +533,8 @@ local config = {
                 "markdown",
                 "markdown_inline",
                 "python",
+                "rust",
+                "toml",
                 "tsx",
                 "typescript",
                 "yaml",
