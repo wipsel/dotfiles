@@ -22,6 +22,7 @@ packages:
     # Wayland / Hyprland desktop — graphical workstations only.
     desktop:
       - hyprland
+      - hyprpm   # loads hy3; its own package since Hyprland 0.57
       - waybar
       - dunst
       - wofi
